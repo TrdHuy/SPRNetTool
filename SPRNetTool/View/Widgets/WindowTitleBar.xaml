@@ -658,6 +658,7 @@
 							  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
 							  Template="{DynamicResource MenuItemControlTemplate2}">
 						<MenuItem Header="Developer mode"
+								  Visibility="Collapsed"
 								  x:Name="DeveloperModeMenu">
 							<MenuItem.Icon>
 								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"

@@ -21,6 +21,9 @@ namespace ArtWiz.Domain.Base
                     },
                     {
                         typeof(ISprWorkManager), BuildValue(null, () => new SprWorkManager())
+                    },
+                    {
+                        typeof(IDeviceConfigManager), BuildValue(null, () => new DeviceConfigManager())
                     }
                 };
             }
