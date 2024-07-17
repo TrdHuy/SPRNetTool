@@ -14,6 +14,10 @@
 					   Height="765"
 					   StateChanged="OnWindowStateChanged"
 					   d:DesignWidth="1280">
+
+	<Window.DataContext>
+		<vm:MainWindowViewModel />
+	</Window.DataContext>
 	<Window.Resources>
 		<cvt:FormulaConverter x:Key="FormulaConverter" />
 	</Window.Resources>

@@ -8,6 +8,18 @@ namespace ArtWiz.ViewModel.Base
         #region Modules
         private IBitmapDisplayManager? bitmapDisplayManager;
         private ISprWorkManager? sprWorkManager;
+        private IDeviceConfigManager? deviceConfigManager;
+
+        protected IDeviceConfigManager DeviceConfigManager
+        {
+            get
+            {
+                return deviceConfigManager ?? IDomainAccessors
+                    .DomainContext
+                    .GetDomain<IDeviceConfigManager>()
+                    .Also(it => deviceConfigManager = it);
+            }
+        }
 
         protected IBitmapDisplayManager BitmapDisplayManager
         {
