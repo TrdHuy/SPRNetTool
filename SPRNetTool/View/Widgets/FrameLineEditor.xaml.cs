@@ -111,7 +111,14 @@ namespace ArtWiz.View.Widgets
 
         private void SetUpFrameSource(IEnumerable<IFramePreviewerViewModel>? frameSource)
         {
-            frameSource?.IfIs<Collection<IFramePreviewerViewModel>>(it => FrameLinePanel.SetUpSource(it));
+            if (frameSource == null)
+            {
+                FrameLinePanel.SetUpSource(null);
+            }
+            else
+            {
+                frameSource?.IfIs<Collection<IFramePreviewerViewModel>>(it => FrameLinePanel.SetUpSource(it));
+            }
         }
 
         private void DisposeFrameSource(IEnumerable<IFramePreviewerViewModel> frameSource)

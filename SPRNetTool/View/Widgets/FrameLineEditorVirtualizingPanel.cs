@@ -319,9 +319,9 @@ namespace ArtWiz.View.Widgets
             // TODO: may implement switch logic if not using observable collection
         }
 
-        public void SetUpSource(Collection<IFramePreviewerViewModel> itemSource)
+        public void SetUpSource(Collection<IFramePreviewerViewModel>? itemSource)
         {
-            itemSource.IfIs<INotifyCollectionChanged>(it =>
+            itemSource?.IfIs<INotifyCollectionChanged>(it =>
             {
                 it.CollectionChanged += OnItemCollectionChanged;
             });
@@ -592,6 +592,10 @@ namespace ArtWiz.View.Widgets
                 Debug.WriteLine("newStartVisibleItemIndex=" + newStartVisibleItemIndex);
                 Debug.WriteLine("newEndVisibleItemIndex=" + newEndVisibleItemIndex);
                 Debug.WriteLine("==================");
+            }
+            else
+            {
+                SetDesiredItemContainerSize(new Size(0, 0));
             }
             return base.MeasureOverride(constraint);
         }
