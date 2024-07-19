@@ -9,9 +9,10 @@
 # .\SignToolUtilForClient.ps1 -filesToSign $filesToSign
 param (
      [string]$filesToSign,
-     [string]$localConfigPath
+     [string]$localConfigPath,
+     [string]$prvtoken
 )
-$_TOKEN = $env:GITHUB_TOKEN
+$_TOKEN = $prvtoken
 $ISLOCAL = $env:ISLOCAL
 if (-not $ISLOCAL) {
      $ISLOCAL = $true
@@ -19,8 +20,9 @@ if (-not $ISLOCAL) {
  
 Write-Host filesToSign: $filesToSign
 Write-Host localConfigPath: $localConfigPath
+Write-Host isLocal: $ISLOCAL
 
-if ($ISLOCAL -eq $true) {
+if (-not $_TOKEN) {
      Write-Host "Assign local variable"
 
      $localXmlString = Get-Content -Raw -Path $localConfigPath
