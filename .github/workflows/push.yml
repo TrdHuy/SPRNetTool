@@ -7,6 +7,8 @@ jobs:
   build:
     runs-on: windows-latest
     env:
+     ISLOCAL: false
+     GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
      VERSION_UP_ISSUE_ID: 52
      BUILD_HEAVY_PUBLISH: false
      PROJEFCT_PATH: SPRNetTool\ArtWiz.csproj
