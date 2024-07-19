@@ -19,7 +19,9 @@
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2}">#FF89B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}">#5089B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}">#3089B46A</Color>
-
+	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel3}">#4C989898</Color>
+	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel4}">#4CEB2838</Color>
+	
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
@@ -48,7 +50,11 @@
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel2_OP1}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel2_OP2}" />
-
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel3}}"
+					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel3}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel4}}"
+					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel4}" />
+	
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBackground}"
 					 Color="#FF232323" />
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBorderBrush}"
@@ -615,7 +621,7 @@
 
 							<!--Content and title bar field-->
 							<Border BorderThickness="1"
-									BorderBrush="#FF4FE79A"
+									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}"
 									Grid.Column="1">
 								<Grid x:Name="ContentAndTitleGrid"
 									  Background="{TemplateBinding Background}">
