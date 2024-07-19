@@ -1,72 +1,76 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <UseWindowsForms>True</UseWindowsForms>
-    <AssemblyVersion>1.0.0.10</AssemblyVersion>
-    <FileVersion>1.0.0.10</FileVersion>
-    <Version>1.0.0.10</Version>
-    <PlatformTarget>x64</PlatformTarget>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyName>ArtWiz</AssemblyName>
-    <RootNamespace>ArtWiz</RootNamespace>
-    <StartupObject>ArtWiz.App</StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Data\**"/>
-    <EmbeddedResource Remove="Data\**"/>
-    <None Remove="Data\**"/>
-    <Page Remove="Data\**"/>
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Resources\12345.spr"/>
-    <None Remove="Resources\bg.jpg"/>
-    <None Remove="Resources\bg2.jpg"/>
-    <None Remove="Resources\cuukiem.spr"/>
-    <None Remove="Resources\Font Awesome 6 Free-Solid-900.otf"/>
-    <None Remove="Resources\logo_40.png"/>
-    <None Remove="Resources\logo_500.png"/>
-    <None Remove="Resources\spr_global_background.png"/>
-    <None Remove="Resources\spr_viewer_background.png"/>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="logo.ico"/>
-    <Content Include="Resources\bg.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\bg2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\cuukiem.spr">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Font Awesome 6 Free-Solid-900.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\12345.spr">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\spr_global_background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\logo_40.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <PackageReference Include="WizMachine" Version="0.0.0.7"/>
-    <Resource Include="Resources\logo_500.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\spr_viewer_background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<UseWindowsForms>True</UseWindowsForms>
+		<AssemblyVersion>1.0.0.10</AssemblyVersion>
+		<FileVersion>1.0.0.10</FileVersion>
+		<Version>1.0.0.10</Version>
+		<PlatformTarget>x64</PlatformTarget>
+		<ApplicationIcon>logo.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AssemblyName>ArtWiz</AssemblyName>
+		<RootNamespace>ArtWiz</RootNamespace>
+		<StartupObject>ArtWiz.App</StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Data\**" />
+		<EmbeddedResource Remove="Data\**" />
+		<None Remove="Data\**" />
+		<Page Remove="Data\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\12345.spr" />
+		<None Remove="Resources\bg.jpg" />
+		<None Remove="Resources\bg2.jpg" />
+		<None Remove="Resources\cuukiem.spr" />
+		<None Remove="Resources\Font Awesome 6 Free-Solid-900.otf" />
+		<None Remove="Resources\logo_40.png" />
+		<None Remove="Resources\logo_500.png" />
+		<None Remove="Resources\spr_global_background.png" />
+		<None Remove="Resources\spr_viewer_background.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="logo.ico" />
+		<Content Include="Resources\bg.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\bg2.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\cuukiem.spr">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Font Awesome 6 Free-Solid-900.otf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\12345.spr">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\spr_global_background.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\logo_40.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<PackageReference Include="WizMachine" Version="0.0.0.7" />
+		<Resource Include="Resources\logo_500.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\spr_viewer_background.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="echo huytd1"/>
+		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDir)SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDir)local.xml'"/>
+	</Target>
 </Project>
