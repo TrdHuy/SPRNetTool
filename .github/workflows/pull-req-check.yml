@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Check message rule
         env:
+            ISLOCAL: false
+            GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
             GIT_CONTEXT: ${{ toJson(github) }}
             PR_INFO_API: ${{ github.event.pull_request._links.self.href }}
         run: |
