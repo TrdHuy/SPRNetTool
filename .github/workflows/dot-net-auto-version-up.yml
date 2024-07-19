@@ -17,6 +17,7 @@ jobs:
   version_bump:
     runs-on: windows-latest
     env:
+     ISLOCAL: false
      ALLOWED_ACTORS: "TrdHuy,BalalaX"
      VERSION_UP_ISSUE_ID: 52
      VERSION_UP_COMMITER_NAME: ${{ vars.CICD_COMMITER_NAME }}
