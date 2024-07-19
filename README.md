@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="SPRNetTool/Resources/logo_500.png" alt="Logo" width="200" height="200 ">
+    <img src="SPRNetTool/Resources/logo_500.png" alt="Logo" width="200" height="200">
   </a>
 
   <h1 align="center">ArtWiz</h1>
