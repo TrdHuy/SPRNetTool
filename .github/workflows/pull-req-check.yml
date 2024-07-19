@@ -85,7 +85,7 @@ jobs:
         dotnet nuget remove source "trdhuy-nuget-package-source"
         dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ secrets.WORK_FLOW_ACCESS_TOKEN }}"
         dotnet restore
-        dotnet test
+        dotnet test /p:GitToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
