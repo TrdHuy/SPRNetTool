@@ -19,6 +19,8 @@ namespace ArtWiz
         public static ResourceKey ForegroundEffectColorLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2_OP1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2_OP2 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundEffectColorLevel3 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundEffectColorLevel4 { get; } = CreateResourceKey();
 
         public static ResourceKey BackgroundLevel0 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundLevel1 { get; } = CreateResourceKey();
@@ -34,6 +36,8 @@ namespace ArtWiz
         public static ResourceKey ForegroundEffectLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel2_OP1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel2_OP2 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundEffectLevel3 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundEffectLevel4 { get; } = CreateResourceKey();
         public static ResourceKey MenuItemBackground { get; } = CreateResourceKey();
         public static ResourceKey MenuItemBorderBrush { get; } = CreateResourceKey();
         public static ResourceKey MouseOverMenuItemBackgroundBrush { get; } = CreateResourceKey();
