@@ -94,5 +94,8 @@
       <HintPath>..\libs\wengine.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	    <Exec Command="echo Execute signing task"/>
+	    <Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDir)SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)testhost.dll,$(TargetDir)testhost.exe' -localConfigPath '$(SolutionDir)local.xml' -prvtoken '$(GitToken)'"/>
+    </Target>
 </Project>
