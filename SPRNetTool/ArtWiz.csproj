@@ -5,17 +5,21 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
+		<ProjectFullPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</ProjectFullPath>
+		<SolutionDirectory>$([System.IO.Path]::GetFullPath('$(ProjectFullPath)\..'))</SolutionDirectory>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<UseWindowsForms>True</UseWindowsForms>
 		<AssemblyVersion>1.0.0.10</AssemblyVersion>
 		<FileVersion>1.0.0.10</FileVersion>
 		<Version>1.0.0.10</Version>
-		<PlatformTarget>x64</PlatformTarget>
+		<PlatformTarget>$(Platform)</PlatformTarget>
 		<ApplicationIcon>logo.ico</ApplicationIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AssemblyName>ArtWiz</AssemblyName>
 		<RootNamespace>ArtWiz</RootNamespace>
 		<StartupObject>ArtWiz.App</StartupObject>
+		<Platforms>x64;x86</Platforms>
+		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -61,7 +65,6 @@
 		<Content Include="Resources\logo_40.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<PackageReference Include="WizMachine" Version="0.0.0.7" />
 		<Resource Include="Resources\logo_500.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
@@ -69,8 +72,41 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="echo huytd1"/>
-		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDir)SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDir)local.xml' -prvtoken '$(GitToken)'"/>
+
+	<ItemGroup Condition="'$(Platform)' == 'x64'">
+		<PackageReference Include="WizMachinex64" Version="1.0.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Platform)' == 'x86'">
+		<PackageReference Include="WizMachinex86" Version="1.0.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\check_file_platform.ps1" />
+		<None Include="..\SignToolUtilForClient.ps1" />
+		<None Include="..\GetSignToolPath.ps1" />
+		<None Include="..\local.xml" />
+		<None Include="..\.github\**" />
+	</ItemGroup>
+
+
+	<!--START: Application Signing Stuff-->
+	<PropertyGroup>
+		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
+		<SignToolPathResuleCachePath>$(SolutionDirectory)\bin\signtoolpath.txt</SignToolPathResuleCachePath>
+	</PropertyGroup>
+	<Target Name= "GetSignToolPath" BeforeTargets="BeforeBuild">
+		<Exec Command="echo $(BuildTag): GetSignToolPath: Platform=$(Platform)" />
+		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GetSignToolPath)&quot; -platform $(Platform) -resCacheFilePath $(SignToolPathResuleCachePath)" />
+		<ReadLinesFromFile File="$(SignToolPathResuleCachePath)">
+			<Output TaskParameter="Lines" PropertyName="SignToolPath" />
+		</ReadLinesFromFile>
+		<Exec Command="echo $(BuildTag): GetSignToolPath: SignToolPath=$(SignToolPath)" />
 	</Target>
+	<Target Name="SignTheApplication" AfterTargets="AfterBuild">
+		<Exec Command="echo $(BuildTag): SignTheApplication: Executing signing task" />
+		<Exec Command="echo $(BuildTag): SignTheApplication: SolutionDirectory: $(SolutionDirectory)" />
+		<Exec Command="echo $(BuildTag): SignTheApplication: TargetDir: $(TargetDir)" />
+		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp; '$(SolutionDirectory)\SignToolUtilForClient.ps1' -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -signToolCachePath '$(SignToolPathResuleCachePath)' -prvtoken '$(GitToken)'&quot;" />
+	</Target>
+	<!--END: Application Signing Stuff-->
 </Project>

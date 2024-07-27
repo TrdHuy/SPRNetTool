@@ -20,7 +20,7 @@ curl -s https://raw.githubusercontent.com/TrdHuy/ArtWiz/document_v1.0/commit-msg
 
 #### 👉 To create a new version up automatically
 ``` cmd
-gh workflow run AutoVersionBump -F vT="minor" -F force="true"
+gh workflow run AutoVersionBump -F branch="minor"
 ```
 
 ```
