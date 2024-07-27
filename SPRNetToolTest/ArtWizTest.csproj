@@ -96,11 +96,6 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="wengine">
-			<HintPath>..\libs\wengine.dll</HintPath>
-		</Reference>
-	</ItemGroup>
 	<!--START: Application Signing Stuff-->
 	<PropertyGroup>
 		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
