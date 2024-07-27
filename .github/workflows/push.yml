@@ -116,12 +116,12 @@ jobs:
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
     - name: Run tests with coverage
-      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       run: |
         dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
-      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       with:
         reports: '*Test/TestResults/*/coverage.cobertura.xml'
         targetdir: 'CoverageReports'
