@@ -120,15 +120,15 @@ jobs:
       run: |
         dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
     - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
-      if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
+      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       with:
-        reports: '*Test/TestResults/*/coverage.cobertura.xml'
+        reports: 'coverage.xml' 
         targetdir: 'CoverageReports'
         reporttypes: 'HtmlInline;Cobertura'
         verbosity: 'Verbose'
     - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v4
       if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       with:
         name: CoverageReports-Release # Artifact name        
