@@ -1,7 +1,15 @@
+name: UnittestService
+
 on:      
   push:
     branches:
       - '*'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Force to run unit test
+        default: true
+
 jobs:
 
   build:
@@ -12,6 +20,7 @@ jobs:
 
     runs-on: windows-latest
     env:
+     IS_FORCE_RUN_UNITTEST: ${{ github.event.inputs.force || 'false' }}
      ISLOCAL: false
      GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
      VERSION_UP_ISSUE_ID: 52
@@ -91,22 +100,27 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1 
+
+    - name: Restore nuget
+      run: |
+        dotnet nuget remove source "trdhuy-nuget-package-source"
+        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
+        dotnet restore
     ################### END CORE REGION #######################
 
 
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
     - name: Run tests with coverage
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       run: |
-        dotnet nuget remove source "trdhuy-nuget-package-source"
-        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
-        dotnet restore
         dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       with:
         reports: '*Test/TestResults/*/coverage.cobertura.xml'
         targetdir: 'CoverageReports'
@@ -114,7 +128,7 @@ jobs:
         verbosity: 'Verbose'
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       with:
         name: CoverageReports-Release # Artifact name        
         path: CoverageReports # Directory containing files to upload
