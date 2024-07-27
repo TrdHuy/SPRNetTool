@@ -35,6 +35,7 @@ jobs:
       with: 
         fetch-depth: 0
     - name: Check Commit Message by github script
+      if: env.IS_FORCE_RUN_UNITTEST == false
       uses: actions/github-script@v5
       id: get-last-issue-id
       with:
