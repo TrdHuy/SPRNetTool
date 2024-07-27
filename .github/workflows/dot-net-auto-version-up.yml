@@ -3,250 +3,48 @@ name: AutoVersionBump
 on:
   schedule:
     - cron: '0 11 * * 5'
-  workflow_dispatch:  # Đây là sự kiện để kích hoạt quy trình
+  workflow_dispatch:
     inputs:
-      vT:
-        description: Version up type
+      branch:
+        description: 'Branch for version up'
+        required: true
+      type:
+        description: 'Version type: patch, build, minor, major'
         required: false
-        default: "build"
-      force:
-        description: Version up type
-        required: false
-        default: "false"
+        default: 'patch'
+
 jobs:
   version_bump:
     runs-on: windows-latest
     env:
      ISLOCAL: false
-     ALLOWED_ACTORS: "TrdHuy,BalalaX"
-     VERSION_UP_ISSUE_ID: 52
-     VERSION_UP_COMMITER_NAME: ${{ vars.CICD_COMMITER_NAME }}
-     BRANCH_NAME: dev
-     PROJECT_FILE_PATH: SPRNetTool/ArtWiz.csproj
+     BUILD_PERMISSION_JSON: ${{ vars.BUILD_PERMISSION_JSON }}
      GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
+     TARGET_BRANCH: ${{ github.event.inputs.branch || 'dev' }}
+     TARGET_MODULE: ArtWiz
+     TRIGGER_ACTOR: ${{ github.triggering_actor }}
+     VERSION_UP_ISSUE_ID: "#2"
+     REPO_OWNER: ${{ github.repository_owner }}
+     REPO_NAME: ArtWiz  # Github event ko có giá trị này :((
+     TARGET_RELEASED_BRANCH: ${{ github.event.inputs.branch || 'dev' }}
+     VERSION_UP_TYPE: ${{ github.event.inputs.type || 'patch' }}
+     CS_VERSION_UP_FILE_PATH: SPRNetTool\ArtWiz.csproj
     steps:
-      - name: Check have permission to run job
-        shell: bash
+      - name: verify build permission
+        shell: powershell
         run: |
-          echo "event_name= ${{ github.event_name }}"
-          if [ "${{ github.event_name }}" == "schedule" ]; then
-            echo "This is a scheduled job."
-          else
-            IFS=',' read -ra actors <<< "${{ env.ALLOWED_ACTORS }}"
-            for actor in "${actors[@]}"; do
-              if [ "${{ github.actor }}" == "$actor" ]; then
-                echo "$actor is allowed to run this job!"
-                exit 0
-              fi
-            done
-            echo "You don't have permission to run this job!"
-            exit 1
-          fi
-      - name: Get version up type
-        shell: bash
+            $Headers = @{
+                Authorization = "token ${{ env.GITHUB_TOKEN }}"
+            }
+            $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/DotNet/BuildPermissionCheckHelper.ps1"
+            Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile BuildPermissionCheckHelper.ps1
+            & .\BuildPermissionCheckHelper.ps1
+      - name: Setup ENV
+        shell: powershell
         run: |
-          if [ -z "${{ github.event.inputs.vT }}" ]; then
-            echo "VERSION_UP_TYPE=${{ vars.VERSION_UP_BUILD }}" >> $GITHUB_ENV
-          elif [[ "${{ github.event.inputs.vT }}" != "${{ vars.VERSION_UP_PATCH }}" \
-            && "${{ github.event.inputs.vT }}" != "${{ vars.VERSION_UP_BUILD }}" \
-            && "${{ github.event.inputs.vT }}" != "${{ vars.VERSION_UP_MAJOR }}" \
-            && "${{ github.event.inputs.vT }}" != "${{ vars.VERSION_UP_MINOR }}" ]]; then
-            echo "VERSION_UP_TYPE=${{ vars.VERSION_UP_BUILD }}" >> $GITHUB_ENV
-          else
-            echo "VERSION_UP_TYPE=${{ github.event.inputs.vT }}" >> $GITHUB_ENV
-          fi
-  
-           if [ -z "${{ github.event.inputs.force }}" ]; then
-             echo "FORCE_VERSION_UP=false" >> $GITHUB_ENV
-           else
-             echo "FORCE_VERSION_UP=${{ github.event.inputs.force }}" >> $GITHUB_ENV
-           fi
-      - name: Version up type
-        shell: bash
-        run: |
-          echo "VERSION_UP_TYPE=${{ env.VERSION_UP_TYPE }}"
-          echo "FORCE_VERSION_UP=${{ env.FORCE_VERSION_UP }}"
-      - name: Print Input
-        run: |
-          echo "Input: ${{ github.event.inputs.vT }}"
-          echo "VERSION_UP_COMMITER_NAME ${{ env.VERSION_UP_COMMITER_NAME }}"
-          echo "head_commit.committer: ${{ toJson(github.event.head_commit.committer) }}"
-          echo "head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
-          echo "head_commit.committer[0]: ${{ toJson(github.event.head_commit.committer[0]) }}"
-
-      # - name: Githublog
-      #   id: extract_version
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       const log = ${{ toJSON(github) }};
-      #       console.log(log);
-      # - name: Github object
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       console.log(github);    
-            
-      - uses: actions/setup-node@v3
-        with:
-            node-version: 20
-      - run: npm install @octokit/action
-      - run: npm install xml2js  
-      - name: Check last commit
-        uses: actions/github-script@v7
-        id: check-last-commit-id
-        with:
-          github-token: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
-          script: |
-            const { Octokit } = require("@octokit/action");
-            const octokit = new Octokit({
-              auth: '${{ secrets.WORK_FLOW_ACCESS_TOKEN }}'
-            })
-            const res = await octokit.request('GET /repos/{owner}/{repo}/commits/{branch}', {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              branch: '${{ env.BRANCH_NAME }}',
-              per_page: 1,
-              headers: {
-                'X-GitHub-Api-Version': '2022-11-28'
-              }
-            })
-            const commitMessages = res.data.commit.message;
-            const normalCommitRegex = /^\[#(\d+)\] .+/;
-            
-            console.log(res);
-            console.log(commitMessages);
-            const match = commitMessages.match(normalCommitRegex);
-            let isVersionUpLastCommit = false
-            if (match && match[1]) {
-              isVersionUpLastCommit = match[1] == ${{ env.VERSION_UP_ISSUE_ID }}
+            $Headers = @{
+                    Authorization = "token ${{ env.GITHUB_TOKEN }}"
             }
-            console.log(`isVersionUpLastCommit: ${isVersionUpLastCommit}`)
-            return isVersionUpLastCommit;
-            
-      - name: Version up
-        uses: actions/github-script@v7
-        id: version-up-id
-        with:
-          github-token: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
-          script: |      
-            const isVersionUpLastCommit = ${{ steps.check-last-commit-id.outputs.result }}
-            if (isVersionUpLastCommit && '${{ env.FORCE_VERSION_UP }}' == 'false') {
-              console.log('last commit is version up, skipped upgrade!')
-              return false;
-            }
-            const { Octokit } = require("@octokit/action");
-            const xml2js = require('xml2js');
-            
-            const octokit = new Octokit({
-                auth: '${{ secrets.WORK_FLOW_ACCESS_TOKEN }}'
-            })
-            const targetBranchRes = await octokit.request('GET /repos/{owner}/{repo}/branches/{branch}', {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                branch: '${{ env.BRANCH_NAME }}',
-                headers: {
-                    'X-GitHub-Api-Version': '2022-11-28'
-                }
-            })
-            console.log(`targetBranchRes=${targetBranchRes}`);
-            function generateBranchName() {
-                const now = new Date();
-                const branchName = `versionUpAutoBranch_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
-                return branchName;
-            }
-            const refsBranchName = generateBranchName();
-            console.log(`refsBranchName=${refsBranchName}`);
-            const createRefRes = await octokit.request('POST /repos/{owner}/{repo}/git/refs', {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `refs/heads/${refsBranchName}`,
-                sha: targetBranchRes.data.commit.sha,
-                headers: {
-                    'X-GitHub-Api-Version': '2022-11-28'
-                }
-            })
-            console.log(`createRefRes=${createRefRes}`);
-            const getContentRes = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                path: '${{ env.PROJECT_FILE_PATH }}',
-                ref: refsBranchName,
-                headers: {
-                    'X-GitHub-Api-Version': '2022-11-28'
-                }
-            })
-            console.log(`getContentRes=${getContentRes}`);
-            const xmlContent = Buffer.from(getContentRes.data.content, 'base64').toString('utf-8');
-            console.log('File content:', xmlContent);
-            const sha = getContentRes.data.sha;
-            console.log('sha:', sha);
-            let newXmlString = '';
-            let newVersion = '';
-            xml2js.parseString(xmlContent, (err, result) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                const project = result.Project;
-                const propertyGroup = project.PropertyGroup[0];
-                const propertiesToCheck = ['AssemblyVersion', 'FileVersion', 'Version'];
-                propertiesToCheck.forEach(propName => {
-                    if (!propertyGroup.hasOwnProperty(propName)) {
-                        // Nếu không tồn tại, thêm nó với giá trị mặc định
-                        propertyGroup[propName] = ['1.0.0.0'];
-                    } else {
-                        // Nếu đã tồn tại, tăng giá trị lên
-                        const currentVersion = propertyGroup[propName][0].split('.').map(Number);
-            
-                        if ('${{ env.VERSION_UP_TYPE }}' == '${{ vars.VERSION_UP_MINOR }}') {
-                            currentVersion[1]++;
-                        } else if ('${{ env.VERSION_UP_TYPE }}' == '${{ vars.VERSION_UP_PATCH }}') {
-                            currentVersion[2]++;
-                        } else if ('${{ env.VERSION_UP_TYPE }}' == '${{ vars.VERSION_UP_BUILD }}') {
-                            currentVersion[3]++;
-                        } else if ('${{ env.VERSION_UP_TYPE }}' == '${{ vars.VERSION_UP_MAJOR }}') {
-                            currentVersion[0]++;
-                        }
-                        propertyGroup[propName][0] = currentVersion.join('.');
-                    }
-                    if (propName == 'Version') {
-                        newVersion = propertyGroup[propName][0];
-                    }
-                });
-                const builder = new xml2js.Builder();
-                newXmlString = builder.buildObject(result);
-                console.log(newXmlString);
-                console.log('File đã được cập nhật.');
-            });
-            if (newXmlString != '') {
-                console.log('Start update version')
-                const updateRes = await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    path: '${{ env.PROJECT_FILE_PATH }}',
-                    branch: refsBranchName,
-                    sha: sha,
-                    message: `[#${{ env.VERSION_UP_ISSUE_ID }}] Version up: ${newVersion}`,
-                    committer: {
-                        name: '${{ env.VERSION_UP_COMMITER_NAME }}',
-                        email: 'trdtranduchuy@gmail.com'
-                    },
-                    content: Buffer.from(newXmlString).toString('base64'),
-                    headers: {
-                        'X-GitHub-Api-Version': '2022-11-28'
-                    }
-                });
-                console.log(updateRes);
-                const creatPullRes = await octokit.request('POST /repos/{owner}/{repo}/pulls', {
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    title: `[#${{ env.VERSION_UP_ISSUE_ID }}] Version up: ${newVersion}`,
-                    head: refsBranchName,
-                    base: '${{ env.BRANCH_NAME }}',
-                    headers: {
-                        'X-GitHub-Api-Version': '2022-11-28'
-                    }
-                })
-                console.log(creatPullRes);
-            }
+            $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/DotNet/UpdateVersionForDotnetPlatform.ps1"
+            Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile UpdateVersionForDotnetPlatform.ps1
+            & .\UpdateVersionForDotnetPlatform.ps1

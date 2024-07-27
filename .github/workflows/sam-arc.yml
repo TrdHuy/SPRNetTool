@@ -1,0 +1,89 @@
+﻿name: SamArcService
+
+on:
+  schedule:
+    - cron: '0 11 * * 5'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch for calculate sam metric'
+        required: true
+
+jobs:
+  calculate_metric:
+    runs-on: windows-latest
+    env:
+     ISLOCAL: false
+     BUILD_PERMISSION_JSON: ${{ vars.BUILD_PERMISSION_JSON }}
+     GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
+     TARGET_BRANCH: ${{ github.event.inputs.branch || 'dev' }}
+     TARGET_MODULE: ArtWiz
+     TRIGGER_ACTOR: ${{ github.triggering_actor }}
+     VERSION_UP_ISSUE_ID: "#2"
+     REPO_OWNER: ${{ github.repository_owner }}
+     REPO_NAME: ArtWiz  # Github event ko có giá trị này :((
+     VERSION_UP_TYPE: ${{ github.event.inputs.type }}
+     CS_VERSION_UP_FILE_PATH: SPRNetTool\ArtWiz.csproj
+    steps:
+      - name: verify build permission
+        shell: powershell
+        run: |
+            $Headers = @{
+                Authorization = "token ${{ env.GITHUB_TOKEN }}"
+            }
+            $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/DotNet/BuildPermissionCheckHelper.ps1"
+            Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile BuildPermissionCheckHelper.ps1
+            & .\BuildPermissionCheckHelper.ps1
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with: 
+            fetch-depth: 0
+            ref: ${{ env.TARGET_BRANCH }}
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+            dotnet-version: 7.0.x
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: create arcrunner.bat
+        shell: cmd
+        run: |
+             set projectPath=%CD%
+             set samPath=%projectPath%\ArcRpter\bin\sam.exe
+             set samDir=%projectPath%\.sam-dir
+             (
+             echo @echo off
+             echo %samPath% init --sam-dir %samDir%
+             echo dotnet clean ${{ env.CS_VERSION_UP_FILE_PATH }} -c Release /p:Platform=x64 /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true
+             echo %samPath% scan --sam-dir %samDir% --source-path %projectPath% --language cs dotnet build ${{ env.CS_VERSION_UP_FILE_PATH }} -c Release /p:Platform=x64 /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true
+             echo %samPath% analyze --sam-dir %samDir% --source-path %projectPath% --language cs 
+             echo %samPath% calculate --sam-dir %samDir% --source-path %projectPath% --language cs --scoring-metrics cc,dc,mcd,cbo,loc,ncs
+             ) > arcrunner.bat
+             type %CD%\arcrunner.bat
+             powershell -command "ls"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+            python-version: '3.11'
+      - name: Add Python to PATH
+        run: |
+            echo "%PYTHON%;%PYTHON%\Scripts" >> $GITHUB_PATH  # Đảm bảo Python được thêm vào biến môi trường PATH
+    # TODO: Dynamic asset download link
+    # Refer: https://stackoverflow.com/questions/20396329/how-to-download-github-release-from-private-repo-using-command-line
+      - name: Download and Install ArcRpter
+        run: |
+            Write-Host Hello world
+            $url = "https://api.github.com/repos/TrdHuy/ArcRpter/releases/assets/126947734"
+            $outPath = "ArcRpter.zip"
+            $pat = "${{ env.GITHUB_TOKEN }}"
+            Invoke-WebRequest -Uri $url -OutFile $outPath -Headers @{"Authorization" = "token $pat"; "Accept" = "application/octet-stream"}
+            Expand-Archive -Path ArcRpter.zip -DestinationPath ArcRpter
+      - name: Run arcrunner.bat
+        run: |
+            ./arcrunner.bat
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+            name: ArcReport # Artifact name        
+            path: .sam-dir\sam-result # Directory containing files to upload

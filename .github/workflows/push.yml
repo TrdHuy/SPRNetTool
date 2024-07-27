@@ -5,6 +5,11 @@ on:
 jobs:
 
   build:
+    strategy:
+     matrix:
+      configuration: [Debug,Release]
+      platformTarget: [x64,x86]
+
     runs-on: windows-latest
     env:
      ISLOCAL: false
@@ -93,11 +98,12 @@ jobs:
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
     - name: Run tests with coverage
+      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
       run: |
         dotnet nuget remove source "trdhuy-nuget-package-source"
-        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ secrets.WORK_FLOW_ACCESS_TOKEN }}"
+        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
         dotnet restore
-        dotnet test --configuration Release --collect:"XPlat Code Coverage" /p:GitToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
+        dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
       if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
@@ -112,94 +118,5 @@ jobs:
       with:
         name: CoverageReports-Release # Artifact name        
         path: CoverageReports # Directory containing files to upload
+        retention-days: 1
     ################### END UNITTEST REGION #######################
-
-
-
-    # The ARC report only supported for version up commit 
-    ################### SAM REGION #######################
-    # Run SAM 
-    - name: create arcrunner.bat
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      shell: cmd
-      run: |
-        set projectPath=%CD%
-        set samPath=%projectPath%\ArcRpter\bin\sam.exe
-        set samDir=%projectPath%\.sam-dir
-        (
-        	echo @echo off
-        	echo %samPath% init --sam-dir %samDir%
-        	echo dotnet clean ${{ env.PROJEFCT_PATH }} -c Release
-        	echo %samPath% scan --sam-dir %samDir% --source-path %projectPath% --language cs dotnet build ${{ env.PROJEFCT_PATH }} -c Release /p:GitToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
-        	echo %samPath% analyze --sam-dir %samDir% --source-path %projectPath% --language cs 
-        	echo %samPath% calculate --sam-dir %samDir% --source-path %projectPath% --language cs --scoring-metrics cc,dc,mcd,cbo,loc,ncs
-        ) > arcrunner.bat
-        type %CD%\arcrunner.bat
-        powershell -command "ls"
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      with:
-        python-version: '3.11'
-    - name: Add Python to PATH
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: |
-        echo "%PYTHON%;%PYTHON%\Scripts" >> $GITHUB_PATH  # Đảm bảo Python được thêm vào biến môi trường PATH
-    # TODO: Dynamic asset download link
-    # Refer: https://stackoverflow.com/questions/20396329/how-to-download-github-release-from-private-repo-using-command-line
-    - name: Download and Install ArcRpter
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: |
-        Write-Host Hello world
-        $url = "https://api.github.com/repos/TrdHuy/ArcRpter/releases/assets/126947734"
-        $outPath = "ArcRpter.zip"
-        $pat = "${{ secrets.WORK_FLOW_ACCESS_TOKEN }}"
-        Invoke-WebRequest -Uri $url -OutFile $outPath -Headers @{"Authorization" = "token $pat"; "Accept" = "application/octet-stream"}
-        Expand-Archive -Path ArcRpter.zip -DestinationPath ArcRpter
-    - name: Run arcrunner.bat
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: |
-        ./arcrunner.bat
-    - name: Upload artifact
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: ArcReport # Artifact name        
-        path: .sam-dir\sam-result # Directory containing files to upload
-    ################### END SAM REGION #######################
-
-    
-    ################### BUILD ARTIFACT #######################
-    - name: Setup MSBuild.exe
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      uses: microsoft/setup-msbuild@v1.0.2
-    - name: Restore package
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: dotnet restore ${{ env.PROJEFCT_PATH }}
-      
-    - name: Light publish
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: msbuild ${{ env.PROJEFCT_PATH }} /t:Publish /p:Configuration=Release /p:PublishDir=..\light_publish /p:DebugType=embedded /p:DebugSymbols=false /p:GenerateDependencyFile=false /p:SolutionDir=${{github.workspace}}\
-    - name: Zip light release
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      run: Compress-Archive -Path 'light_publish' -DestinationPath 'light_publish.zip'
-    - name: Upload light_publish artifacts
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID
-      uses: actions/upload-artifact@v3
-      with:
-        name: light_publish.zip
-        path: light_publish.zip
-        
-    - name: Heavy publish
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID && env.BUILD_HEAVY_PUBLISH == 'true'
-      run: msbuild ${{ env.PROJEFCT_PATH }} /t:Publish /p:Configuration=Release /p:PublishSingleFile=true /p:RuntimeIdentifier=win-x64 /p:SelfContained=true /p:PublishDir=..\heavy_publish /p:DebugType=embedded /p:DebugSymbols=false /p:GenerateDependencyFile=false /p:SolutionDir=${{github.workspace}}\
-    - name: Zip heavy release
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID && env.BUILD_HEAVY_PUBLISH == 'true'
-      run: Compress-Archive -Path 'heavy_publish' -DestinationPath 'heavy_publish.zip'
-    - name: Upload heavy_publish artifacts
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID && env.BUILD_HEAVY_PUBLISH == 'true'
-      uses: actions/upload-artifact@v3
-      with:
-        name: heavy_publish.zip
-        path: heavy_publish.zip
-    ################### END BUILD ARTIFACT #######################

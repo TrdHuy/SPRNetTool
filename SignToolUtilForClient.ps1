@@ -10,7 +10,8 @@
 param (
      [string]$filesToSign,
      [string]$localConfigPath,
-     [string]$prvtoken
+     [string]$prvtoken,
+     [string]$signToolCachePath
 )
 $_TOKEN = $prvtoken
 $ISLOCAL = $env:ISLOCAL
@@ -18,6 +19,7 @@ if (-not $ISLOCAL) {
      $ISLOCAL = $true
 }
  
+Write-Host signToolCachePath: $signToolCachePath
 Write-Host filesToSign: $filesToSign
 Write-Host localConfigPath: $localConfigPath
 Write-Host isLocal: $ISLOCAL
@@ -36,7 +38,23 @@ if (-not $_TOKEN) {
 }
 
 if (-not $_TOKEN) {
-     throw "GITHUB_TOKEN must not be null "
+     throw "======= FATAL =====> GITHUB_TOKEN must not be null."
+}
+
+$signToolPath = Get-Content -Path $signToolCachePath -Raw
+$signToolPath = $signToolPath.Trim()
+Write-Host signToolPath: $signToolPath
+
+if (-not $signtoolPath) {
+     throw "======= FATAL =====> signtoolPath must not be null."
+}
+
+if (Test-Path -Path "$signtoolPath")  {
+    Write-Host "Found sign tool at: $signtoolPath"
+} else {
+    throw "======= FATAL =====> signtool is not available.`
+    Please make sure it is installed and added to your system's PATH.`
+    The location of the usual signtool is: 'C:\Program Files (x86)\Windows Kits\10\bin\'"
 }
 
 $headers = @{
@@ -45,7 +63,8 @@ $headers = @{
 $url = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/SignToolUtil.ps1"
 $script = Invoke-RestMethod -Uri $url -Headers $headers
 
-$modifiedScriptContent = "`$filesToSign = `"$filesToSign`"`n" `
+$modifiedScriptContent = "`$signToolPath = `"$signToolPath`"`n" `
+     + "`$filesToSign = `"$filesToSign`"`n" `
      + "`$TOKEN = `"$_TOKEN`"`n" `
      + $script
 Write-Host Start signing internal
