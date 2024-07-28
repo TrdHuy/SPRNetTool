@@ -105,33 +105,42 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1 
 
-    - name: Restore nuget
-      run: |
-        dotnet nuget remove source "trdhuy-nuget-package-source"
-        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
-        dotnet restore
+    #- name: Restore nuget
+    #  run: |
+    #    dotnet nuget remove source "trdhuy-nuget-package-source"
+    #    dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
+    #    dotnet restore
     ################### END CORE REGION #######################
+
+    - name: Install report coverage
+      run: |
+        dotnet tool install -g dotnet-reportgenerator-globaltool -v n
+        dotnet tool install -g dotnet-coverage -v n
+        reportgenerator -h
+    - name: Show help
+      run: |
+        reportgenerator -h
 
 
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
-    - name: Run tests with coverage
-      if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      run: |
-        dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
-    - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
-      if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      with:
-        reports: 'coverage.xml' 
-        targetdir: 'CoverageReports'
-        reporttypes: 'HtmlInline;Cobertura'
-        verbosity: 'Verbose'
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      with:
-        name: CoverageReports-Release # Artifact name        
-        path: CoverageReports # Directory containing files to upload
-        retention-days: 1
+    #- name: Run tests with coverage
+    #  if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  run: |
+    #    dotnet test --collect:"XPlat Code Coverage" --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:IsFromDotnet=true /p:GitToken=${{ env.GITHUB_TOKEN }} --results-directory ./TestResults/${{ matrix.configuration }}/${{ matrix.platformTarget }} /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/${{ matrix.configuration }}/${{ matrix.platformTarget }}/Coverage/
+    #- name: ReportGenerator
+    #  uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
+    #  if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  with:
+    #    reports: 'coverage.xml' 
+    #    targetdir: 'CoverageReports'
+    #    reporttypes: 'HtmlInline;Cobertura'
+    #    verbosity: 'Verbose'
+    #- name: Upload artifact
+    #  uses: actions/upload-artifact@v4
+    #  if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  with:
+    #    name: CoverageReports-Release # Artifact name        
+    #    path: CoverageReports # Directory containing files to upload
+    #    retention-days: 1
     ################### END UNITTEST REGION #######################

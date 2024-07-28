@@ -7,10 +7,9 @@
 		<ProjectFullPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))</ProjectFullPath>
 		<SolutionDirectory>$([System.IO.Path]::GetFullPath('$(ProjectFullPath)\..'))</SolutionDirectory>
 		<PlatformTarget>$(Platform)</PlatformTarget>
-
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
-		<PlatformTarget>x64</PlatformTarget>
+		<PlatformTarget>$(Platform)</PlatformTarget>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_TEST_BUILD_TAG</BuildTag>
 	</PropertyGroup>
@@ -113,7 +112,8 @@
 		<Exec Command="echo $(BuildTag): SignTheApplication: Executing signing task" />
 		<Exec Command="echo $(BuildTag): SignTheApplication: SolutionDirectory: $(SolutionDirectory)" />
 		<Exec Command="echo $(BuildTag): SignTheApplication: TargetDir: $(TargetDir)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp; '$(SolutionDirectory)\SignToolUtilForClient.ps1' -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -signToolCachePath '$(SignToolPathResuleCachePath)' -prvtoken '$(GitToken)'&quot;" />
+		<Exec Condition="'$(Platform)' == 'x64'" Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDirectory)\SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)testhost.exe,$(TargetDir)ArtWizTest.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -prvtoken '$(GitToken)' -signToolCachePath '$(SignToolPathResuleCachePath)'" />
+		<Exec Condition="'$(Platform)' == 'x86'" Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDirectory)\SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)testhost.x86.exe,$(TargetDir)ArtWizTest.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -prvtoken '$(GitToken)' -signToolCachePath '$(SignToolPathResuleCachePath)'" />
 	</Target>
 	<!--END: Application Signing Stuff-->
 </Project>
