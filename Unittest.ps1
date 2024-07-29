@@ -56,6 +56,7 @@ function UploadFolderToGitHub {
           $filePath = $file.FullName
           $relativePath = $file.FullName.Substring($localFolderPath.Length + 1).Replace("\", "/")
           $remotePath = "$remoteFolderPath/$relativePath"
+          $remotePath = $remotePath.Replace("\", "/")
           $fileContent = [System.IO.File]::ReadAllBytes($filePath)
           $fileContentBase64 = [Convert]::ToBase64String($fileContent)
  
