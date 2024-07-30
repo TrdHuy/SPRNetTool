@@ -26,6 +26,15 @@ jobs:
      VERSION_UP_ISSUE_ID: 52
      BUILD_HEAVY_PUBLISH: false
      PROJEFCT_PATH: SPRNetTool\ArtWiz.csproj
+     ASSEMBLY_FILTER: "+ArtWiz;-wengine"
+     COVERAGE_OUT_DIR: "CoverageOutDir"
+     IS_UPLOAD_REPORT_TO_GH_PAGE: true
+     OWNER_TO_UPLOAD_ARTIFACT: "TrdHuy"
+     BRANCH_TO_UPLOAD_ARTIFACT: "master"
+     ROOT_FOLDER_TO_UPLOAD_ARTIFACT: "CoverageReport"
+     PROJECT_ID_TO_UPLOAD_ARTIFACT: "ArtWiz"
+     GIT_REPO_TO_UPLOAD_ARTIFACT: "TrdHuy.github.io"
+     COVERAGE_RETENTION_HOURS: 24
      # GIT_CONTEXT: ${{ toJson(github) }}
      
     steps:
@@ -105,12 +114,12 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1 
 
-    #- name: Restore nuget
-    #  run: |
-    #    dotnet nuget remove source "trdhuy-nuget-package-source"
-    #    dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
-    #    dotnet restore
-    ################### END CORE REGION #######################
+    - name: Restore nuget
+      run: |
+       dotnet nuget remove source "trdhuy-nuget-package-source"
+       dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
+       dotnet restore
+    ################## END CORE REGION #######################
 
     - name: Install report coverage
       run: |
@@ -119,8 +128,19 @@ jobs:
         reportgenerator -h
     - name: Show help
       run: |
-        reportgenerator -h
-
+         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+          -config "${{ matrix.configuration }}" `
+          -platform "${{ matrix.platformTarget }}" `
+          -isUploadArtifactToGitHubPage ${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }} `
+          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+          -reportSHAToUploadArtifact "${{ github.sha }}" `
+          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+          -coverageRetentionHours ${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}
 
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################

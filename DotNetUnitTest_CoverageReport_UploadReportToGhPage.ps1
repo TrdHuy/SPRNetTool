@@ -90,7 +90,6 @@ function UploadFolderToGitHub {
      Write-Output "Commit created successfully with SHA: $newCommitSha"
 }
  
-
 $SCRIPT_ROOT = (Get-Location).Path
 $LOG_TAG = "UNITTESTUTIL"
 
