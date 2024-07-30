@@ -133,7 +133,7 @@ jobs:
           -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
           -config "${{ matrix.configuration }}" `
           -platform "${{ matrix.platformTarget }}" `
-          -isUploadArtifactToGitHubPage ${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }} `
+          -isUploadArtifactToGitHubPage ([bool]${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}) `
           -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
           -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
           -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
