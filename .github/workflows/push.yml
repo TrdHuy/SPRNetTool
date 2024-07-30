@@ -140,7 +140,7 @@ jobs:
           -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
           -reportSHAToUploadArtifact "${{ github.sha }}" `
           -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
-          -coverageRetentionHours ([System.Int16]"${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}")
+          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
 
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
