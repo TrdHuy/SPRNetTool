@@ -13,11 +13,6 @@ on:
 jobs:
 
   build:
-    strategy:
-     matrix:
-      configuration: [Debug,Release]
-      platformTarget: [x64,x86]
-
     runs-on: windows-latest
     env:
      IS_FORCE_RUN_UNITTEST: ${{ github.event.inputs.force || 'false' }}
@@ -44,7 +39,7 @@ jobs:
       with: 
         fetch-depth: 0
     - name: Check Commit Message by github script
-      if: env.IS_FORCE_RUN_UNITTEST == false
+      if: env.IS_FORCE_RUN_UNITTEST == 'false'
       uses: actions/github-script@v5
       id: get-last-issue-id
       with:
@@ -126,13 +121,61 @@ jobs:
         dotnet tool install -g dotnet-reportgenerator-globaltool -v n
         dotnet tool install -g dotnet-coverage -v n
         reportgenerator -h
-    - name: Show help
+    - name: Run test Debug x86
       run: |
          & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
           -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
           -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
-          -config "${{ matrix.configuration }}" `
-          -platform "${{ matrix.platformTarget }}" `
+          -config "Debug" `
+          -platform "x86" `
+          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+          -reportSHAToUploadArtifact "${{ github.sha }}" `
+          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+
+    - name: Run test Debug x64
+      run: |
+         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+          -config "Debug" `
+          -platform "x64" `
+          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+          -reportSHAToUploadArtifact "${{ github.sha }}" `
+          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+
+    - name: Run test Release x64
+      run: |
+         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+          -config "Release" `
+          -platform "x64" `
+          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+          -reportSHAToUploadArtifact "${{ github.sha }}" `
+          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+
+    - name: Run test Release x86
+      run: |
+         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+          -config "Release" `
+          -platform "x86" `
           -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
           -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
           -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
