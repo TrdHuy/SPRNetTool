@@ -23,7 +23,7 @@ jobs:
      PROJEFCT_PATH: SPRNetTool\ArtWiz.csproj
      ASSEMBLY_FILTER: "+ArtWiz;-wengine"
      COVERAGE_OUT_DIR: "CoverageOutDir"
-     IS_UPLOAD_REPORT_TO_GH_PAGE: true
+     IS_UPLOAD_REPORT_TO_GH_PAGE: ${{ github.event.inputs.force || 'false' }}
      OWNER_TO_UPLOAD_ARTIFACT: "TrdHuy"
      BRANCH_TO_UPLOAD_ARTIFACT: "master"
      ROOT_FOLDER_TO_UPLOAD_ARTIFACT: "CoverageReport"
@@ -121,70 +121,70 @@ jobs:
         dotnet tool install -g dotnet-reportgenerator-globaltool -v n
         dotnet tool install -g dotnet-coverage -v n
         reportgenerator -h
-    - name: Run test Debug x86
-      run: |
-         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
-          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
-          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
-          -config "Debug" `
-          -platform "x86" `
-          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
-          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
-          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
-          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
-          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
-          -reportSHAToUploadArtifact "${{ github.sha }}" `
-          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
-          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
 
-    - name: Run test Debug x64
+    - name: Run all test
       run: |
-         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
-          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
-          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
-          -config "Debug" `
-          -platform "x64" `
-          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
-          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
-          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
-          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
-          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
-          -reportSHAToUploadArtifact "${{ github.sha }}" `
-          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
-          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+        $Headers = @{
+            Authorization = "token ${{ env.GITHUB_TOKEN }}"
+        }
+        $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/DotNet/DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1"
+        Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Debug" `
+            -platform "x64" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
 
-    - name: Run test Release x64
-      run: |
-         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
-          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
-          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
-          -config "Release" `
-          -platform "x64" `
-          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
-          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
-          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
-          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
-          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
-          -reportSHAToUploadArtifact "${{ github.sha }}" `
-          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
-          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
-
-    - name: Run test Release x86
-      run: |
-         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
-          -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
-          -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
-          -config "Release" `
-          -platform "x86" `
-          -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
-          -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
-          -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
-          -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
-          -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
-          -reportSHAToUploadArtifact "${{ github.sha }}" `
-          -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
-          -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
-
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Debug" `
+            -platform "x86" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+        
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Release" `
+            -platform "x64" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+        
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Release" `
+            -platform "x86" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+   
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
     #- name: Run tests with coverage

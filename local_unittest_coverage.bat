@@ -70,7 +70,7 @@ goto :eof
 
 
     dotnet coverage collect dotnet test --output .\TestResult\CodeCoverage --output-format cobertura
-    reportgenerator -reports:.\TestResult\CodeCoverage -targetdir:".\TestResult\CoverageReport" -reporttypes:Html -assemblyfilters:+SPRNetTool
+    reportgenerator -reports:".\TestResult\CodeCoverage" -targetdir:".\TestResult\CoverageReport" -reporttypes:HtmlInline;Cobertura -assemblyfilters:+ArtWiz
     start "" ".\TestResult\CoverageReport\index.html"
 goto :eof
 
