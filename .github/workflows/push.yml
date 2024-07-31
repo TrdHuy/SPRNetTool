@@ -1,22 +1,35 @@
+name: UnittestService
+
 on:      
   push:
     branches:
       - '*'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Force to run unit test
+        default: true
+
 jobs:
 
   build:
-    strategy:
-     matrix:
-      configuration: [Debug,Release]
-      platformTarget: [x64,x86]
-
     runs-on: windows-latest
     env:
+     IS_FORCE_RUN_UNITTEST: ${{ github.event.inputs.force || 'false' }}
      ISLOCAL: false
      GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
      VERSION_UP_ISSUE_ID: 52
      BUILD_HEAVY_PUBLISH: false
      PROJEFCT_PATH: SPRNetTool\ArtWiz.csproj
+     ASSEMBLY_FILTER: "+ArtWiz;-wengine"
+     COVERAGE_OUT_DIR: "CoverageOutDir"
+     IS_UPLOAD_REPORT_TO_GH_PAGE: ${{ github.event.inputs.force || 'false' }}
+     OWNER_TO_UPLOAD_ARTIFACT: "TrdHuy"
+     BRANCH_TO_UPLOAD_ARTIFACT: "master"
+     ROOT_FOLDER_TO_UPLOAD_ARTIFACT: "CoverageReport"
+     PROJECT_ID_TO_UPLOAD_ARTIFACT: "ArtWiz"
+     GIT_REPO_TO_UPLOAD_ARTIFACT: "TrdHuy.github.io"
+     COVERAGE_RETENTION_HOURS: 24
      # GIT_CONTEXT: ${{ toJson(github) }}
      
     steps:
@@ -26,6 +39,7 @@ jobs:
       with: 
         fetch-depth: 0
     - name: Check Commit Message by github script
+      if: env.IS_FORCE_RUN_UNITTEST == 'false'
       uses: actions/github-script@v5
       id: get-last-issue-id
       with:
@@ -91,32 +105,105 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    
-    ################### END CORE REGION #######################
 
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1 
 
+    - name: Restore nuget
+      run: |
+       dotnet nuget remove source "trdhuy-nuget-package-source"
+       dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
+       dotnet restore
+    ################## END CORE REGION #######################
+
+    - name: Install report coverage
+      run: |
+        dotnet tool install -g dotnet-reportgenerator-globaltool -v n
+        dotnet tool install -g dotnet-coverage -v n
+        reportgenerator -h
+
+    - name: Run all test
+      run: |
+        $Headers = @{
+            Authorization = "token ${{ env.GITHUB_TOKEN }}"
+        }
+        $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/DotNet/DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1"
+        Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Debug" `
+            -platform "x64" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Debug" `
+            -platform "x86" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+        
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Release" `
+            -platform "x64" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+        
+        & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
+            -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
+            -coverageOutDir "${{ env.ASSEMBLY_FILTER }}" `
+            -config "Release" `
+            -platform "x86" `
+            -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
+            -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
+            -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
+            -rootFolderToUploadArtifact "${{ env.ROOT_FOLDER_TO_UPLOAD_ARTIFACT }}" `
+            -projectIdToUploadArtifact "${{ env.PROJECT_ID_TO_UPLOAD_ARTIFACT }}" `
+            -reportSHAToUploadArtifact "${{ github.sha }}" `
+            -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
+            -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}")
+   
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
-    - name: Run tests with coverage
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      run: |
-        dotnet nuget remove source "trdhuy-nuget-package-source"
-        dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ env.GITHUB_TOKEN }}"
-        dotnet restore
-        dotnet test --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ env.GITHUB_TOKEN }} /p:IsFromDotnet=true --collect:"XPlat Code Coverage"
-    - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      with:
-        reports: '*Test/TestResults/*/coverage.cobertura.xml'
-        targetdir: 'CoverageReports'
-        reporttypes: 'HtmlInline;Cobertura'
-        verbosity: 'Verbose'
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      if: env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
-      with:
-        name: CoverageReports-Release # Artifact name        
-        path: CoverageReports # Directory containing files to upload
-        retention-days: 1
+    #- name: Run tests with coverage
+    #  if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  run: |
+    #    dotnet test --collect:"XPlat Code Coverage" --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:IsFromDotnet=true /p:GitToken=${{ env.GITHUB_TOKEN }} --results-directory ./TestResults/${{ matrix.configuration }}/${{ matrix.platformTarget }} /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/${{ matrix.configuration }}/${{ matrix.platformTarget }}/Coverage/
+    #- name: ReportGenerator
+    #  uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
+    #  if: env.IS_FORCE_RUN_UNITTEST == 'true' || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  with:
+    #    reports: 'coverage.xml' 
+    #    targetdir: 'CoverageReports'
+    #    reporttypes: 'HtmlInline;Cobertura'
+    #    verbosity: 'Verbose'
+    #- name: Upload artifact
+    #  uses: actions/upload-artifact@v4
+    #  if: env.IS_FORCE_RUN_UNITTEST == true || env.ISSUE_NUMBER == env.VERSION_UP_ISSUE_ID || startsWith(github.ref, 'refs/heads/unittest_') || startsWith(github.ref, 'refs/heads/dev')
+    #  with:
+    #    name: CoverageReports-Release # Artifact name        
+    #    path: CoverageReports # Directory containing files to upload
+    #    retention-days: 1
     ################### END UNITTEST REGION #######################
