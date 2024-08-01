@@ -56,7 +56,7 @@
 										Value="12" />
 								<Setter Property="Background"
 										TargetName="MainBorder"
-										Value="#4CEB2838" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundEffectLevel4}}" />
 							</Trigger>
 
 						</ControlTemplate.Triggers>
@@ -114,7 +114,7 @@
 										Value="12" />
 								<Setter Property="Background"
 										TargetName="MainBorder"
-										Value="#4C989898" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundEffectLevel3}}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -169,7 +169,7 @@
 										Value="12" />
 								<Setter Property="Background"
 										TargetName="MainBorder"
-										Value="#4C989898" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundEffectLevel3}}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -205,7 +205,7 @@
 										Value="12" />
 								<Setter Property="Background"
 										TargetName="MainBorder"
-										Value="#4C989898" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundEffectLevel3}}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -221,12 +221,6 @@
 					Value="White" />
 			<Setter Property="BorderBrush"
 					Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
-			<Setter Property="BorderThickness"
-					Value="1" />
-			<Setter Property="Margin"
-					Value="0,0" />
-			<Setter Property="Padding"
-					Value="10,0" />
 
 			<Style.Triggers>
 				<Trigger Property="IsHighlighted"
@@ -497,6 +491,7 @@
 					SnapsToDevicePixels="True">
 
 				<Grid VerticalAlignment="Center"
+					  Margin="10,4"
 					  SnapsToDevicePixels="True">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -506,15 +501,16 @@
 					<Border x:Name="EffectBorder"
 							Grid.ColumnSpan="2"
 							ClipToBounds="False"
-							CornerRadius="10"
+							Margin="-10,-4"
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}">
-						<Border.Effect>
+						<!--<Border.Effect>
 							<DropShadowEffect ShadowDepth="0"
 											  Color="#FF9CB297"
 											  Opacity="1"
+											  Direction="90"
 											  BlurRadius="20" />
-						</Border.Effect>
+						</Border.Effect>-->
 					</Border>
 
 					<ContentPresenter x:Name="Icon"
@@ -539,9 +535,8 @@
 							   Height="15"
 							   FontSize="14"
 							   FontFamily="Calibri"
-							   FontWeight="Thin"
+							   FontWeight="Bold"
 							   Margin="0,4"
-							   Padding="20,0,20,0"
 							   VerticalAlignment="Center"
 							   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 					<Popup x:Name="PART_Popup"
@@ -576,6 +571,9 @@
 					<Setter Property="Background"
 							TargetName="EffectBorder"
 							Value="{StaticResource ResourceKey={x:Static def:Definitions.MouseOverMenuItemBackgroundBrush}}" />
+					<Setter Property="BorderThickness"
+							TargetName="EffectBorder"
+							Value="1" />
 
 					<!--<Setter TargetName="EffectBorder2"
 							Property="Visibility"
@@ -650,14 +648,13 @@
 					  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
 					  Height="27"
 					  Panel.ZIndex="1"
-					  Padding="5,0,0,0"
 					  VerticalContentAlignment="Center">
 					<MenuItem Header="Home"
-							  Margin="-12,0,0,0"
 							  Style="{StaticResource menuParentStyle}"
 							  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
 							  Template="{DynamicResource MenuItemControlTemplate2}">
 						<MenuItem Header="Developer mode"
+								  Visibility="Collapsed"
 								  x:Name="DeveloperModeMenu">
 							<MenuItem.Icon>
 								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
@@ -679,7 +676,6 @@
 						</MenuItem>
 					</MenuItem>
 					<MenuItem Header="About"
-							  Margin="-15,0,0,0"
 							  Style="{StaticResource menuParentStyle}"
 							  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
 							  Template="{DynamicResource MenuItemControlTemplate2}" />

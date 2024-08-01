@@ -279,6 +279,13 @@ namespace ArtWiz.Utils
             return self;
         }
 
+        public static T? IfNotNull<T>(this T? self, Action<T> block)
+        {
+            if (self != null)
+                block(self);
+            return self;
+        }
+
         public static void IfIs<T>(this object self, Action<T> block, Action? @else = null)
         {
             if (self is T e)
