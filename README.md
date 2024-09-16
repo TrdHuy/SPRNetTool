@@ -35,7 +35,11 @@ force indicates that, you will version up even if previous commit is version up 
 force="true"
 force="false"
 ```
-
+- ##### Version up rule:
+  - use ```build```: If new version contains only workflow CLs
+  - use ```patch```: If new version contains any product related CLs
+ 
+ 
 #### 👉 Note: new versions will be released automatically every Friday at 18:00 (UTC+7), [detail](https://github.com/TrdHuy/ArtWiz/blob/dev/.github/workflows/dot-net-auto-version-up.yml)
 
 #### 👉 Internal nuget source address
