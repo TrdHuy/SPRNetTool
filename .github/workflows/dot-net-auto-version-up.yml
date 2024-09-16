@@ -24,6 +24,8 @@ jobs:
      TARGET_MODULE: ArtWiz
      TRIGGER_ACTOR: ${{ github.triggering_actor }}
      VERSION_UP_ISSUE_ID: "#52"
+     EXCLUDE_ISSUE_ID: "12,52"
+     AUTO_DECIDE_VERSION_UP: true
      REPO_OWNER: ${{ github.repository_owner }}
      REPO_NAME: ArtWiz  # Github event ko có giá trị này :((
      TARGET_RELEASED_BRANCH: ${{ github.event.inputs.branch || 'dev' }}
