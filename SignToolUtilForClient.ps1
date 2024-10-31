@@ -33,7 +33,7 @@ if (-not $_TOKEN) {
      $localXmlDoc = New-Object System.Xml.XmlDocument
      $localXmlDoc.PreserveWhitespace = $true
      $localXmlDoc.LoadXml($localXmlString)
-     $_TOKEN = $localXmlDoc.configuration.GITHUB_TOKEN
+     $_TOKEN = $localXmlDoc.configuration.SIGINING_TOKEN
 
 }
 
@@ -60,7 +60,7 @@ if (Test-Path -Path "$signtoolPath")  {
 $headers = @{
      Authorization = "token $_TOKEN"
 }
-$url = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/SignToolUtil.ps1"
+$url = "https://raw.githubusercontent.com/BalalaX/DezoneSignToolPkg/main/SignToolUtil.ps1"
 $script = Invoke-RestMethod -Uri $url -Headers $headers
 
 $modifiedScriptContent = "`$signToolPath = `"$signToolPath`"`n" `
