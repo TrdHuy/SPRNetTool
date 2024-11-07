@@ -16,9 +16,17 @@
 		<cvt:FormulaConverter x:Key="FormulaConverter" />
 		<ControlTemplate x:Key="ToggleButtonTemplate"
 						 TargetType="{x:Type ButtonBase}">
-			<Ellipse Fill="#00FFFFFF"
-					 x:Name="Ellipse" />
+			<Grid>
+				<Border Background="#00FFFFFF"
+						BorderThickness="{Binding ElementName=IconToggleContainer,Path=IconBorderThickness, FallbackValue=Red}"
+						x:Name="Rectangle"
+						Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}}" />
 
+				<Ellipse Fill="#00FFFFFF"
+						 x:Name="Ellipse"
+						 Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"/>
+			</Grid>
+			
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver"
 						 Value="true">
@@ -27,11 +35,17 @@
 					<Setter Property="Fill"
 							TargetName="Ellipse"
 							Value="#15FFFFFF" />
+					<Setter Property="Background"
+							TargetName="Rectangle"
+							Value="#15FFFFFF" />
 				</Trigger>
 				<Trigger Property="IsPressed"
 						 Value="true">
 					<Setter Property="Fill"
 							TargetName="Ellipse"
+							Value="#25FFFFFF" />
+					<Setter Property="Background"
+							TargetName="Rectangle"
 							Value="#25FFFFFF" />
 				</Trigger>
 			</ControlTemplate.Triggers>
@@ -41,6 +55,11 @@
 			<Grid x:Name="GridContainer"
 				  Background="Transparent"
 				  MouseLeftButtonUp="IconToggleContainerMouseUp">
+				<Border Background="{Binding ElementName=IconToggleContainer,Path=Fill, FallbackValue=Red}"
+						BorderThickness="{Binding ElementName=IconToggleContainer,Path=IconBorderThickness, FallbackValue=Red}"
+						Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}}">
+
+				</Border>
 				<Ellipse IsHitTestVisible="False"
 						 Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter}}"
 						 StrokeThickness="{Binding ElementName=IconToggleContainer, Path=StrokeThickness, FallbackValue=3}"
@@ -58,8 +77,8 @@
 							<Binding Path="ActualHeight"
 									 ElementName="GridContainer" />
 							<Binding Path="IconRatio"
-									 ElementName="IconToggleContainer" 
-									 FallbackValue="0.4"/>
+									 ElementName="IconToggleContainer"
+									 FallbackValue="0.4" />
 						</MultiBinding>
 					</Path.Height>
 
@@ -70,7 +89,7 @@
 									 ElementName="GridContainer" />
 							<Binding Path="IconRatio"
 									 ElementName="IconToggleContainer"
-									 FallbackValue="0.4"/>
+									 FallbackValue="0.4" />
 						</MultiBinding>
 					</Path.Width>
 					<Path.Style>
@@ -108,7 +127,7 @@
 									 ElementName="GridContainer" />
 							<Binding Path="IconRatio"
 									 ElementName="IconToggleContainer"
-									 FallbackValue="0.4"/>
+									 FallbackValue="0.4" />
 						</MultiBinding>
 					</Path.Width>
 					<Path.Style>
@@ -124,6 +143,7 @@
 					</Path.Style>
 				</Path>
 
+
 				<ToggleButton Template="{DynamicResource ToggleButtonTemplate}"
 							  x:Name="ToggleButton"
 							  IsHitTestVisible="{Binding ElementName=IconToggleContainer, Path=IsEnableToggleClick}"
@@ -138,5 +158,5 @@
 			</Grid>
 		</ControlTemplate>
 	</UserControl.Resources>
-	
+
 </UserControl>

@@ -14,7 +14,7 @@ namespace ArtWiz.View.Base
         public Dispatcher ViewElementDispatcher => Dispatcher;
         public Dispatcher ViewDispatcher => Dispatcher;
         public abstract object ViewModel { get; }
-
+        public abstract string PageName { get; }
         public BasePageViewer(IWindowViewer ownerWindow)
         {
             _ownerWindow = ownerWindow;

@@ -1,6 +1,9 @@
 ﻿using ArtWiz.Utils;
 using ArtWiz.View.Base;
 using ArtWiz.View.Pages;
+using ArtWiz.View.Widgets;
+using System;
+using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shell;
@@ -11,7 +14,12 @@ namespace ArtWiz.View
     {
         private DebugPage? debugPage = null;
         private SprEditorPage? sprEditorPage = null;
+        private PakEditorPage? pakEditorPage = null;
         private double previousePageContentScrollViewHeightCache = -1d;
+
+        private MenuItem? _sprWorkSpaceItem;
+        private MenuItem? _devModeMenuItem;
+        private MenuItem? _pakWorkSpaceItem;
 
         public MainWindow()
         {
@@ -23,15 +31,21 @@ namespace ArtWiz.View
         {
             PageContentPresenter.Content = content;
             var chrome = WindowChrome.GetWindowChrome(this);
-            if (content is SprEditorPage)
+            if (chrome != null)
             {
-                chrome.ResizeBorderThickness = new Thickness(0);
+                if (content is SprEditorPage)
+                {
+                    chrome.ResizeBorderThickness = new Thickness(0);
+                }
+                else
+                {
+                    chrome.ResizeBorderThickness = new Thickness(10);
+                }
             }
-            else
-            {
-                chrome.ResizeBorderThickness = new Thickness(10);
-            }
+
+            UpdatePageNameOnWindowBar(PageContentPresenter.Content);
         }
+
 
         public override void DisableWindow(bool isDisabled)
         {
@@ -45,11 +59,18 @@ namespace ArtWiz.View
             }
         }
 
+
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _devModeMenuItem!.Click += MenuItemClick;
-            _sprWorkSpaceItem!.Click += MenuItemClick;
+            _sprWorkSpaceItem = (_windowTitleBar as WindowTitleBar)?.SprWorkSpceMenu ?? throw new Exception();
+            _devModeMenuItem = (_windowTitleBar as WindowTitleBar)?.DeveloperModeMenu ?? throw new Exception();
+            _pakWorkSpaceItem = (_windowTitleBar as WindowTitleBar)?.PakWorkSpaceMenu ?? throw new Exception();
+            _devModeMenuItem.Click += MenuItemClick;
+            _sprWorkSpaceItem.Click += MenuItemClick;
+            _pakWorkSpaceItem.Click += MenuItemClick;
+            UpdatePageNameOnWindowBar(PageContentPresenter.Content);
         }
 
         private void MenuItemClick(object sender, RoutedEventArgs e)
@@ -61,6 +82,10 @@ namespace ArtWiz.View
             else if (sender == _sprWorkSpaceItem)
             {
                 SetPageContent(sprEditorPage ?? new SprEditorPage((IWindowViewer)this).Also((it) => sprEditorPage = it));
+            }
+            else if (sender == _pakWorkSpaceItem)
+            {
+                SetPageContent(pakEditorPage ?? new PakEditorPage((IWindowViewer)this).Also((it) => pakEditorPage = it));
             }
         }
 
@@ -83,6 +108,13 @@ namespace ArtWiz.View
                 PageContentScrollViewer.UpdateLayout();
                 PageContentScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
+        }
+
+        private void UpdatePageNameOnWindowBar(object pageContent)
+        {
+            _windowTitleBar?.IfIs<WindowTitleBar>(it1
+              => pageContent?.IfIs<BasePageViewer>(it2
+                  => it1.PageTitleTextBlock.Text = it2.PageName));
         }
     }
 

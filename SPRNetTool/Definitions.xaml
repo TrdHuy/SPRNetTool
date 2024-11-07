@@ -21,7 +21,7 @@
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}">#3089B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel3}">#4C989898</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel4}">#4CEB2838</Color>
-	
+
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
@@ -54,7 +54,7 @@
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel3}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel4}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel4}" />
-	
+
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBackground}"
 					 Color="#FF232323" />
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBorderBrush}"
@@ -585,12 +585,6 @@
 		<Setter Property="ResizeMode"
 				Value="CanResizeWithGrip" />
 
-		<Setter Property="shell:WindowChrome.WindowChrome">
-			<Setter.Value>
-				<shell:WindowChrome CaptionHeight="40" />
-			</Setter.Value>
-		</Setter>
-
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Window}">
@@ -633,7 +627,7 @@
 									<!--Title bar-->
 									<Grid x:Name="TitleBartGrid"
 										  Grid.Row="0"
-										  Height="40"
+										  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
 										  Background="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel10}}"
 										  VerticalAlignment="Stretch">
 
@@ -645,25 +639,8 @@
 
 										</Grid.ColumnDefinitions>
 
-										<wg:WindowTitleBar x:Name="WindowTitleBar" />
-										<!--Title-->
-										<Viewbox x:Name="TitleViewBox"
-												 Grid.Column="0"
-												 HorizontalAlignment="Left"
-												 Grid.ColumnSpan="3"
-												 Margin="20,8,8,8">
-											<TextBlock x:Name="SubContentTitleText"
-													   FontWeight="Bold"
-													   FontFamily="Calibri"
-													   Text="{TemplateBinding Title}"
-													   TextAlignment="Center" />
-										</Viewbox>
-
-										<!--Window Buttons-->
-										<StackPanel x:Name="WindowControlPanel"
-													Grid.Column="1"
-													Orientation="Horizontal">
-										</StackPanel>
+										<wg:WindowTitleBar x:Name="WindowTitleBar"
+														   Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}" />
 
 									</Grid>
 

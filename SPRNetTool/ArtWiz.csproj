@@ -74,10 +74,10 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Platform)' == 'x64'">
-		<PackageReference Include="WizMachinex64" Version="1.0.0.0" />
+		<PackageReference Include="WizMachinex64" Version="1.0.3.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Platform)' == 'x86'">
-		<PackageReference Include="WizMachinex86" Version="1.0.0.0" />
+		<PackageReference Include="WizMachinex86" Version="1.0.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,7 +94,7 @@
 		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
 		<SignToolPathResuleCachePath>$(SolutionDirectory)\bin\signtoolpath.txt</SignToolPathResuleCachePath>
 	</PropertyGroup>
-	<Target Name= "GetSignToolPath" BeforeTargets="BeforeBuild">
+	<Target Name="GetSignToolPath" BeforeTargets="BeforeBuild">
 		<Exec Command="echo $(BuildTag): GetSignToolPath: Platform=$(Platform)" />
 		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GetSignToolPath)&quot; -platform $(Platform) -resCacheFilePath $(SignToolPathResuleCachePath)" />
 		<ReadLinesFromFile File="$(SignToolPathResuleCachePath)">

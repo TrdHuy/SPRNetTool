@@ -1,13 +1,27 @@
-﻿using ArtWiz.View.Widgets;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shell;
 using WinInterop = System.Windows.Interop;
 
 namespace ArtWiz.View.Base
 {
+    public interface IWindowTitleBar
+    {
+        public delegate void TitleBarHeightChangedHandler(object? sender, double oldValue, double newValue);
+
+        public Button MinimizeButton { get; }
+        public Button SmallmizeButton { get; }
+        public Button CloseButton { get; }
+
+        public Button MaximizeButton { get; }
+        public double TitleBarHeight { get; }
+
+        event TitleBarHeightChangedHandler? TitleBarHeightChanged;
+    }
     public abstract class CyberWindow : Window
     {
         private static Style? DefaultArtWizWindowStyle;
@@ -405,7 +419,7 @@ namespace ArtWiz.View.Base
         private RowDefinition? _botShadowRowDefinition;
         private ColumnDefinition? _leftShadowColumnDefinition;
         private ColumnDefinition? _rightShadowColumnDefinition;
-        protected WindowTitleBar? _windowTitleBar;
+        protected IWindowTitleBar? _windowTitleBar;
 
         protected WindowSizeManager _windowSizeManager;
 
@@ -435,12 +449,11 @@ namespace ArtWiz.View.Base
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _windowTitleBar = GetTemplateChild("WindowTitleBar") as WindowTitleBar ?? throw new ArgumentNullException();
+            _windowTitleBar = GetTemplateChild("WindowTitleBar") as IWindowTitleBar ?? throw new ArgumentNullException();
             _minimizeBtn = _windowTitleBar.MinimizeButton;
             _maximizeBtn = _windowTitleBar.MaximizeButton;
             _closeBtn = _windowTitleBar.CloseButton;
             _smallmizeBtn = _windowTitleBar.SmallmizeButton;
-            _windowControlPanel = GetTemplateChild(WindowControlPanelName) as StackPanel ?? throw new ArgumentNullException();
             _botShadowRowDefinition = GetTemplateChild(BotShadowRowDefName) as RowDefinition ?? throw new ArgumentNullException();
             _leftShadowColumnDefinition = GetTemplateChild(LeftShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
             _rightShadowColumnDefinition = GetTemplateChild(RightShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
@@ -465,12 +478,41 @@ namespace ArtWiz.View.Base
                 this.WindowState = WindowState.Minimized;
             };
 
+            _windowTitleBar.TitleBarHeightChanged += (s, o, n) =>
+            {
+                UpdateCaptionHeight(this, n);
+            };
+
+            UpdateCaptionHeight(this, _windowTitleBar.TitleBarHeight);
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
             _windowSizeManager.NotifyCyberWindowStateChange();
             base.OnStateChanged(e);
+        }
+
+        private static void UpdateCaptionHeight(Window window, double newHeight)
+        {
+            // Lấy WindowChrome hiện tại
+            var windowChrome = WindowChrome.GetWindowChrome(window);
+            if (windowChrome != null)
+            {
+                // Cập nhật CaptionHeight
+                windowChrome.CaptionHeight = newHeight;
+
+                // Nếu cần, áp dụng lại
+                WindowChrome.SetWindowChrome(window, windowChrome);
+            }
+            else
+            {
+                // Nếu WindowChrome chưa được thiết lập, tạo mới và gán
+                windowChrome = new WindowChrome
+                {
+                    CaptionHeight = newHeight
+                };
+                WindowChrome.SetWindowChrome(window, windowChrome);
+            }
         }
     }
 

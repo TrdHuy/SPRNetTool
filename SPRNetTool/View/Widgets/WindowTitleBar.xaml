@@ -7,8 +7,9 @@
 			 xmlns:def="clr-namespace:ArtWiz"
 			 xmlns:bview="clr-namespace:ArtWiz.View.Base"
 			 mc:Ignorable="d"
-			 d:DesignHeight="40"
-			 d:DesignWidth="800">
+			 d:DesignHeight="{Binding ElementName=WindowBarContainer,Path=WindowBarHeight, FallbackValue=90}"
+			 d:DesignWidth="800"
+			 x:Name="WindowBarContainer">
 	<UserControl.Resources>
 		<!--Window control button-->
 		<Style x:Key="WindowControlButton"
@@ -643,7 +644,13 @@
 					   RenderOptions.BitmapScalingMode="HighQuality"
 					   SnapsToDevicePixels="True"
 					   Source="/ArtWiz;component/resources/logo_500.png" />
-
+				<TextBlock x:Name="PageTitleTextBlock"
+						   Text="Pak Editor"
+						   FontSize="16"
+						   Foreground="White"
+						   VerticalAlignment="Center"
+						   FontWeight="Black"
+						   Margin="5,0"/>
 				<Menu x:Name="MainMenu"
 					  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
 					  Height="27"
@@ -666,6 +673,16 @@
 						</MenuItem>
 						<MenuItem Header="Spr work space"
 								  x:Name="SprWorkSpceMenu">
+							<MenuItem.Icon>
+								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+									  Stretch="Uniform"
+									  Width="16"
+									  Height="16"
+									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Pak work space"
+								  x:Name="PakWorkSpaceMenu">
 							<MenuItem.Icon>
 								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
 									  Stretch="Uniform"
