@@ -5,6 +5,106 @@
 					xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
 					xmlns:local="clr-namespace:ArtWiz">
 
+	<FontFamily x:Key="{x:Static local:Definitions.FontAwsome}">
+		/ArtWiz;component/Resources/Font Awesome 6 Free-Solid-900.otf#Font Awesome 6 Free Solid
+	</FontFamily>
+	
+	<!--#region FiraSans Font-->
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Black}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Black.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_BlackItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-BlackItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Bold}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Bold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_BoldItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-BoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraBold}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-ExtraBold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraBoldItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-ExtraBoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraLight}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-ExtraLight.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraLightItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-ExtraLightItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Italic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Italic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Light}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Light.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_LightItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-LightItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Medium}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Medium.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_MediumItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-MediumItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Regular}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Regular.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_SemiBold}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-SemiBold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_SemiBoldItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-SemiBoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Thin}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-Thin.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ThinItalic}">
+		/ArtWiz;component/Resources/Font/Fira_Sans/FiraSans-ThinItalic.ttf#Fira Sans
+	</FontFamily>
+	<!--#endregion-->
+	
+	<!--#region Roboto Font-->
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Black}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Black.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_BlackItalic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-BlackItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Bold}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Bold.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_BoldItalic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-BoldItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Italic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Italic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Light}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Light.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_LightItalic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-LightItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Medium}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Medium.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_MediumItalic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-MediumItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Regular}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Regular.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Thin}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-Thin.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_ThinItalic}">
+		/ArtWiz;component/Resources/Font/Roboto/Roboto-ThinItalic.ttf#Roboto
+	</FontFamily>
+	<!--#endregion-->
+	
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel0}">#FF000000</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1}">#FF151515</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel2}">#FF262626</Color>

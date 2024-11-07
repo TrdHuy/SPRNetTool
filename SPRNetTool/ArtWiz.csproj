@@ -33,6 +33,36 @@
 		<None Remove="Resources\bg2.jpg" />
 		<None Remove="Resources\cuukiem.spr" />
 		<None Remove="Resources\Font Awesome 6 Free-Solid-900.otf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Black.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-BlackItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Bold.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-BoldItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-ExtraBold.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-ExtraBoldItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-ExtraLight.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-ExtraLightItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Italic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Light.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-LightItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Medium.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-MediumItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Regular.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-SemiBold.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-SemiBoldItalic.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-Thin.ttf" />
+		<None Remove="Resources\Fonts\Fira_Sans\FiraSans-ThinItalic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Black.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Light.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
+		<None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
 		<None Remove="Resources\logo_40.png" />
 		<None Remove="Resources\logo_500.png" />
 		<None Remove="Resources\spr_global_background.png" />
@@ -58,6 +88,96 @@
 	<ItemGroup>
 		<Content Include="Resources\12345.spr">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Black.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-BlackItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Bold.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-BoldItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraBold.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraBoldItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraLight.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraLightItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Italic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Light.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-LightItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Medium.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-MediumItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Regular.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-SemiBold.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-SemiBoldItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Thin.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ThinItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Black.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Bold.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Italic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Light.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Medium.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Regular.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-Thin.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\spr_global_background.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

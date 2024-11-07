@@ -68,6 +68,47 @@ namespace ArtWiz
         
         public static ResourceKey ArtWizDefaultWindowStyle { get; } = CreateResourceKey();
         public static ResourceKey UnidentifiedPreviewFrameSourceGeometry { get; } = CreateResourceKey();
+        
+        public static ResourceKey FontAwsome { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto { get; } = CreateResourceKey();
+
+        #region FiraSans Font
+        // Auto-generated font resource keys
+        public static ResourceKey FontFiraSans_Black { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_BlackItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Bold { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_BoldItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_ExtraBold { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_ExtraBoldItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_ExtraLight { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_ExtraLightItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Italic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Light { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_LightItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Medium { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_MediumItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Regular { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_SemiBold { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_SemiBoldItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_Thin { get; } = CreateResourceKey();
+        public static ResourceKey FontFiraSans_ThinItalic { get; } = CreateResourceKey();
+        #endregion
+
+        #region Roboto
+        public static ResourceKey FontRoboto_Roboto_Black { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_BlackItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Bold { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_BoldItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Italic { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Light { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_LightItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Medium { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_MediumItalic { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Regular { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_Thin { get; } = CreateResourceKey();
+        public static ResourceKey FontRoboto_Roboto_ThinItalic { get; } = CreateResourceKey();
+
+        #endregion
 
         public static Definitions? Instance { get; private set; }
 
