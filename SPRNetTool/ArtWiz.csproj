@@ -20,6 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
+		<WizMachineVersion>1.0.3.1</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -90,94 +91,94 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Black.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-BlackItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Bold.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-BoldItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraBold.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraBoldItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraLight.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ExtraLightItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Italic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Light.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-LightItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Medium.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-MediumItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Regular.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-SemiBold.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-SemiBoldItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-Thin.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Fira_Sans\FiraSans-ThinItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Black.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Bold.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Italic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Light.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Medium.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Regular.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-Thin.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\spr_global_background.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -193,13 +194,38 @@
 		</Resource>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Platform)' == 'x64'">
-		<PackageReference Include="WizMachinex64" Version="1.0.3.0" />
+
+	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
+		<PackageReference Include="WizMachinex64-Debug" Version="$(WizMachineVersion)" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Platform)' == 'x86'">
-		<PackageReference Include="WizMachinex86" Version="1.0.3.0" />
+	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' != 'Debug'">
+		<PackageReference Include="WizMachinex64" Version="$(WizMachineVersion)" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Platform)' == 'x86' And '$(Configuration)' == 'Debug'">
+		<PackageReference Include="WizMachinex86-Debug" Version="$(WizMachineVersion)" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Platform)' == 'x86' And '$(Configuration)' != 'Debug'">
+		<PackageReference Include="WizMachinex86" Version="$(WizMachineVersion)" />
 	</ItemGroup>
 
+	<Target Name="CopyDebugFiles" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
+		<ItemGroup>
+			<!-- Thêm các file cần copy từ thư mục NuGet -->
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.pdb" Condition="'$(Platform)' == 'x64'" />
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.exp" Condition="'$(Platform)' == 'x64'" />
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x64'" />
+
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.pdb" Condition="'$(Platform)' == 'x86'" />
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.exp" Condition="'$(Platform)' == 'x86'" />
+			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x86'" />
+		</ItemGroup>
+
+		<!-- Copy các file debug vào output folder -->
+		<Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(OutDir)">
+			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
+		</Copy>
+		<Message Text="Copied debug files @(CopiedDebugFiles) to $(OutDir)" Importance="high" />
+	</Target>
 	<ItemGroup>
 		<None Include="..\check_file_platform.ps1" />
 		<None Include="..\SignToolUtilForClient.ps1" />
@@ -207,6 +233,12 @@
 		<None Include="..\local.xml" />
 		<None Include="..\.github\**" />
 	</ItemGroup>
+
+	<!--<ItemGroup>
+	  <Reference Include="wengine">
+	    <HintPath>..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\wengine.dll</HintPath>
+	  </Reference>
+	</ItemGroup>-->
 
 
 	<!--START: Application Signing Stuff-->
