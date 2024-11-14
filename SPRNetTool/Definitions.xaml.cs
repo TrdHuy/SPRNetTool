@@ -68,7 +68,10 @@ namespace ArtWiz
         
         public static ResourceKey ArtWizDefaultWindowStyle { get; } = CreateResourceKey();
         public static ResourceKey UnidentifiedPreviewFrameSourceGeometry { get; } = CreateResourceKey();
-        
+
+        public static ResourceKey MenuParentStyle { get; } = CreateResourceKey();
+
+
         public static ResourceKey FontAwsome { get; } = CreateResourceKey();
         public static ResourceKey FontRoboto { get; } = CreateResourceKey();
 

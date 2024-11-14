@@ -103,254 +103,320 @@
 		</Style>
 	</UserControl.Resources>
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0" />
-			<ColumnDefinition Width="3*" />
-			<ColumnDefinition Width="0" />
-			<ColumnDefinition Width="5*" />
-			<ColumnDefinition Width="0" />
-			<ColumnDefinition Width="2.5*" />
-
-		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="10" />
+			<RowDefinition Height="100" />
 			<RowDefinition />
-			<RowDefinition Height="10" />
 		</Grid.RowDefinitions>
+		<wg:WindowTitleBar x:Name="PageHeader">
+			<wg:WindowTitleBar.CustomHeaderView>
+				<Border Background="Transparent">
+					<StackPanel Orientation="Horizontal">
+						<Menu Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
+							  Panel.ZIndex="1"
+							  VerticalAlignment="Center"
+							  Margin="40,0,0,0"
+							  VerticalContentAlignment="Center">
+							<MenuItem Header="Trang chủ"
+									  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
+								<MenuItem Header="Developer mode"
+										  Visibility="Collapsed">
+									<MenuItem.Icon>
+										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+											  Stretch="Uniform"
+											  Width="16"
+											  Height="16"
+											  Data="{StaticResource ResourceKey={x:Static def:Definitions.DeveloperModeIconGeometry}}" />
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Spr work space">
+									<MenuItem.Icon>
+										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+											  Stretch="Uniform"
+											  Width="16"
+											  Height="16"
+											  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Pak work space">
+									<MenuItem.Icon>
+										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+											  Stretch="Uniform"
+											  Width="16"
+											  Height="16"
+											  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+							<MenuItem Header="Công cụ"
+									  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}" />
+						</Menu>
 
-		<Grid Grid.Column="1"
-			  Grid.Row="1"
-			  Background="#FF262626">
+						<wg:PlaceHolderTextBox Placeholder="Tìm theo đường dẫn..."
+											   Margin="60,0,0,0"
+											   Width="700"
+											   Height="50"
+											   FontSize="16"
+											   PlaceholderForeground="#FF7D8184"
+											   VerticalAlignment="Center"
+											   BorderBrush="#FF7D8184"
+											   BorderThickness="1"
+											   FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"/>
+					</StackPanel>
+					
+				</Border>
+			</wg:WindowTitleBar.CustomHeaderView>
+		</wg:WindowTitleBar>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0" />
+				<ColumnDefinition Width="3*" />
+				<ColumnDefinition Width="0" />
+				<ColumnDefinition Width="5*" />
+				<ColumnDefinition Width="0" />
+				<ColumnDefinition Width="2.5*" />
+
+			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="50" />
+				<RowDefinition Height="10" />
 				<RowDefinition />
+				<RowDefinition Height="10" />
 			</Grid.RowDefinitions>
-			<StackPanel Orientation="Horizontal">
-				<wg:IconToggle x:Name="AddFilePakToWorkManager"
-							   IsEllipse="True"
-							   StrokeThickness="3"
-							   IsEnableToggleClick="False"
-							   Margin="10,0,0,0"
-							   Click="OnButtonClick"
-							   Style="{StaticResource IconToogleStyle2}"
-							   IconRatio="0.5"
-							   Width="25"
-							   Height="25"
-							   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
-							   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
-							   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}" />
-				<Label Content="Thêm file pak"
-					   Foreground="White"
-					   FontFamily="Calibri"
-					   FontSize="20"
-					   VerticalAlignment="Center" />
-			</StackPanel>
-			<ListBox Grid.Row="1"
-					 Margin="15,0"
-					 Background="Transparent"
-					 BorderThickness="0"
-					 VirtualizingStackPanel.IsVirtualizing="True"
-					 VirtualizingStackPanel.VirtualizationMode="Recycling"
-					 ScrollViewer.CanContentScroll="True">
-				<ListBox.ItemContainerStyle>
-					<Style TargetType="ListBoxItem">
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="ListBoxItem">
-									<Border BorderThickness="0"
-											Background="#FF2E2E2E"
-											CornerRadius="5"
-											Height="60"
-											Margin="0,0,0,5">
-										<Grid>
-											<Grid.RowDefinitions>
-												<RowDefinition Height="*" />
-												<RowDefinition Height="3*" />
-												<RowDefinition Height="1.2*" />
-												<RowDefinition Height="0.5*" />
-											</Grid.RowDefinitions>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*" />
-												<ColumnDefinition Width="5*" />
-												<ColumnDefinition Width="0.7*" />
-												<ColumnDefinition Width="0.5*" />
-											</Grid.ColumnDefinitions>
-											<StackPanel Orientation="Vertical"
-														Grid.RowSpan="4"
-														Margin="5">
-												<TextBlock Text="{Binding Name}"
-														   FontWeight="Bold"
-														   FontSize="15"
-														   Foreground="White"
-														   Margin="5,0" />
-												<TextBlock Text="{Binding Description}"
-														   Margin="5,0"
-														   Foreground="#FF727679" />
+
+			<Grid Grid.Column="1"
+				  Grid.Row="1"
+				  Background="#FF262626">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<StackPanel Orientation="Horizontal">
+					<wg:IconToggle x:Name="AddFilePakToWorkManager"
+								   IsEllipse="True"
+								   StrokeThickness="3"
+								   IsEnableToggleClick="False"
+								   Margin="10,0,0,0"
+								   Click="OnButtonClick"
+								   Style="{StaticResource IconToogleStyle2}"
+								   IconRatio="0.5"
+								   Width="25"
+								   Height="25"
+								   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
+								   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
+								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}" />
+					<Label Content="Thêm file pak"
+						   Foreground="White"
+						   FontFamily="Calibri"
+						   FontSize="20"
+						   VerticalAlignment="Center" />
+				</StackPanel>
+				<ListBox Grid.Row="1"
+						 Margin="15,0"
+						 Background="Transparent"
+						 BorderThickness="0"
+						 VirtualizingStackPanel.IsVirtualizing="True"
+						 VirtualizingStackPanel.VirtualizationMode="Recycling"
+						 ScrollViewer.CanContentScroll="True">
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="ListBoxItem">
+										<Border BorderThickness="0"
+												Background="#FF2E2E2E"
+												CornerRadius="5"
+												Height="60"
+												Margin="0,0,0,5">
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="*" />
+													<RowDefinition Height="3*" />
+													<RowDefinition Height="1.2*" />
+													<RowDefinition Height="0.5*" />
+												</Grid.RowDefinitions>
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="*" />
+													<ColumnDefinition Width="5*" />
+													<ColumnDefinition Width="0.7*" />
+													<ColumnDefinition Width="0.5*" />
+												</Grid.ColumnDefinitions>
+												<StackPanel Orientation="Vertical"
+															Grid.RowSpan="4"
+															Margin="5">
+													<TextBlock Text="{Binding Name}"
+															   FontWeight="Bold"
+															   FontSize="15"
+															   Foreground="White"
+															   Margin="5,0" />
+													<TextBlock Text="{Binding Description}"
+															   Margin="5,0"
+															   Foreground="#FF727679" />
+												</StackPanel>
+
+												<ProgressBar Height="8"
+															 Grid.Column="1"
+															 Grid.ColumnSpan="2"
+															 BorderThickness="0"
+															 Background="#FF424242"
+															 Foreground="#FF4FE79A"
+															 Value="30"
+															 Grid.Row="2" />
+
+												<wg:IconToggle x:Name="AddFilePakToWorkManager"
+															   Grid.Row="1"
+															   Grid.Column="2"
+															   IsEllipse="True"
+															   StrokeThickness="2"
+															   IsEnableToggleClick="False"
+															   Margin="10,0,0,0"
+															   Click="OnButtonClick"
+															   Style="{StaticResource IconToogleStyle2}"
+															   IconRatio="0.4"
+															   Width="20"
+															   Height="20"
+															   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
+															   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
+															   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}" />
+
+											</Grid>
+
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</ListBox.ItemContainerStyle>
+
+					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
+					<ListBoxItem>
+						<ListBoxItem.DataContext>
+							<local:Item Name="Item 1"
+										Description="8GB" />
+						</ListBoxItem.DataContext>
+					</ListBoxItem>
+					<ListBoxItem>
+						<ListBoxItem.DataContext>
+							<local:Item Name="Item 2"
+										Description="4GB" />
+						</ListBoxItem.DataContext>
+					</ListBoxItem>
+				</ListBox>
+			</Grid>
+
+			<Grid Grid.Row="1"
+				  Grid.Column="3"
+				  Background="#FF2E2E2E">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1.5*" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+
+				<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
+								 Margin="10,40"
+								 ToolBoxIconSize="40"
+								 ToolBoxWidth="60"
+								 Padding="10"
+								 Background="#FF151515"
+								 ToolBoxBorderBrush="#FF151515"
+								 ToolBoxBackground="#FF151515"
+								 ToolBoxIconFill="#FF262626"
+								 ToolBoxIconStroke="White"
+								 UseFitToScreenFunction="True"
+								 UseLayoutBoundFunction="False"
+								 UseTransparenDecodedFrameBackgroundFunction="False"
+								 UseTransparentBackgroundFunction="False">
+
+				</wg:BitmapViewer>
+
+				<StackPanel Grid.Row="1"
+							Margin="10,0">
+					<Label Content="Chi tiết khối"
+						   Foreground="White"
+						   FontWeight="Bold"
+						   FontSize="18" />
+					<TextBlock Margin="25,10,0,0">
+				<Run Text="Kích thước:"
+						Foreground="White"
+						FontSize="16" />
+					</TextBlock>
+					<TextBlock Margin="25,5,0,0">
+				<Run Text="Định dạng:"
+						Foreground="White"
+						FontSize="16" />
+					</TextBlock>
+
+					<Button Margin="25,30,250,0"
+							Height="40"
+							BorderThickness="0"
+							Background="#FF55646F"
+							Content="Xuất file"
+							Foreground="White"
+							FontSize="18">
+
+					</Button>
+				</StackPanel>
+			</Grid>
+
+			<Grid Grid.Column="5"
+				  Grid.Row="1"
+				  Background="#FF262626">
+				<ListBox Margin="15,0"
+						 Background="Transparent"
+						 BorderThickness="0"
+						 VirtualizingStackPanel.IsVirtualizing="True"
+						 VirtualizingStackPanel.VirtualizationMode="Recycling"
+						 ScrollViewer.CanContentScroll="True">
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="ListBoxItem">
+										<Border BorderThickness="0,0,0,2"
+												BorderBrush="#FF353535"
+												Background="#FF262626"
+												Height="60"
+												Margin="0,20,0,0">
+											<StackPanel Orientation="Vertical">
+												<TextBlock>
+											<Run Text="Tên khối:"
+													Foreground="White"
+													FontWeight="Bold"
+													FontSize="16" />
+												</TextBlock>
+												<TextBlock>
+											<Run Text="Định dạng:"
+													Foreground="#FF7B8797"
+													FontSize="12" />
+												</TextBlock>
+												<TextBlock>
+											<Run Text="Kích thước:"
+													Foreground="#FF7B8797"
+													FontSize="12" />
+												</TextBlock>
 											</StackPanel>
 
-											<ProgressBar Height="8"
-														 Grid.Column="1"
-														 Grid.ColumnSpan="2"
-														 BorderThickness="0"
-														 Background="#FF424242"
-														 Foreground="#FF4FE79A"
-														 Value="30"
-														 Grid.Row="2" />
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</ListBox.ItemContainerStyle>
 
-											<wg:IconToggle x:Name="AddFilePakToWorkManager"
-														   Grid.Row="1"
-														   Grid.Column="2"
-														   IsEllipse="True"
-														   StrokeThickness="2"
-														   IsEnableToggleClick="False"
-														   Margin="10,0,0,0"
-														   Click="OnButtonClick"
-														   Style="{StaticResource IconToogleStyle2}"
-														   IconRatio="0.4"
-														   Width="20"
-														   Height="20"
-														   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-														   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-														   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}" />
-
-										</Grid>
-
-									</Border>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</ListBox.ItemContainerStyle>
-
-				<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-				<ListBoxItem>
-					<ListBoxItem.DataContext>
-						<local:Item Name="Item 1"
-									Description="8GB" />
-					</ListBoxItem.DataContext>
-				</ListBoxItem>
-				<ListBoxItem>
-					<ListBoxItem.DataContext>
-						<local:Item Name="Item 2"
-									Description="4GB" />
-					</ListBoxItem.DataContext>
-				</ListBoxItem>
-			</ListBox>
-		</Grid>
-
-		<Grid Grid.Row="1"
-			  Grid.Column="3"
-			  Background="#FF2E2E2E">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="1.5*" />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-
-			<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
-							 Margin="10,40"
-							 ToolBoxIconSize="40"
-							 ToolBoxWidth="60"
-							 Padding="10"
-							 Background="#FF151515"
-							 ToolBoxBorderBrush="#FF151515"
-							 ToolBoxBackground="#FF151515"
-							 ToolBoxIconFill="#FF262626"
-							 ToolBoxIconStroke="White"
-							 UseFitToScreenFunction="True"
-							 UseLayoutBoundFunction="False"
-							 UseTransparenDecodedFrameBackgroundFunction="False"
-							 UseTransparentBackgroundFunction="False">
-
-			</wg:BitmapViewer>
-
-			<StackPanel Grid.Row="1"
-						Margin="10,0">
-				<Label Content="Chi tiết khối"
-					   Foreground="White"
-					   FontWeight="Bold"
-					   FontSize="18" />
-				<TextBlock Margin="25,10,0,0">
-					<Run Text="Kích thước:"
-						 Foreground="White"
-						 FontSize="16" />
-				</TextBlock>
-				<TextBlock Margin="25,5,0,0">
-					<Run Text="Định dạng:"
-						 Foreground="White"
-						 FontSize="16" />
-				</TextBlock>
-
-				<Button Margin="25,30,250,0"
-						Height="40"
-						BorderThickness="0"
-						Background="#FF55646F"
-						Content="Xuất file"
-						Foreground="White"
-						FontSize="18">
-
-				</Button>
-			</StackPanel>
-		</Grid>
-
-		<Grid Grid.Column="5"
-			  Grid.Row="1"
-			  Background="#FF262626">
-			<ListBox Margin="15,0"
-					 Background="Transparent"
-					 BorderThickness="0"
-					 VirtualizingStackPanel.IsVirtualizing="True"
-					 VirtualizingStackPanel.VirtualizationMode="Recycling"
-					 ScrollViewer.CanContentScroll="True">
-				<ListBox.ItemContainerStyle>
-					<Style TargetType="ListBoxItem">
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="ListBoxItem">
-									<Border BorderThickness="0,0,0,2"
-											BorderBrush="#FF353535"
-											Background="#FF262626"
-											Height="60"
-											Margin="0,20,0,0">
-										<StackPanel Orientation="Vertical">
-											<TextBlock>
-												<Run Text="Tên khối:"
-													 Foreground="White"
-													 FontWeight="Bold"
-													 FontSize="16"/>
-											</TextBlock>
-											<TextBlock>
-												<Run Text="Định dạng:"
-													 Foreground="#FF7B8797"
-													 FontSize="12"/>
-											</TextBlock>
-											<TextBlock>
-												<Run Text="Kích thước:"
-												Foreground="#FF7B8797"
-												FontSize="12" />
-											</TextBlock>
-										</StackPanel>
-
-									</Border>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</ListBox.ItemContainerStyle>
-
-				<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-				<ListBoxItem>
-					<ListBoxItem.DataContext>
-						<local:Item Name="Item 1"
-									Description="8GB" />
-					</ListBoxItem.DataContext>
-				</ListBoxItem>
-				<ListBoxItem>
-					<ListBoxItem.DataContext>
-						<local:Item Name="Item 2"
-									Description="4GB" />
-					</ListBoxItem.DataContext>
-				</ListBoxItem>
-			</ListBox>
+					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
+					<ListBoxItem>
+						<ListBoxItem.DataContext>
+							<local:Item Name="Item 1"
+										Description="8GB" />
+						</ListBoxItem.DataContext>
+					</ListBoxItem>
+					<ListBoxItem>
+						<ListBoxItem.DataContext>
+							<local:Item Name="Item 2"
+										Description="4GB" />
+						</ListBoxItem.DataContext>
+					</ListBoxItem>
+				</ListBox>
+			</Grid>
 		</Grid>
 	</Grid>
+
 </base:BasePageViewer>

@@ -42,5 +42,46 @@ namespace ArtWiz.Utils
 
             return true;
         }
+
+        public static bool IsValid(this CornerRadius cornerRadius, bool allowNegative, bool allowNaN, bool allowPositiveInfinity, bool allowNegativeInfinity)
+        {
+            if (!allowNegative)
+            {
+                if (cornerRadius.TopLeft < 0d || cornerRadius.TopRight < 0d || cornerRadius.BottomLeft < 0d || cornerRadius.BottomRight < 0d)
+                {
+                    return (false);
+                }
+            }
+
+            if (!allowNaN)
+            {
+                if (double.IsNaN(cornerRadius.TopLeft) || double.IsNaN(cornerRadius.TopRight)
+                    || double.IsNaN(cornerRadius.BottomLeft)
+                    || double.IsNaN(cornerRadius.BottomRight))
+                {
+                    return (false);
+                }
+            }
+
+            if (!allowPositiveInfinity)
+            {
+                if (Double.IsPositiveInfinity(cornerRadius.TopLeft) || Double.IsPositiveInfinity(cornerRadius.TopRight) ||
+                    Double.IsPositiveInfinity(cornerRadius.BottomLeft) || Double.IsPositiveInfinity(cornerRadius.BottomRight))
+                {
+                    return (false);
+                }
+            }
+
+            if (!allowNegativeInfinity)
+            {
+                if (Double.IsNegativeInfinity(cornerRadius.TopLeft) || Double.IsNegativeInfinity(cornerRadius.TopRight) ||
+                    Double.IsNegativeInfinity(cornerRadius.BottomLeft) || Double.IsNegativeInfinity(cornerRadius.BottomRight))
+                {
+                    return (false);
+                }
+            }
+
+            return (true);
+        }
     }
 }

@@ -20,7 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
-		<WizMachineVersion>1.0.3.1</WizMachineVersion>
+		<WizMachineVersion>1.0.11</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -196,7 +196,7 @@
 
 
 	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
-		<PackageReference Include="WizMachinex64-Debug" Version="$(WizMachineVersion)" />
+		<PackageReference Include="WizMachinex64-Debug" Version="1.0.11" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' != 'Debug'">
 		<PackageReference Include="WizMachinex64" Version="$(WizMachineVersion)" />
@@ -210,7 +210,6 @@
 
 	<Target Name="CopyDebugFiles" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
 		<ItemGroup>
-			<!-- Thêm các file cần copy từ thư mục NuGet -->
 			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.pdb" Condition="'$(Platform)' == 'x64'" />
 			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.exp" Condition="'$(Platform)' == 'x64'" />
 			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x64'" />
@@ -220,7 +219,6 @@
 			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x86'" />
 		</ItemGroup>
 
-		<!-- Copy các file debug vào output folder -->
 		<Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(OutDir)">
 			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
 		</Copy>
@@ -233,6 +231,11 @@
 		<None Include="..\local.xml" />
 		<None Include="..\.github\**" />
 	</ItemGroup>
+	<!--<ItemGroup>
+	  <Reference Include="wengine">
+	    <HintPath>D:\Workspace\Temp\WizMachine\WizMachine\bin\x64\Release\net6.0-windows\wengine.dll</HintPath>
+	  </Reference>
+	</ItemGroup>-->
 
 	<!--<ItemGroup>
 	  <Reference Include="wengine">

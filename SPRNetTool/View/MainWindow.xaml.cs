@@ -78,14 +78,27 @@ namespace ArtWiz.View
             if (sender == _devModeMenuItem)
             {
                 SetPageContent(debugPage ?? new DebugPage((IWindowViewer)this).Also((it) => debugPage = it));
+                _windowTitleBar?.IfIs<WindowTitleBar>(it =>
+                {
+                    it.CustomHeaderView = null;
+                });
             }
             else if (sender == _sprWorkSpaceItem)
             {
                 SetPageContent(sprEditorPage ?? new SprEditorPage((IWindowViewer)this).Also((it) => sprEditorPage = it));
+                _windowTitleBar?.IfIs<WindowTitleBar>(it =>
+                {
+                    it.CustomHeaderView = null;
+                });
             }
             else if (sender == _pakWorkSpaceItem)
             {
                 SetPageContent(pakEditorPage ?? new PakEditorPage((IWindowViewer)this).Also((it) => pakEditorPage = it));
+
+                _windowTitleBar?.IfIs<WindowTitleBar>(it =>
+                {
+                    //it.CustomHeaderView = pakEditorPage!.PageHeader.CustomHeaderView;
+                });
             }
         }
 

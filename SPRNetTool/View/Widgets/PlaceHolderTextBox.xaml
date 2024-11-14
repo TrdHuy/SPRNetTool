@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="ArtWiz.View.Widgets.PlaceHolderTextBox"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 mc:Ignorable="d"
+			 d:DesignHeight="40"
+			 d:DesignWidth="300"
+			 xmlns:def="clr-namespace:ArtWiz"
+			 x:Name="MainContainer"
+			 Background="Transparent"
+			 IsHitTestVisible="True"
+			 PreviewMouseDown="MainContainer_PreviewMouseDown">
+	<Grid IsHitTestVisible="False">
+
+		<!-- Placeholder -->
+		<TextBlock x:Name="PlaceholderText"
+				   Text="{Binding Placeholder, ElementName=MainContainer}"
+				   Foreground="{Binding PlaceholderForeground, ElementName=MainContainer}"
+				   IsHitTestVisible="False"
+				   VerticalAlignment="Center"
+				   Margin="5,0,5,0"
+				   Visibility="{Binding Text, ElementName=MainContainer, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}" />
+
+		<!-- Border for TextBox -->
+		<Border BorderBrush="{Binding ElementName=MainContainer, Path=BorderBrush}"
+				IsHitTestVisible="False"
+				BorderThickness="{Binding ElementName=MainContainer, Path=BorderThickness}"
+				CornerRadius="{Binding ElementName=MainContainer, Path=CornerRadius}" />
+		<TextBox x:Name="TextInput"
+				 IsHitTestVisible="False"
+				 Text="{Binding Text, ElementName=MainContainer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				 Background="Transparent"
+				 Foreground="White"
+				 BorderThickness="0"
+				 VerticalAlignment="Center"
+				 Margin="5,0,5,0"
+				 CaretBrush="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+				 VerticalContentAlignment="Center"
+				 Padding="5" />
+	</Grid>
+</UserControl>
