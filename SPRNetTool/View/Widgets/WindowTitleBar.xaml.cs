@@ -24,22 +24,9 @@ namespace ArtWiz.View.Widgets
 
         private static void OnCustomHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            d.IfIs<WindowTitleBar>(it =>
-            {
-                if (e.NewValue != null)
-                {
-                    it.MainMenu.Visibility = Visibility.Collapsed;
-                    it.CustomHeaderContainer.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    it.MainMenu.Visibility = Visibility.Visible;
-                    it.CustomHeaderContainer.Visibility = Visibility.Collapsed;
-                }
-            });
         }
 
-        public object CustomHeaderView
+        public object? CustomHeaderView
         {
             get { return GetValue(CustomHeaderViewProperty); }
             set { SetValue(CustomHeaderViewProperty, value); }

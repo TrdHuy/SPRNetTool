@@ -102,70 +102,37 @@
 			</Setter>
 		</Style>
 	</UserControl.Resources>
-	<Grid>
+	<Grid x:Name="PagePanelWithHeader">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="100" />
-			<RowDefinition />
+			<RowDefinition Height="90"
+						   x:Name="HeaderRowDef" />
+			<RowDefinition x:Name="ConentRowDef" />
 		</Grid.RowDefinitions>
-		<wg:WindowTitleBar x:Name="PageHeader">
-			<wg:WindowTitleBar.CustomHeaderView>
-				<Border Background="Transparent">
-					<StackPanel Orientation="Horizontal">
-						<Menu Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
-							  Panel.ZIndex="1"
-							  VerticalAlignment="Center"
-							  Margin="40,0,0,0"
-							  VerticalContentAlignment="Center">
-							<MenuItem Header="Trang chủ"
-									  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
-								<MenuItem Header="Developer mode"
-										  Visibility="Collapsed">
-									<MenuItem.Icon>
-										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-											  Stretch="Uniform"
-											  Width="16"
-											  Height="16"
-											  Data="{StaticResource ResourceKey={x:Static def:Definitions.DeveloperModeIconGeometry}}" />
-									</MenuItem.Icon>
-								</MenuItem>
-								<MenuItem Header="Spr work space">
-									<MenuItem.Icon>
-										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-											  Stretch="Uniform"
-											  Width="16"
-											  Height="16"
-											  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
-									</MenuItem.Icon>
-								</MenuItem>
-								<MenuItem Header="Pak work space">
-									<MenuItem.Icon>
-										<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-											  Stretch="Uniform"
-											  Width="16"
-											  Height="16"
-											  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
-									</MenuItem.Icon>
-								</MenuItem>
-							</MenuItem>
-							<MenuItem Header="Công cụ"
-									  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}" />
-						</Menu>
+		<StackPanel Orientation="Horizontal">
+			<Menu Panel.ZIndex="1"
+				  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
+				  x:Name="ExtraMenu"
+				  VerticalAlignment="Center"
+				  VerticalContentAlignment="Center">
+				<MenuItem Header="Công cụ"
+						  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
+				</MenuItem>
+			</Menu>
+			<Grid x:Name="CustomHeaderViewPanel"
+				  Width="700"
+				  Margin="30,0,0,0"
+				  VerticalAlignment="Center">
+				<wg:PlaceHolderTextBox Placeholder="Tìm theo đường dẫn..."
+									   Height="50"
+									   FontSize="16"
+									   PlaceholderForeground="#FF7D8184"
+									   BorderBrush="#FF7D8184"
+									   BorderThickness="1"
+									   FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}" />
+			</Grid>
 
-						<wg:PlaceHolderTextBox Placeholder="Tìm theo đường dẫn..."
-											   Margin="60,0,0,0"
-											   Width="700"
-											   Height="50"
-											   FontSize="16"
-											   PlaceholderForeground="#FF7D8184"
-											   VerticalAlignment="Center"
-											   BorderBrush="#FF7D8184"
-											   BorderThickness="1"
-											   FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"/>
-					</StackPanel>
-					
-				</Border>
-			</wg:WindowTitleBar.CustomHeaderView>
-		</wg:WindowTitleBar>
+		</StackPanel>
+
 		<Grid Grid.Row="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="0" />

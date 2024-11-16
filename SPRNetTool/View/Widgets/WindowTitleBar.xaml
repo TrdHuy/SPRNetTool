@@ -5,7 +5,9 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:ArtWiz.View.Widgets"
 			 xmlns:def="clr-namespace:ArtWiz"
+			 xmlns:vutil="clr-namespace:ArtWiz.View.Utils"
 			 xmlns:bview="clr-namespace:ArtWiz.View.Base"
+			 Focusable="True"
 			 mc:Ignorable="d"
 			 d:DesignHeight="{Binding ElementName=WindowBarContainer,Path=WindowBarHeight, FallbackValue=90}"
 			 d:DesignWidth="800"
@@ -265,58 +267,64 @@
 						   Foreground="White"
 						   VerticalAlignment="Center"
 						   Margin="5,0" />
-				<Grid x:Name="MainHeaderContainer">
-					<Menu x:Name="MainMenu"
-						  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
-						  Panel.ZIndex="1"
-						  VerticalAlignment="Center"
-						  Margin="40,0,0,0"
-						  VerticalContentAlignment="Center">
-						<MenuItem Header="Trang chủ"
-								  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
-							<MenuItem Header="Developer mode"
-									  Visibility="Collapsed"
-									  x:Name="DeveloperModeMenu">
-								<MenuItem.Icon>
-									<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-										  Stretch="Uniform"
-										  Width="16"
-										  Height="16"
-										  Data="{StaticResource ResourceKey={x:Static def:Definitions.DeveloperModeIconGeometry}}" />
-								</MenuItem.Icon>
-							</MenuItem>
-							<MenuItem Header="Spr work space"
-									  x:Name="SprWorkSpceMenu">
-								<MenuItem.Icon>
-									<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-										  Stretch="Uniform"
-										  Width="16"
-										  Height="16"
-										  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
-								</MenuItem.Icon>
-							</MenuItem>
-							<MenuItem Header="Pak work space"
-									  x:Name="PakWorkSpaceMenu">
-								<MenuItem.Icon>
-									<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-										  Stretch="Uniform"
-										  Width="16"
-										  Height="16"
-										  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
-								</MenuItem.Icon>
-							</MenuItem>
+				<Menu x:Name="MainMenu"
+					  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
+					  Panel.ZIndex="1"
+					  VerticalAlignment="Center"
+					  Margin="40,0,0,0"
+					  VerticalContentAlignment="Center">
+					<MenuItem Header="Trang chủ"
+							  Tag="{x:Static vutil:AppMenuTag.HomeMenu}"
+							  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
+						<MenuItem Header="Developer mode"
+								  Tag="{x:Static vutil:AppMenuTag.DevPageMenu}"
+								  Visibility="Collapsed"
+								  x:Name="DeveloperModeMenu">
+							<MenuItem.Icon>
+								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+									  Stretch="Uniform"
+									  Width="16"
+									  Height="16"
+									  Data="{StaticResource ResourceKey={x:Static def:Definitions.DeveloperModeIconGeometry}}" />
+							</MenuItem.Icon>
 						</MenuItem>
-						<MenuItem Header="Hỗ trợ"
-								  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}" />
-					</Menu>
+						<MenuItem Header="Spr work space"
+								  Tag="{x:Static vutil:AppMenuTag.SprEditorPageMenu}"
+								  x:Name="SprWorkSpceMenu">
+							<MenuItem.Icon>
+								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+									  Stretch="Uniform"
+									  Width="16"
+									  Height="16"
+									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Pak work space"
+								  Tag="{x:Static vutil:AppMenuTag.PakEditorPageMenu}"
+								  x:Name="PakWorkSpaceMenu">
+							<MenuItem.Icon>
+								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+									  Stretch="Uniform"
+									  Width="16"
+									  Height="16"
+									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Hỗ trợ"
+							  Tag="{x:Static vutil:AppMenuTag.SupportMenu}"
+							  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}" />
+				</Menu>
 
-					
+
+				<Grid x:Name="MainHeaderContainer">
 					<ContentControl Grid.Column="1"
 									Grid.Row="1"
 									x:Name="CustomHeaderContainer"
 									Content="{Binding ElementName=WindowBarContainer, Path=CustomHeaderView}" />
 
 				</Grid>
+
 			</StackPanel>
 
 

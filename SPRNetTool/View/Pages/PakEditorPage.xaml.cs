@@ -1,20 +1,9 @@
-﻿using Microsoft.Win32;
-using ArtWiz.Utils;
-using ArtWiz.View.Base;
-using ArtWiz.View.Widgets;
-using ArtWiz.ViewModel;
-using ArtWiz.ViewModel.CommandVM;
-using System;
+﻿using ArtWiz.View.Base;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using static ArtWiz.View.InputWindow;
-using static ArtWiz.View.Widgets.PaletteEditor;
-using System.ComponentModel.Design;
+using System.Windows.Controls;
+using ArtWiz.View.Utils;
 
 namespace ArtWiz.View.Pages
 {
@@ -44,6 +33,30 @@ namespace ArtWiz.View.Pages
             };
 
             // Gán danh sách vào ItemsSource của ListBox
+        }
+        public override object? CustomHeaderView => CustomHeaderViewPanel;
+
+        public override bool ProcessMenuItem(PreProcessMenuItemInfo menuItem)
+        {
+            base.ProcessMenuItem(menuItem);
+            switch (menuItem.MenuTag)
+            {
+                case AppMenuTag.HomeMenu:
+                    {
+                        break;
+                    }
+                case AppMenuTag.SupportMenu:
+                    {
+                        menuItem.Visibility = Visibility.Collapsed;
+                        return true;
+                    }
+            }
+            return false;
+        }
+        public override RowDefinition? HeaderRow => HeaderRowDef;
+        public override Menu? GetExtraMenuForPage()
+        {
+            return ExtraMenu;
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)

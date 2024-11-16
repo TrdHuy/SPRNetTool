@@ -9,9 +9,8 @@
 			 xmlns:def="clr-namespace:ArtWiz"
 			 x:Name="MainContainer"
 			 Background="Transparent"
-			 IsHitTestVisible="True"
-			 PreviewMouseDown="MainContainer_PreviewMouseDown">
-	<Grid IsHitTestVisible="False">
+			 IsHitTestVisible="True">
+	<Grid>
 
 		<!-- Placeholder -->
 		<TextBlock x:Name="PlaceholderText"
@@ -22,19 +21,13 @@
 				   Margin="5,0,5,0"
 				   Visibility="{Binding Text, ElementName=MainContainer, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}" />
 
-		<!-- Border for TextBox -->
-		<Border BorderBrush="{Binding ElementName=MainContainer, Path=BorderBrush}"
-				IsHitTestVisible="False"
-				BorderThickness="{Binding ElementName=MainContainer, Path=BorderThickness}"
-				CornerRadius="{Binding ElementName=MainContainer, Path=CornerRadius}" />
 		<TextBox x:Name="TextInput"
-				 IsHitTestVisible="False"
 				 Text="{Binding Text, ElementName=MainContainer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 				 Background="Transparent"
 				 Foreground="White"
 				 BorderThickness="0"
 				 VerticalAlignment="Center"
-				 Margin="5,0,5,0"
+				 Margin="0,0,5,0"
 				 CaretBrush="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
 				 VerticalContentAlignment="Center"
 				 Padding="5" />

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -192,8 +192,21 @@ namespace ArtWiz.View.Base
                  IntPtr lParam,
                  ref bool handled)
             {
+                const int WM_NCHITTEST = 0x0084;
+                const int HTCLIENT = 1;
                 switch (msg)
                 {
+                    case WM_NCHITTEST:
+                        {
+                            var mousePositionFromScreen = _cyberWindow.PointFromScreen(new Point((lParam.ToInt32() & 0xFFFF), (lParam.ToInt32() >> 16)));
+                            Debug.WriteLine(mousePositionFromScreen);
+                            if (_cyberWindow.ProcessHitTest(mousePositionFromScreen))
+                            {
+                                handled = true;
+                                return new IntPtr(HTCLIENT);
+                            }
+                            break;
+                        }
                     case WM_DPICHANGED:
                         {
                             //TODO: Implement DPI change
@@ -382,6 +395,43 @@ namespace ArtWiz.View.Base
                 var dpi = NativeMethods.GetDeviceCaps();
                 return pixel * 96 / dpi.Y;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the specified mouse position falls within the client area or the non-client area of the window.
+        /// </summary>
+        /// <param name="mousePositionFromScreen">
+        /// The mouse position in screen coordinates. This should be converted using PointFromScreen 
+        /// to map the position relative to the window.
+        /// </param>
+        /// <returns>
+        /// A boolean value indicating whether the mouse position is within the client area or not:
+        /// <list type="bullet">
+        /// <item><c>true</c>: The mouse position is within the client area.</item>
+        /// <item><c>false</c>: The mouse position is within the non-client area.</item>
+        /// </list>
+        /// </returns>
+        /// <remarks>
+        /// This method is designed to be overridden in derived classes to provide custom hit test logic for specific UI elements 
+        /// or window regions. By default, it returns <c>false</c>, treating all positions as part of the non-client area.
+        /// </remarks>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// protected override bool ProcessHitTest(Point mousePositionFromScreen)
+        /// {
+        ///     // Custom logic to determine client area
+        ///     if (IsMouseOverCustomControl(mousePositionFromScreen))
+        ///     {
+        ///         return true; // Client area
+        ///     }
+        ///     return false; // Non-client area
+        /// }
+        /// </code>
+        /// </example>
+        protected virtual bool ProcessHitTest(Point mousePositionFromScreen)
+        {
+            return false;
         }
 
         private void UpdateWindowShadowEffect(int shadowDef)

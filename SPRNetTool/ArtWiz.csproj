@@ -20,7 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
-		<WizMachineVersion>1.0.11</WizMachineVersion>
+		<WizMachineVersion>1.0.12.1</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -231,18 +231,6 @@
 		<None Include="..\local.xml" />
 		<None Include="..\.github\**" />
 	</ItemGroup>
-	<!--<ItemGroup>
-	  <Reference Include="wengine">
-	    <HintPath>D:\Workspace\Temp\WizMachine\WizMachine\bin\x64\Release\net6.0-windows\wengine.dll</HintPath>
-	  </Reference>
-	</ItemGroup>-->
-
-	<!--<ItemGroup>
-	  <Reference Include="wengine">
-	    <HintPath>..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\wengine.dll</HintPath>
-	  </Reference>
-	</ItemGroup>-->
-
 
 	<!--START: Application Signing Stuff-->
 	<PropertyGroup>
