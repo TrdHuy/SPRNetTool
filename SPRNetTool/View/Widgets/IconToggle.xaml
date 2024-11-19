@@ -24,9 +24,9 @@
 
 				<Ellipse Fill="#00FFFFFF"
 						 x:Name="Ellipse"
-						 Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"/>
+						 Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}" />
 			</Grid>
-			
+
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver"
 						 Value="true">
@@ -105,7 +105,8 @@
 					</Path.Style>
 				</Path>
 
-				<Path Fill="{Binding ElementName=IconToggleContainer, Path=Stroke, FallbackValue=Aqua}"
+				<Path x:Name="IsCheckedIcon"
+					  Fill="{Binding ElementName=IconToggleContainer, Path=Stroke, FallbackValue=Aqua}"
 					  Stretch="Uniform"
 					  IsHitTestVisible="False"
 					  Data="{Binding ElementName=IconToggleContainer, Path=OffIconData, FallbackValue='m 87.469708,-212.21443 c -1.11978,-0.61247 -1.19063,-0.94468 -1.19063,-5.58327 0,-2.45561 0.11452,-4.67871 0.25448,-4.94023 0.34873,-0.65162 1.70883,-1.17308 2.52524,-0.96817 1.42681,0.3581 1.7182,0.98657 1.7182,3.70577 0,1.37054 0.0723,2.68023 0.1606,2.91041 0.13076,0.34075 0.62486,0.41852 2.65897,0.41852 3.43382,0 4.32418,0.4903 4.32418,2.38125 0,2.08119 -0.74796,2.38339 -5.87384,2.3732 -2.41576,-0.005 -4.26141,-0.12475 -4.5772,-0.29748 z m 21.431252,0 c -0.83237,-0.45527 -1.19063,-1.04874 -1.19063,-1.97236 0,-2.0046 0.83541,-2.48461 4.32418,-2.48461 2.03412,0 2.52822,-0.0778 2.65897,-0.41852 0.0883,-0.23018 0.1606,-1.48816 0.1606,-2.79552 0,-2.6913 0.17866,-3.19116 1.30767,-3.65881 0.94572,-0.39173 1.94484,-0.1934 2.66782,0.52958 0.47901,0.47902 0.52243,0.89443 0.52243,4.99871 0,2.46195 -0.074,4.66901 -0.16435,4.90458 -0.37049,0.96548 -1.50486,1.20279 -5.70949,1.19443 -2.41576,-0.005 -4.26141,-0.12475 -4.5772,-0.29748 z m -21.431252,-21.43125 c -1.11869,-0.61187 -1.19063,-0.94684 -1.19063,-5.54424 0,-2.43414 0.074,-4.61844 0.16436,-4.854 0.3683,-0.95979 1.50993,-1.20248 5.65648,-1.20248 5.06806,0 5.82083,0.30795 5.82083,2.38125 0,1.89094 -0.89036,2.38125 -4.32418,2.38125 -2.03411,0 -2.52821,0.0778 -2.65897,0.41851 -0.0883,0.23018 -0.1606,1.4706 -0.1606,2.75649 0,2.76343 -0.093,3.07269 -1.07726,3.58166 -0.88206,0.45613 -1.50364,0.47887 -2.23003,0.0816 z m 28.575002,0 c -1.02737,-0.56192 -1.19063,-1.05005 -1.19063,-3.55986 0,-1.34273 -0.0723,-2.62967 -0.1606,-2.85985 -0.13075,-0.34074 -0.62485,-0.41851 -2.65897,-0.41851 -3.43382,0 -4.32418,-0.49031 -4.32418,-2.38125 0,-2.0733 0.75278,-2.38125 5.82084,-2.38125 4.14655,0 5.28817,0.24269 5.65648,1.20248 0.21419,0.55817 0.21419,8.94312 0,9.50129 -0.19251,0.50167 -1.45301,1.206 -2.13761,1.19443 -0.26189,-0.004 -0.71429,-0.13829 -1.00533,-0.29748 z'}">
@@ -151,10 +152,6 @@
 							  Click="ToggleButton_Click"
 							  Background="Transparent" />
 
-				<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-								  IsHitTestVisible="False"
-								  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-								  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 			</Grid>
 		</ControlTemplate>
 	</UserControl.Resources>

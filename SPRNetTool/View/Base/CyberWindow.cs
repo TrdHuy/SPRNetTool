@@ -198,8 +198,23 @@ namespace ArtWiz.View.Base
                 {
                     case WM_NCHITTEST:
                         {
-                            var mousePositionFromScreen = _cyberWindow.PointFromScreen(new Point((lParam.ToInt32() & 0xFFFF), (lParam.ToInt32() >> 16)));
-                            Debug.WriteLine(mousePositionFromScreen);
+                            // Lấy tọa độ X từ lParam
+                            // lParam chứa hai giá trị: Low-order word (tọa độ X) và High-order word (tọa độ Y).
+                            // Lấy 16-bit thấp (Low-order word) bằng cách AND với 0xFFFF.
+                            // Sau đó, chuyển đổi kết quả từ unsigned 16-bit sang signed 16-bit bằng cách ép kiểu (short).
+                            // Điều này là cần thiết vì tọa độ trên màn hình có thể là số âm (ví dụ: màn hình bên trái màn hình chính có X < 0).
+                            int x = (short)(lParam.ToInt32() & 0xFFFF);
+
+                            // Lấy tọa độ Y từ lParam
+                            // Dịch bit của lParam sang phải 16 bit để lấy High-order word (tọa độ Y).
+                            // Sau đó, AND với 0xFFFF để lấy 16-bit cao.
+                            // Tương tự như X, chuyển đổi giá trị từ unsigned 16-bit sang signed 16-bit bằng cách ép kiểu (short).
+                            // Điều này đảm bảo rằng tọa độ Y âm (nếu màn hình ở bên trên màn hình chính) được xử lý chính xác.
+                            int y = (short)((lParam.ToInt32() >> 16) & 0xFFFF);
+
+                            // Chuyển đổi từ tọa độ màn hình sang tọa độ cửa sổ
+                            var mousePositionFromScreen = _cyberWindow.PointFromScreen(new Point(x, y));
+                            //Debug.WriteLine(mousePositionFromScreen);
                             if (_cyberWindow.ProcessHitTest(mousePositionFromScreen))
                             {
                                 handled = true;

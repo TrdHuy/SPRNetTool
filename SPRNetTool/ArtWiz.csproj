@@ -196,7 +196,7 @@
 
 
 	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
-		<PackageReference Include="WizMachinex64-Debug" Version="1.0.11" />
+		<PackageReference Include="WizMachinex64-Debug" Version="$(WizMachineVersion)" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' != 'Debug'">
 		<PackageReference Include="WizMachinex64" Version="$(WizMachineVersion)" />

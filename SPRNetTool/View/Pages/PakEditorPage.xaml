@@ -17,7 +17,7 @@
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
 
 	<UserControl.DataContext>
-		<vm:DebugPageViewModel />
+		<vm:PakPageViewModel />
 	</UserControl.DataContext>
 
 	<UserControl.Resources>
@@ -158,6 +158,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel Orientation="Horizontal">
 					<wg:IconToggle x:Name="AddFilePakToWorkManager"
+								   Tag="{x:Static local:PakEditorPageId.AddFilePak}"
 								   IsEllipse="True"
 								   StrokeThickness="3"
 								   IsEnableToggleClick="False"
@@ -180,6 +181,7 @@
 						 Margin="15,0"
 						 Background="Transparent"
 						 BorderThickness="0"
+						 ItemsSource="{Binding PakFiles}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
 						 ScrollViewer.CanContentScroll="True">
@@ -209,12 +211,12 @@
 												<StackPanel Orientation="Vertical"
 															Grid.RowSpan="4"
 															Margin="5">
-													<TextBlock Text="{Binding Name}"
+													<TextBlock Text="{Binding ItemName}"
 															   FontWeight="Bold"
 															   FontSize="15"
 															   Foreground="White"
 															   Margin="5,0" />
-													<TextBlock Text="{Binding Description}"
+													<TextBlock Text="{Binding FileSize}"
 															   Margin="5,0"
 															   Foreground="#FF727679" />
 												</StackPanel>
@@ -225,7 +227,7 @@
 															 BorderThickness="0"
 															 Background="#FF424242"
 															 Foreground="#FF4FE79A"
-															 Value="30"
+															 Value="{Binding LoadingProgress}"
 															 Grid.Row="2" />
 
 												<wg:IconToggle x:Name="AddFilePakToWorkManager"
@@ -254,7 +256,7 @@
 					</ListBox.ItemContainerStyle>
 
 					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<ListBoxItem>
+					<!--<ListBoxItem>
 						<ListBoxItem.DataContext>
 							<local:Item Name="Item 1"
 										Description="8GB" />
@@ -265,7 +267,7 @@
 							<local:Item Name="Item 2"
 										Description="4GB" />
 						</ListBoxItem.DataContext>
-					</ListBoxItem>
+					</ListBoxItem>-->
 				</ListBox>
 			</Grid>
 

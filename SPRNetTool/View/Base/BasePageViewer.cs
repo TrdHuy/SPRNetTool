@@ -24,12 +24,13 @@ namespace ArtWiz.View.Base
         public BasePageViewer(IWindowViewer ownerWindow)
         {
             _ownerWindow = ownerWindow;
-            ownerWindow.AddOnWindowClosedEvent(OnWindowClosed);
+            Unloaded += OnUnloaded;
         }
 
-        private void OnWindowClosed(Window w)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             DataContext.IfIs<IArtWizViewModel>((it) => it.OnDestroy());
+            Unloaded -= OnUnloaded;
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -51,11 +52,6 @@ namespace ArtWiz.View.Base
         public virtual Menu? GetExtraMenuForPage()
         {
             return null;
-        }
-
-        ~BasePageViewer()
-        {
-            _ownerWindow.RemoveOnWindowClosedEvent(OnWindowClosed);
         }
     }
 }

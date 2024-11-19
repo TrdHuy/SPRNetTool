@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ArtWiz.View.Utils;
+using ArtWiz.Utils;
+using ArtWiz.ViewModel.CommandVM;
 
 namespace ArtWiz.View.Pages
 {
@@ -11,6 +13,11 @@ namespace ArtWiz.View.Pages
     {
         public string Name { get; set; }
         public string Description { get; set; }
+    }
+
+    public enum PakEditorPageId
+    {
+        AddFilePak,
     }
     /// <summary>
     /// Interaction logic for PakEditorPage.xaml
@@ -20,19 +27,14 @@ namespace ArtWiz.View.Pages
         public override object ViewModel => DataContext;
         public override string PageName => "PAK EDITOR";
         private Window ownerWindow;
+        private IPakPageCommand? commandVM;
 
         public PakEditorPage(IWindowViewer ownerWindow) : base(ownerWindow)
         {
             InitializeComponent();
             this.ownerWindow = (Window)ownerWindow;
+            DataContext.IfIsThenAlso<IPakPageCommand>((it) => commandVM = it);
 
-            var items = new List<Item>
-            {
-                new Item { Name = "Item 1", Description = "Description for item 1" },
-                new Item { Name = "Item 2", Description = "Description for item 2" }
-            };
-
-            // Gán danh sách vào ItemsSource của ListBox
         }
         public override object? CustomHeaderView => CustomHeaderViewPanel;
 
@@ -61,7 +63,26 @@ namespace ArtWiz.View.Pages
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
+            (sender as FrameworkElement)?.Tag.IfIs<PakEditorPageId>(it =>
+            {
+                switch (it)
+                {
+                    case PakEditorPageId.AddFilePak:
+                        var openFileDialog = new Microsoft.Win32.OpenFileDialog
+                        {
+                            Title = "Chọn tệp Pak",
+                            Filter = "Pak Files (*.pak)|*.pak|All Files (*.*)|*.*", // Lọc tệp .pak
+                            Multiselect = false // Không cho phép chọn nhiều tệp
+                        };
 
+                        if (openFileDialog.ShowDialog() == true)
+                        {
+                            string filePath = openFileDialog.FileName;
+                            commandVM?.OnAddedPakFileClick(filePath); // Gửi filePath vào ViewModel
+                        }
+                        break;
+                }
+            });
         }
     }
 }
