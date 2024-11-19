@@ -742,6 +742,7 @@
 										</Grid.ColumnDefinitions>
 
 										<wg:WindowTitleBar x:Name="WindowTitleBar"
+														   WindowBarHeight="69"
 														   Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}" />
 
 									</Grid>
@@ -972,70 +973,12 @@
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="5" />
-							<ColumnDefinition MinWidth="22"
-											  Width="Auto" />
+							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="2" />
 							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
+							<ColumnDefinition Width="20" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-
-						<Rectangle x:Name="RecEff1"
-								   Grid.Row="0"
-								   Visibility="Hidden"
-								   Grid.ColumnSpan="10">
-							<Rectangle.Fill>
-								<LinearGradientBrush EndPoint="0.5,1"
-													 StartPoint="0.5,0">
-									<GradientStop Color="#FF2E3C25" />
-									<GradientStop Color="#FF548235"
-												  Offset="0.5" />
-									<GradientStop Color="#FF2E3C25"
-												  Offset="1" />
-								</LinearGradientBrush>
-							</Rectangle.Fill>
-							<Rectangle.Effect>
-								<DropShadowEffect ShadowDepth="1"
-												  Color="#FF9CB297"
-												  Opacity="1"
-												  BlurRadius="3" />
-							</Rectangle.Effect>
-						</Rectangle>
-						<Rectangle x:Name="RecEff2"
-								   Grid.Row="0"
-								   Visibility="Hidden"
-								   Height="1"
-								   Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-								   Grid.ColumnSpan="10" />
-
-						<Rectangle x:Name="RecEff3"
-								   Visibility="Hidden"
-								   Grid.Row="2"
-								   Grid.ColumnSpan="10">
-							<Rectangle.Fill>
-								<LinearGradientBrush EndPoint="0.5,1"
-													 StartPoint="0.5,0">
-									<GradientStop Color="#FF2E3C25" />
-									<GradientStop Color="#FF548235"
-												  Offset="0.5" />
-									<GradientStop Color="#FF2E3C25"
-												  Offset="1" />
-								</LinearGradientBrush>
-							</Rectangle.Fill>
-							<Rectangle.Effect>
-								<DropShadowEffect ShadowDepth="1"
-												  Color="#FF9CB297"
-												  Opacity="1"
-												  BlurRadius="3" />
-							</Rectangle.Effect>
-						</Rectangle>
-						<Rectangle x:Name="RecEff4"
-								   Grid.Row="2"
-								   Visibility="Hidden"
-								   Height="1"
-								   Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-								   Grid.ColumnSpan="10" />
-
 
 						<ContentPresenter x:Name="Icon"
 										  Grid.Row="1"
@@ -1053,10 +996,9 @@
 								Background="#3D26A0DA"
 								ClipToBounds="False"
 								HorizontalAlignment="Center"
-								Height="22"
-								Visibility="Hidden"
+								Height="10"
 								VerticalAlignment="Center"
-								Width="22">
+								Width="10">
 							<Path x:Name="Glyph"
 								  Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z"
 								  Fill="#FF212121"
@@ -1092,21 +1034,10 @@
 					</Trigger>
 					<Trigger Property="IsHighlighted"
 							 Value="True">
-						<Setter TargetName="RecEff1"
-								Property="Visibility"
-								Value="Visible" />
-						<Setter TargetName="RecEff2"
-								Property="Visibility"
-								Value="Visible" />
-						<Setter TargetName="RecEff3"
-								Property="Visibility"
-								Value="Visible" />
-						<Setter TargetName="RecEff4"
-								Property="Visibility"
-								Value="Visible" />
+						
 						<Setter Property="Background"
 								TargetName="templateRoot"
-								Value="{StaticResource ResourceKey={x:Static def:Definitions.MouseOverMenuItemBackgroundBrush}}" />
+								Value="#55646F" />
 					</Trigger>
 					<Trigger Property="IsEnabled"
 							 Value="False">
@@ -1133,6 +1064,8 @@
 					</MultiTrigger>
 				</ControlTemplate.Triggers>
 			</ControlTemplate>
+			
+			
 			<ControlTemplate x:Key="MenuItemControlTemplate2"
 							 TargetType="{x:Type MenuItem}">
 				<Border x:Name="templateRoot"

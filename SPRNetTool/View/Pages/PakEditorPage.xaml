@@ -12,6 +12,7 @@
 					 xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
 					 MinWidth="1280"
 					 MinHeight="718"
+					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 					 xmlns:def="clr-namespace:ArtWiz"
 					 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1}}"
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
@@ -116,14 +117,33 @@
 				  VerticalContentAlignment="Center">
 				<MenuItem Header="Công cụ"
 						  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
+					<MenuItem Header="Nhập file pak">
+						<MenuItem.Icon>
+							<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+								  Stretch="Uniform"
+								  Width="16"
+								  Height="16"
+								  Data="{StaticResource ResourceKey={x:Static def:Definitions.FileImportIconGeometry}}" />
+						</MenuItem.Icon>
+					</MenuItem>
+
+					<MenuItem Header="Nén folder ra file pak">
+						<MenuItem.Icon>
+							<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+								  Stretch="Uniform"
+								  Width="16"
+								  Height="16"
+								  Data="{StaticResource ResourceKey={x:Static def:Definitions.FileImportIconGeometry}}" />
+						</MenuItem.Icon>
+					</MenuItem>
 				</MenuItem>
 			</Menu>
 			<Grid x:Name="CustomHeaderViewPanel"
-				  Width="700"
+				  Width="578"
 				  Margin="30,0,0,0"
 				  VerticalAlignment="Center">
 				<wg:PlaceHolderTextBox Placeholder="Tìm theo đường dẫn..."
-									   Height="50"
+									   Height="44"
 									   FontSize="16"
 									   PlaceholderForeground="#FF7D8184"
 									   BorderBrush="#FF7D8184"
@@ -144,7 +164,7 @@
 
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="10" />
+				<RowDefinition Height="0" />
 				<RowDefinition />
 				<RowDefinition Height="10" />
 			</Grid.RowDefinitions>
@@ -173,8 +193,7 @@
 								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}" />
 					<Label Content="Thêm file pak"
 						   Foreground="White"
-						   FontFamily="Calibri"
-						   FontSize="20"
+						   FontSize="16"
 						   VerticalAlignment="Center" />
 				</StackPanel>
 				<ListBox Grid.Row="1"

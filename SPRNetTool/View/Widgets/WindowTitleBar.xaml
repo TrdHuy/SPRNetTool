@@ -253,16 +253,16 @@
 			<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Left">
 
-				<Image Height="25"
+				<Image Height="38"
 					   Stretch="Uniform"
 					   Margin="5,0,0,0"
-					   Width="25"
+					   Width="38"
 					   RenderOptions.BitmapScalingMode="HighQuality"
 					   SnapsToDevicePixels="True"
 					   Source="/ArtWiz;component/resources/logo_500.png" />
 				<TextBlock x:Name="PageTitleTextBlock"
 						   Text="Pak Editor"
-						   FontSize="16"
+						   FontSize="18"
 						   FontFamily="{DynamicResource ResourceKey={x:Static def:Definitions.FontFiraSans_Bold}}"
 						   Foreground="White"
 						   VerticalAlignment="Center"
@@ -281,10 +281,10 @@
 								  Visibility="Collapsed"
 								  x:Name="DeveloperModeMenu">
 							<MenuItem.Icon>
-								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-									  Stretch="Uniform"
+								<Path Stretch="Uniform"
 									  Width="16"
 									  Height="16"
+									  Fill="White"
 									  Data="{StaticResource ResourceKey={x:Static def:Definitions.DeveloperModeIconGeometry}}" />
 							</MenuItem.Icon>
 						</MenuItem>
@@ -292,10 +292,10 @@
 								  Tag="{x:Static vutil:AppMenuTag.SprEditorPageMenu}"
 								  x:Name="SprWorkSpceMenu">
 							<MenuItem.Icon>
-								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-									  Stretch="Uniform"
+								<Path Stretch="Uniform"
 									  Width="16"
 									  Height="16"
+									  Fill="White"
 									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
 							</MenuItem.Icon>
 						</MenuItem>
@@ -303,11 +303,11 @@
 								  Tag="{x:Static vutil:AppMenuTag.PakEditorPageMenu}"
 								  x:Name="PakWorkSpaceMenu">
 							<MenuItem.Icon>
-								<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
-									  Stretch="Uniform"
-									  Width="16"
-									  Height="16"
-									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+								<Path  Stretch="Uniform"
+									   Width="16"
+									   Fill="White"
+									   Height="16"
+									   Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
 							</MenuItem.Icon>
 						</MenuItem>
 					</MenuItem>
