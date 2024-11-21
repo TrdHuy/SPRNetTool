@@ -8,8 +8,12 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Definitions.xaml" />
 			</ResourceDictionary.MergedDictionaries>
-			
+
 			<cvt:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+			<cvt:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
+			<cvt:BoolToObjectConverter x:Key="BoolToObjectConverter" />
+			<cvt:FormulaConverter x:Key="FormulaConverter" />
+
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

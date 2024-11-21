@@ -9,6 +9,7 @@
 					 mc:Ignorable="d"
 					 d:DesignHeight="720"
 					 d:DesignWidth="1280"
+					 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 					 xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
 					 MinWidth="1280"
 					 MinHeight="718"
@@ -200,7 +201,6 @@
 						 Margin="15,0"
 						 Background="Transparent"
 						 BorderThickness="0"
-						 ItemsSource="{Binding PakFiles}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
 						 ScrollViewer.CanContentScroll="True">
@@ -221,49 +221,76 @@
 													<RowDefinition Height="1.2*" />
 													<RowDefinition Height="0.5*" />
 												</Grid.RowDefinitions>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="5*" />
-													<ColumnDefinition Width="0.7*" />
-													<ColumnDefinition Width="0.5*" />
-												</Grid.ColumnDefinitions>
+
 												<StackPanel Orientation="Vertical"
+															Grid.Column="0"
+															Grid.ColumnSpan="4"
 															Grid.RowSpan="4"
-															Margin="5">
+															Margin="5"
+															VerticalAlignment="Stretch"
+															HorizontalAlignment="Stretch">
 													<TextBlock Text="{Binding ItemName}"
 															   FontWeight="Bold"
 															   FontSize="15"
 															   Foreground="White"
+															   TextTrimming="CharacterEllipsis"
+															   TextWrapping="NoWrap"
 															   Margin="5,0" />
 													<TextBlock Text="{Binding FileSize}"
 															   Margin="5,0"
 															   Foreground="#FF727679" />
 												</StackPanel>
 
-												<ProgressBar Height="8"
-															 Grid.Column="1"
-															 Grid.ColumnSpan="2"
-															 BorderThickness="0"
-															 Background="#FF424242"
-															 Foreground="#FF4FE79A"
-															 Value="{Binding LoadingProgress}"
-															 Grid.Row="2" />
 
-												<wg:IconToggle x:Name="AddFilePakToWorkManager"
-															   Grid.Row="1"
-															   Grid.Column="2"
-															   IsEllipse="True"
-															   StrokeThickness="2"
-															   IsEnableToggleClick="False"
-															   Margin="10,0,0,0"
-															   Click="OnButtonClick"
-															   Style="{StaticResource IconToogleStyle2}"
-															   IconRatio="0.4"
-															   Width="20"
-															   Height="20"
-															   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-															   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-															   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}" />
+												<wg:SmoothProgressbar Height="8"
+																	  Grid.Column="1"
+																	  Grid.ColumnSpan="2"
+																	  BorderThickness="0"
+																	  Margin="85,0,10,0"
+																	  Value="{Binding LoadingProgress}"
+																	  Grid.Row="2" />
+												<StackPanel Orientation="Horizontal"
+															Grid.Row="1"
+															VerticalAlignment="Center"
+															HorizontalAlignment="Right">
+													<TextBlock x:Name="StatusTextBlock"
+															   Text="{Binding LoadingStatusToString}"
+															   Foreground="#FF727679"
+															   Margin="5,0"
+															   VerticalAlignment="Bottom" />
+													<wg:IconToggle x:Name="RemoveFilePakFormWorkManager"
+																   IsEllipse="True"
+																   StrokeThickness="2"
+																   IsEnableToggleClick="False"
+																   Click="OnButtonClick"
+																   Style="{StaticResource IconToogleStyle2}"
+																   Visibility="{Binding RemoveFilePakVisibility}"
+																   IconRatio="0.4"
+																   Width="20"
+																   Height="20"
+																   Margin="0,0,10,0"
+																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
+																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
+																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}" />
+
+
+													<wg:IconToggle x:Name="RetryLoadPakFormWorkManager"
+																   IsEllipse="false"
+																   StrokeThickness="2"
+																   IsEnableToggleClick="False"
+																   Click="OnButtonClick"
+																   Style="{StaticResource IconToogleStyle2}"
+																   Visibility="{Binding ReloadPakVisibility}"
+																   IconRatio="1"
+																   Width="20"
+																   Height="20"
+																   Margin="0,0,10,0"
+																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
+																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
+																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}" />
+
+
+												</StackPanel>
 
 											</Grid>
 
@@ -275,18 +302,18 @@
 					</ListBox.ItemContainerStyle>
 
 					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<!--<ListBoxItem>
+					<ListBoxItem>
 						<ListBoxItem.DataContext>
-							<local:Item Name="Item 1"
-										Description="8GB" />
+							<local:Item ItemName="dataWithPak.pak"
+										FileSize="8GB" />
 						</ListBoxItem.DataContext>
 					</ListBoxItem>
 					<ListBoxItem>
 						<ListBoxItem.DataContext>
-							<local:Item Name="Item 2"
-										Description="4GB" />
+							<local:Item ItemName="test.pak"
+										FileSize="4GB" />
 						</ListBoxItem.DataContext>
-					</ListBoxItem>-->
+					</ListBoxItem>
 				</ListBox>
 			</Grid>
 
@@ -388,20 +415,6 @@
 							</Setter>
 						</Style>
 					</ListBox.ItemContainerStyle>
-
-					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item Name="Item 1"
-										Description="8GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>
-					<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item Name="Item 2"
-										Description="4GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>
 				</ListBox>
 			</Grid>
 		</Grid>

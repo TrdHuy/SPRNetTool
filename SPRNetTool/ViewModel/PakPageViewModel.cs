@@ -6,19 +6,95 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using WizMachine;
 using WizMachine.Services.Base;
 
 namespace ArtWiz.ViewModel
 {
-
+    internal enum PakItemLoadingStatus
+    {
+        NONE,
+        ERROR,
+        PREPARING,
+        LOADING,
+        LOADED
+    }
     internal class PakFileItemViewModel : BaseSubViewModel
     {
         private string _filePath;
         private long _fileSizeInBytes;
         private int _loadingProgress;
+        private PakItemLoadingStatus _loadingStatus = PakItemLoadingStatus.NONE;
+        private string _sessionToken = "";
 
         private IPakWorkManager workManager = EngineKeeper.GetPakWorkManagerService();
+
+        private PakItemLoadingStatus LoadingStatus
+        {
+            get => _loadingStatus;
+            set
+            {
+                _loadingStatus = value;
+                Invalidate(nameof(ReloadPakVisibility));
+                Invalidate(nameof(RemoveFilePakVisibility));
+                Invalidate(nameof(LoadingStatusToString));
+            }
+        }
+
+        [Bindable(true)]
+        public Visibility ReloadPakVisibility
+        {
+            get
+            {
+                if (LoadingStatus == PakItemLoadingStatus.ERROR || LoadingStatus == PakItemLoadingStatus.LOADED)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
+            }
+        }
+
+        [Bindable(true)]
+        public Visibility RemoveFilePakVisibility
+        {
+            get
+            {
+                if (LoadingStatus == PakItemLoadingStatus.LOADED ||
+                    LoadingStatus == PakItemLoadingStatus.LOADING ||
+                    LoadingStatus == PakItemLoadingStatus.ERROR)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
+            }
+        }
+
+        [Bindable(true)]
+        public string LoadingStatusToString
+        {
+            get
+            {
+                switch (_loadingStatus)
+                {
+                    case PakItemLoadingStatus.LOADING:
+                        return "loading...";
+                    case PakItemLoadingStatus.LOADED:
+                        return "";
+                    case PakItemLoadingStatus.NONE:
+                        return "";
+                    case PakItemLoadingStatus.PREPARING:
+                        return "preparing...";
+                }
+                return "";
+            }
+        }
 
         [Bindable(true)]
         public string ItemName
@@ -88,7 +164,7 @@ namespace ArtWiz.ViewModel
             await Task.Run(() =>
             {
                 // Gọi hàm load file và cập nhật progress
-                workManager.LoadPakFileToWorkManager(filePath, (progress, message) =>
+                var result = workManager.LoadPakFileToWorkManager(filePath, (progress, message) =>
                 {
                     // Chuyển về UI thread để cập nhật progress
                     App.Current.Dispatcher.Invoke(() =>
@@ -96,6 +172,11 @@ namespace ArtWiz.ViewModel
                         LoadingProgress = progress; // Cập nhật progress
                     });
                 });
+
+                if (result == false)
+                {
+                    _loadingStatus = PakItemLoadingStatus.ERROR;
+                }
             });
         }
 

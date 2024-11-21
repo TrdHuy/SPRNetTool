@@ -11,8 +11,8 @@ namespace ArtWiz.View.Pages
 {
     public class Item
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string ItemName { get; set; }
+        public string FileSize { get; set; }
     }
 
     public enum PakEditorPageId
