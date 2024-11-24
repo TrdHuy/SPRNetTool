@@ -1,4 +1,6 @@
-﻿using ArtWiz.LogUtil;
+﻿using ArtWiz.Domain.Base;
+using ArtWiz.LogUtil;
+using ArtWiz.Utils;
 using ArtWiz.ViewModel.Base;
 using ArtWiz.ViewModel.CommandVM;
 using System;
@@ -7,8 +9,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using WizMachine;
-using WizMachine.Services.Base;
 
 namespace ArtWiz.ViewModel
 {
@@ -18,17 +18,14 @@ namespace ArtWiz.ViewModel
         ERROR,
         PREPARING,
         LOADING,
-        LOADED
+        LOADED,
     }
-    internal class PakFileItemViewModel : BaseSubViewModel
+    internal class PakFileItemViewModel : BaseSubViewModel, ILoadPakFileCallback, IRemovePakFileCallback
     {
         private string _filePath;
         private long _fileSizeInBytes;
         private int _loadingProgress;
         private PakItemLoadingStatus _loadingStatus = PakItemLoadingStatus.NONE;
-        private string _sessionToken = "";
-
-        private IPakWorkManager workManager = EngineKeeper.GetPakWorkManagerService();
 
         private PakItemLoadingStatus LoadingStatus
         {
@@ -41,6 +38,7 @@ namespace ArtWiz.ViewModel
                 Invalidate(nameof(LoadingStatusToString));
             }
         }
+
 
         [Bindable(true)]
         public Visibility ReloadPakVisibility
@@ -141,7 +139,8 @@ namespace ArtWiz.ViewModel
                 _fileSizeInBytes = 0;
             }
 
-            _ = StartLoadingPakFileAsync(filePath); // Bắt đầu load file không blocking
+            LoadingStatus = PakItemLoadingStatus.PREPARING;
+            PakWorkManager.LoadPakFileToWorkManagerAsync(filePath, this);
         }
 
         public void SetFilePath(string filePath)
@@ -158,26 +157,12 @@ namespace ArtWiz.ViewModel
             InvalidateAll();
         }
 
-        // Phương thức async để xử lý tải file
-        private async Task StartLoadingPakFileAsync(string filePath)
+        public void ClosePakSession()
         {
-            await Task.Run(() =>
+            if (PakWorkManager.IsFileAlreadyAdded(_filePath))
             {
-                // Gọi hàm load file và cập nhật progress
-                var result = workManager.LoadPakFileToWorkManager(filePath, (progress, message) =>
-                {
-                    // Chuyển về UI thread để cập nhật progress
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        LoadingProgress = progress; // Cập nhật progress
-                    });
-                });
-
-                if (result == false)
-                {
-                    _loadingStatus = PakItemLoadingStatus.ERROR;
-                }
-            });
+                PakWorkManager.CloseSessionAsync(_filePath, this);
+            }
         }
 
         private string FormatFileSize(long bytes)
@@ -194,6 +179,42 @@ namespace ArtWiz.ViewModel
             double adjustedSize = bytes / Math.Pow(scale, unitIndex);
 
             return $"{adjustedSize:0.##} {units[unitIndex]}";
+        }
+
+        public void OnSessionCreated()
+        {
+            LoadingStatus = PakItemLoadingStatus.LOADING;
+        }
+
+        public void OnBlockLoaded()
+        {
+        }
+
+        public void OnLoadCompleted()
+        {
+        }
+
+        public void OnLoadFailed()
+        {
+            LoadingStatus = PakItemLoadingStatus.ERROR;
+        }
+
+        public void OnProgressChanged(int newProgress)
+        {
+            LoadingProgress = newProgress;
+        }
+
+        public void OnFinishJob()
+        {
+            LoadingStatus = PakItemLoadingStatus.LOADED;
+        }
+
+        public void OnRemoveSuccess()
+        {
+            Parents.IfIs<PakPageViewModel>(it =>
+            {
+                it.PakFiles.Remove(this);
+            });
         }
     }
 
@@ -226,8 +247,22 @@ namespace ArtWiz.ViewModel
                 return;
             }
 
+            if (PakWorkManager.IsFileAlreadyAdded(filePath))
+            {
+                logger.E($"File already added {filePath}");
+                return;
+            }
+
             var newFile = new PakFileItemViewModel(this, filePath);
             PakFiles.Add(newFile);
+        }
+
+        void IPakPageCommand.OnRemovePakFileClick(object pakFileViewModel)
+        {
+            pakFileViewModel.IfIs<PakFileItemViewModel>(it =>
+            {
+                it.ClosePakSession();
+            });
         }
     }
 }

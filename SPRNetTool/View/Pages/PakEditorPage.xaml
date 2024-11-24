@@ -201,6 +201,7 @@
 						 Margin="15,0"
 						 Background="Transparent"
 						 BorderThickness="0"
+						 ItemsSource="{Binding PakFiles}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
 						 ScrollViewer.CanContentScroll="True">
@@ -259,6 +260,7 @@
 															   Margin="5,0"
 															   VerticalAlignment="Bottom" />
 													<wg:IconToggle x:Name="RemoveFilePakFormWorkManager"
+																   Tag="{x:Static local:PakEditorPageId.RemoveFilePak}"
 																   IsEllipse="True"
 																   StrokeThickness="2"
 																   IsEnableToggleClick="False"
@@ -276,6 +278,7 @@
 
 													<wg:IconToggle x:Name="RetryLoadPakFormWorkManager"
 																   IsEllipse="false"
+																   Tag="{x:Static local:PakEditorPageId.ReloadFilePak}"
 																   StrokeThickness="2"
 																   IsEnableToggleClick="False"
 																   Click="OnButtonClick"
@@ -302,7 +305,7 @@
 					</ListBox.ItemContainerStyle>
 
 					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<ListBoxItem>
+					<!--<ListBoxItem>
 						<ListBoxItem.DataContext>
 							<local:Item ItemName="dataWithPak.pak"
 										FileSize="8GB" />
@@ -313,7 +316,7 @@
 							<local:Item ItemName="test.pak"
 										FileSize="4GB" />
 						</ListBoxItem.DataContext>
-					</ListBoxItem>
+					</ListBoxItem>-->
 				</ListBox>
 			</Grid>
 

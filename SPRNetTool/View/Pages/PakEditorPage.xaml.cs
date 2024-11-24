@@ -18,6 +18,8 @@ namespace ArtWiz.View.Pages
     public enum PakEditorPageId
     {
         AddFilePak,
+        RemoveFilePak,
+        ReloadFilePak
     }
     /// <summary>
     /// Interaction logic for PakEditorPage.xaml
@@ -80,6 +82,9 @@ namespace ArtWiz.View.Pages
                             string filePath = openFileDialog.FileName;
                             commandVM?.OnAddedPakFileClick(filePath); // Gửi filePath vào ViewModel
                         }
+                        break;
+                    case PakEditorPageId.RemoveFilePak:
+                        commandVM?.OnRemovePakFileClick((sender as FrameworkElement)!.DataContext);
                         break;
                 }
             });

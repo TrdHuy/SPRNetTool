@@ -20,7 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
-		<WizMachineVersion>1.0.12.1</WizMachineVersion>
+		<WizMachineVersion>1.0.14</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -195,7 +195,7 @@
 	</ItemGroup>
 
 
-	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
+	<!--<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
 		<PackageReference Include="WizMachinex64-Debug" Version="$(WizMachineVersion)" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' != 'Debug'">
@@ -223,7 +223,7 @@
 			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
 		</Copy>
 		<Message Text="Copied debug files @(CopiedDebugFiles) to $(OutDir)" Importance="high" />
-	</Target>
+	</Target>-->
 	<ItemGroup>
 		<None Include="..\check_file_platform.ps1" />
 		<None Include="..\SignToolUtilForClient.ps1" />
@@ -231,6 +231,25 @@
 		<None Include="..\local.xml" />
 		<None Include="..\.github\**" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="wengine">
+	    <HintPath>..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\wengine.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<Target Name="CopyDebugFiles" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
+		<ItemGroup>
+			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\engine.dll" Condition="'$(Platform)' == 'x64'" />
+			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.pdb" Condition="'$(Platform)' == 'x64'" />
+			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.exp" Condition="'$(Platform)' == 'x64'" />
+			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.lib" Condition="'$(Platform)' == 'x64'" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(OutDir)">
+			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
+		</Copy>
+		<Message Text="Copied debug files @(CopiedDebugFiles) to $(OutDir)" Importance="high" />
+	</Target>
 
 	<!--START: Application Signing Stuff-->
 	<PropertyGroup>
