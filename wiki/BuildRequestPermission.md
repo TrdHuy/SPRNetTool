@@ -5,7 +5,7 @@ If you need to request build permissions for the **ArtWiz** project, follow the 
 ---
 
 #### **Step 1: Navigate to the Issues Tab**
-1. Go to the **[Issues](../../issues)** section of this repository.
+1. Go to the **[Issues](https://github.com/TrdHuy/DezoneOrgManager/issues)** section of this repository.
 2. Click on the **"New Issue"** button.
 
 ---
