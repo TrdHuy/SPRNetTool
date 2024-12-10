@@ -13,7 +13,9 @@
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_TEST_BUILD_TAG</BuildTag>
 	</PropertyGroup>
-
+	<ItemGroup>
+		<PackageReference Include="DezoneBuildPlugin" Version="8.0.0" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\1.bin" />
 		<None Remove="Resources\1.png" />
@@ -95,25 +97,4 @@
 		</Content>
 	</ItemGroup>
 
-	<!--START: Application Signing Stuff-->
-	<PropertyGroup>
-		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
-		<SignToolPathResuleCachePath>$(SolutionDirectory)\bin\signtoolpath.txt</SignToolPathResuleCachePath>
-	</PropertyGroup>
-	<Target Name= "GetSignToolPath" BeforeTargets="BeforeBuild">
-		<Exec Command="echo $(BuildTag): GetSignToolPath: Platform=$(Platform)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GetSignToolPath)&quot; -platform $(Platform) -resCacheFilePath $(SignToolPathResuleCachePath)" />
-		<ReadLinesFromFile File="$(SignToolPathResuleCachePath)">
-			<Output TaskParameter="Lines" PropertyName="SignToolPath" />
-		</ReadLinesFromFile>
-		<Exec Command="echo $(BuildTag): GetSignToolPath: SignToolPath=$(SignToolPath)" />
-	</Target>
-	<Target Name="SignTheApplication" AfterTargets="AfterBuild">
-		<Exec Command="echo $(BuildTag): SignTheApplication: Executing signing task" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: SolutionDirectory: $(SolutionDirectory)" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: TargetDir: $(TargetDir)" />
-		<Exec Condition="'$(Platform)' == 'x64'" Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDirectory)\SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)testhost.exe,$(TargetDir)ArtWizTest.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -prvtoken '$(GitToken)' -signToolCachePath '$(SignToolPathResuleCachePath)'" />
-		<Exec Condition="'$(Platform)' == 'x86'" Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp;$(SolutionDirectory)\SignToolUtilForClient.ps1&quot; -filesToSign '$(TargetDir)testhost.x86.exe,$(TargetDir)ArtWizTest.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -prvtoken '$(GitToken)' -signToolCachePath '$(SignToolPathResuleCachePath)'" />
-	</Target>
-	<!--END: Application Signing Stuff-->
 </Project>
