@@ -91,6 +91,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="DezoneBuildPlugin" Version="8.0.2" />
+	  <PackageReference Include="DezoneBuildPlugin" Version="8.1.0" />
 	</ItemGroup>
 </Project>
