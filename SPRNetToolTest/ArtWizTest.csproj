@@ -14,7 +14,7 @@
 		<BuildTag>ARTWIZ_TEST_BUILD_TAG</BuildTag>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="DezoneBuildPlugin" Version="8.0.1" />
+		<PackageReference Include="DezoneBuildPlugin" Version="8.0.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\1.bin" />
