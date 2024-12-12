@@ -134,6 +134,7 @@ jobs:
             -coverageOutDir "${{ env.COVERAGE_OUT_DIR }}" `
             -config "Release" `
             -platform "x64" `
+            -projectPath "SPRNetToolTest\ArtWizTest.csproj" `
             -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
             -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
             -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
@@ -149,6 +150,7 @@ jobs:
             -coverageOutDir "${{ env.COVERAGE_OUT_DIR }}" `
             -config "Release" `
             -platform "x86" `
+            -projectPath "SPRNetToolTest\ArtWizTest.csproj" `
             -isUploadArtifactToGitHubPage ([bool]"${{ env.IS_UPLOAD_REPORT_TO_GH_PAGE }}") `
             -ownerRepoToUploadArtifact "${{ env.OWNER_TO_UPLOAD_ARTIFACT }}" `
             -branchRepoToUploadArtifact "${{ env.BRANCH_TO_UPLOAD_ARTIFACT }}" `
