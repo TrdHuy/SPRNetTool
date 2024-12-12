@@ -86,7 +86,7 @@ jobs:
         dotnet nuget remove source "trdhuy-nuget-package-source"
         dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ secrets.WORK_FLOW_ACCESS_TOKEN }}"
         dotnet restore
-        dotnet test /p:GitToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
+        dotnet test /p:DezoneAdminToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }} /p:ShouldResolveDezonePkgReferences=none /p:DezoneResourceKey=${{ secrets.DEZ_CLIENT_RES_KEY }} /p:ShouldSkipDezVersionCheck=true
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
@@ -95,5 +95,5 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: Execute unit tests
-      run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:GitToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }} /p:IsFromDotnet=true
+      run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }} -p:Platform=${{ matrix.platformTarget }} /p:DezoneAdminToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }} /p:ShouldResolveDezonePkgReferences=none /p:DezoneResourceKey=${{ secrets.DEZ_CLIENT_RES_KEY }} /p:ShouldSkipDezVersionCheck=true
 

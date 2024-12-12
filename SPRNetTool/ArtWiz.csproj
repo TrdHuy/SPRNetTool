@@ -74,9 +74,11 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Platform)' == 'x64'">
+		<DezonePackageReference Include="WizMachinex64" Version="1.0.0" />
 		<PackageReference Include="WizMachinex64" Version="1.0.0.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Platform)' == 'x86'">
+		<DezonePackageReference Include="WizMachinex86" Version="1.0.0" />
 		<PackageReference Include="WizMachinex86" Version="1.0.0.0" />
 	</ItemGroup>
 
@@ -88,25 +90,7 @@
 		<None Include="..\.github\**" />
 	</ItemGroup>
 
-
-	<!--START: Application Signing Stuff-->
-	<PropertyGroup>
-		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
-		<SignToolPathResuleCachePath>$(SolutionDirectory)\bin\signtoolpath.txt</SignToolPathResuleCachePath>
-	</PropertyGroup>
-	<Target Name= "GetSignToolPath" BeforeTargets="BeforeBuild">
-		<Exec Command="echo $(BuildTag): GetSignToolPath: Platform=$(Platform)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GetSignToolPath)&quot; -platform $(Platform) -resCacheFilePath $(SignToolPathResuleCachePath)" />
-		<ReadLinesFromFile File="$(SignToolPathResuleCachePath)">
-			<Output TaskParameter="Lines" PropertyName="SignToolPath" />
-		</ReadLinesFromFile>
-		<Exec Command="echo $(BuildTag): GetSignToolPath: SignToolPath=$(SignToolPath)" />
-	</Target>
-	<Target Name="SignTheApplication" AfterTargets="AfterBuild">
-		<Exec Command="echo $(BuildTag): SignTheApplication: Executing signing task" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: SolutionDirectory: $(SolutionDirectory)" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: TargetDir: $(TargetDir)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp; '$(SolutionDirectory)\SignToolUtilForClient.ps1' -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -signToolCachePath '$(SignToolPathResuleCachePath)' -prvtoken '$(GitToken)'&quot;" />
-	</Target>
-	<!--END: Application Signing Stuff-->
+	<ItemGroup>
+	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
+	</ItemGroup>
 </Project>
