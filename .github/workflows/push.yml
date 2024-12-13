@@ -3,7 +3,7 @@ name: UnittestService
 on:      
   push:
     branches:
-      - 'dev'
+      - '*'
   workflow_dispatch:
     inputs:
       force:
