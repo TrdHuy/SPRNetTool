@@ -143,7 +143,7 @@ jobs:
             -reportSHAToUploadArtifact "${{ github.sha }}" `
             -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
             -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}") `
-            -additionalProperties @{ "DezoneAdminToken" = "${{ env.GITHUB_TOKEN }}"; "ShouldResolveDezonePkgReferences" = "none"; "DezoneResourceKey" = "${{ env.DEZ_CLIENT_RES_KEY }}"; "ShouldSkipDezVersionCheck" = $true }
+            -additionalProperties @{ "DezoneAdminToken" = "${{ env.GITHUB_TOKEN }}"; "ShouldResolveDezonePkgReferences" = "none"; "DezoneResourceKey" = "${{ secrets.DEZ_CLIENT_RES_KEY }}"; "ShouldSkipDezVersionCheck" = $true }
         
         & .\DotNetUnitTest_CoverageReport_UploadReportToGhPage.ps1 -prvtoken "${{ env.GITHUB_TOKEN }}" `
             -assemblyfilters "${{ env.ASSEMBLY_FILTER }}" `
@@ -159,7 +159,7 @@ jobs:
             -reportSHAToUploadArtifact "${{ github.sha }}" `
             -gitHubPageRepoToUploadArtifact "${{ env.GIT_REPO_TO_UPLOAD_ARTIFACT }}" `
             -coverageRetentionHours ([System.Int16]"${{ env.COVERAGE_RETENTION_HOURS }}") `
-            -additionalProperties @{ "DezoneAdminToken" = "${{ env.GITHUB_TOKEN }}"; "ShouldResolveDezonePkgReferences" = "none"; "DezoneResourceKey" = "${{ env.DEZ_CLIENT_RES_KEY }}"; "ShouldSkipDezVersionCheck" = $true }
+            -additionalProperties @{ "DezoneAdminToken" = "${{ env.GITHUB_TOKEN }}"; "ShouldResolveDezonePkgReferences" = "none"; "DezoneResourceKey" = "${{ secrets.DEZ_CLIENT_RES_KEY }}"; "ShouldSkipDezVersionCheck" = $true }
 
     # The coverage report only supported for version up commit, unittest_* and dev* branch 
     ################### UNITTES REGION #######################
