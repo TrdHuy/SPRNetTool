@@ -211,11 +211,8 @@
 		<None Include="..\local.xml" />
 		<None Include="..\.github\**" />
 	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
-	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
+	  <PackageReference Include="DezoneBuildPlugin" Version="8.7.0" />
 	</ItemGroup>
 </Project>
