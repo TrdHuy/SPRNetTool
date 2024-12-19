@@ -215,4 +215,7 @@
 	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
+	</ItemGroup>
 </Project>
