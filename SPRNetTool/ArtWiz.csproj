@@ -20,7 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
-		<WizMachineVersion>1.0.14</WizMachineVersion>
+		<WizMachineVersion>1.0.16</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -195,35 +195,15 @@
 	</ItemGroup>
 
 
-	<!--<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' == 'Debug'">
-		<PackageReference Include="WizMachinex64-Debug" Version="$(WizMachineVersion)" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(Platform)' == 'x64' And '$(Configuration)' != 'Debug'">
+	<ItemGroup Condition="'$(Platform)' == 'x64'">
+		<DezonePackageReference Include="WizMachinex64" Version="$(WizMachineVersion)" />
 		<PackageReference Include="WizMachinex64" Version="$(WizMachineVersion)" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Platform)' == 'x86' And '$(Configuration)' == 'Debug'">
-		<PackageReference Include="WizMachinex86-Debug" Version="$(WizMachineVersion)" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(Platform)' == 'x86' And '$(Configuration)' != 'Debug'">
+	<ItemGroup Condition="'$(Platform)' == 'x86'">
+		<DezonePackageReference Include="WizMachinex86" Version="$(WizMachineVersion)" />
 		<PackageReference Include="WizMachinex86" Version="$(WizMachineVersion)" />
 	</ItemGroup>
 
-	<Target Name="CopyDebugFiles" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
-		<ItemGroup>
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.pdb" Condition="'$(Platform)' == 'x64'" />
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.exp" Condition="'$(Platform)' == 'x64'" />
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex64-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x64'" />
-
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.pdb" Condition="'$(Platform)' == 'x86'" />
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.exp" Condition="'$(Platform)' == 'x86'" />
-			<DebugFiles Include="$(NuGetPackageRoot)\wizmachinex86-debug\$(WizMachineVersion)\lib\net6.0-windows7.0\*.lib" Condition="'$(Platform)' == 'x86'" />
-		</ItemGroup>
-
-		<Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(OutDir)">
-			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
-		</Copy>
-		<Message Text="Copied debug files @(CopiedDebugFiles) to $(OutDir)" Importance="high" />
-	</Target>-->
 	<ItemGroup>
 		<None Include="..\check_file_platform.ps1" />
 		<None Include="..\SignToolUtilForClient.ps1" />
@@ -232,43 +212,7 @@
 		<None Include="..\.github\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Reference Include="wengine">
-	    <HintPath>..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\wengine.dll</HintPath>
-	  </Reference>
+	  <PackageReference Include="DezoneBuildPlugin" Version="8.4.0" />
 	</ItemGroup>
 
-	<Target Name="CopyDebugFiles" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
-		<ItemGroup>
-			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\engine.dll" Condition="'$(Platform)' == 'x64'" />
-			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.pdb" Condition="'$(Platform)' == 'x64'" />
-			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.exp" Condition="'$(Platform)' == 'x64'" />
-			<DebugFiles Include="..\..\..\..\..\..\Desktop\temp\test\bin\WizMachine\WizMachine\bin\x64\Debug\net6.0-windows\*.lib" Condition="'$(Platform)' == 'x64'" />
-		</ItemGroup>
-
-		<Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(OutDir)">
-			<Output TaskParameter="CopiedFiles" ItemName="CopiedDebugFiles" />
-		</Copy>
-		<Message Text="Copied debug files @(CopiedDebugFiles) to $(OutDir)" Importance="high" />
-	</Target>
-
-	<!--START: Application Signing Stuff-->
-	<PropertyGroup>
-		<GetSignToolPath>$(SolutionDirectory)\GetSignToolPath.ps1</GetSignToolPath>
-		<SignToolPathResuleCachePath>$(SolutionDirectory)\bin\signtoolpath.txt</SignToolPathResuleCachePath>
-	</PropertyGroup>
-	<Target Name="GetSignToolPath" BeforeTargets="BeforeBuild">
-		<Exec Command="echo $(BuildTag): GetSignToolPath: Platform=$(Platform)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GetSignToolPath)&quot; -platform $(Platform) -resCacheFilePath $(SignToolPathResuleCachePath)" />
-		<ReadLinesFromFile File="$(SignToolPathResuleCachePath)">
-			<Output TaskParameter="Lines" PropertyName="SignToolPath" />
-		</ReadLinesFromFile>
-		<Exec Command="echo $(BuildTag): GetSignToolPath: SignToolPath=$(SignToolPath)" />
-	</Target>
-	<Target Name="SignTheApplication" AfterTargets="AfterBuild">
-		<Exec Command="echo $(BuildTag): SignTheApplication: Executing signing task" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: SolutionDirectory: $(SolutionDirectory)" />
-		<Exec Command="echo $(BuildTag): SignTheApplication: TargetDir: $(TargetDir)" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -Command &quot;&amp; '$(SolutionDirectory)\SignToolUtilForClient.ps1' -filesToSign '$(TargetDir)ArtWiz.exe,$(TargetDir)ArtWiz.dll' -localConfigPath '$(SolutionDirectory)\local.xml' -signToolCachePath '$(SignToolPathResuleCachePath)' -prvtoken '$(GitToken)'&quot;" />
-	</Target>
-	<!--END: Application Signing Stuff-->
 </Project>
