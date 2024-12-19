@@ -120,7 +120,7 @@
 						  Style="{StaticResource ResourceKey={x:Static def:Definitions.MenuParentStyle}}">
 					<MenuItem Header="Nhập file pak">
 						<MenuItem.Icon>
-							<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+							<Path Fill="White"
 								  Stretch="Uniform"
 								  Width="16"
 								  Height="16"
@@ -130,11 +130,11 @@
 
 					<MenuItem Header="Nén folder ra file pak">
 						<MenuItem.Icon>
-							<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+							<Path Fill="White"
 								  Stretch="Uniform"
 								  Width="16"
 								  Height="16"
-								  Data="{StaticResource ResourceKey={x:Static def:Definitions.FileImportIconGeometry}}" />
+								  Data="{StaticResource ResourceKey={x:Static def:Definitions.FileZipperGeometry}}" />
 						</MenuItem.Icon>
 					</MenuItem>
 				</MenuItem>
@@ -180,18 +180,18 @@
 				<StackPanel Orientation="Horizontal">
 					<wg:IconToggle x:Name="AddFilePakToWorkManager"
 								   Tag="{x:Static local:PakEditorPageId.AddFilePak}"
-								   IsEllipse="True"
+								   IsEllipse="False"
 								   StrokeThickness="3"
 								   IsEnableToggleClick="False"
 								   Margin="10,0,0,0"
 								   Click="OnButtonClick"
 								   Style="{StaticResource IconToogleStyle2}"
-								   IconRatio="0.5"
+								   IconRatio="0.8"
 								   Width="25"
 								   Height="25"
-								   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
-								   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}"
-								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamAdditionIconGeometry}}" />
+								   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}"
+								   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}"
+								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}" />
 					<Label Content="Thêm file pak"
 						   Foreground="White"
 						   FontSize="16"
@@ -261,19 +261,19 @@
 															   VerticalAlignment="Bottom" />
 													<wg:IconToggle x:Name="RemoveFilePakFormWorkManager"
 																   Tag="{x:Static local:PakEditorPageId.RemoveFilePak}"
-																   IsEllipse="True"
+																   IsEllipse="False"
 																   StrokeThickness="2"
 																   IsEnableToggleClick="False"
 																   Click="OnButtonClick"
 																   Style="{StaticResource IconToogleStyle2}"
 																   Visibility="{Binding RemoveFilePakVisibility}"
-																   IconRatio="0.4"
+																   IconRatio="0.8"
 																   Width="20"
 																   Height="20"
 																   Margin="0,0,10,0"
-																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}"
-																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ParamSubtracterIconGeometry}}" />
+																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}"
+																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}"
+																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}" />
 
 
 													<wg:IconToggle x:Name="RetryLoadPakFormWorkManager"
@@ -284,7 +284,7 @@
 																   Click="OnButtonClick"
 																   Style="{StaticResource IconToogleStyle2}"
 																   Visibility="{Binding ReloadPakVisibility}"
-																   IconRatio="1"
+																   IconRatio="0.8"
 																   Width="20"
 																   Height="20"
 																   Margin="0,0,10,0"
@@ -391,24 +391,23 @@
 										<Border BorderThickness="0,0,0,2"
 												BorderBrush="#FF353535"
 												Background="#FF262626"
-												Height="60"
-												Margin="0,20,0,0">
+												Height="80">
 											<StackPanel Orientation="Vertical">
-												<TextBlock>
-											<Run Text="Tên khối:"
-													Foreground="White"
-													FontWeight="Bold"
-													FontSize="16" />
+												<TextBlock Margin="0,12,0,0">
+													<Run Text="Tên khối:"
+														 Foreground="White"
+														 FontWeight="Bold"
+														 FontSize="16" />
 												</TextBlock>
-												<TextBlock>
-											<Run Text="Định dạng:"
-													Foreground="#FF7B8797"
-													FontSize="12" />
+												<TextBlock Margin="0,6,0,0">
+													<Run Text="Định dạng:"
+														 Foreground="#FF7B8797"
+														 FontSize="12" />	
 												</TextBlock>
-												<TextBlock>
-											<Run Text="Kích thước:"
-													Foreground="#FF7B8797"
-													FontSize="12" />
+												<TextBlock  Margin="0,3,0,0">
+													<Run Text="Kích thước:"
+														 Foreground="#FF7B8797"
+														 FontSize="12" />
 												</TextBlock>
 											</StackPanel>
 

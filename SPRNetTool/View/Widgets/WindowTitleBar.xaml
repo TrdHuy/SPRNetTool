@@ -296,7 +296,7 @@
 									  Width="16"
 									  Height="16"
 									  Fill="White"
-									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+									  Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkspaceGeometry}}" />
 							</MenuItem.Icon>
 						</MenuItem>
 						<MenuItem Header="Pak work space"
@@ -307,7 +307,7 @@
 									   Width="16"
 									   Fill="White"
 									   Height="16"
-									   Data="{StaticResource ResourceKey={x:Static def:Definitions.SprWorkSpaceIconGeometry}}" />
+									   Data="{StaticResource ResourceKey={x:Static def:Definitions.PakWorkspaceGeometry}}" />
 							</MenuItem.Icon>
 						</MenuItem>
 					</MenuItem>

@@ -60,12 +60,16 @@ namespace ArtWiz
         public static ResourceKey DropDownIconGeometry { get; } = CreateResourceKey();
         public static ResourceKey FileImportIconGeometry { get; } = CreateResourceKey();
         public static ResourceKey DeveloperModeIconGeometry { get; } = CreateResourceKey();
-        public static ResourceKey SprWorkSpaceIconGeometry { get; } = CreateResourceKey();
         public static ResourceKey ArtWizLogoGeometry { get; } = CreateResourceKey();
         public static ResourceKey ArtWizTextLogoGeometry { get; } = CreateResourceKey();
         public static ResourceKey RightArrowIconGeometry { get; } = CreateResourceKey();
         public static ResourceKey LeftArrowIconGeometry { get; } = CreateResourceKey();
-        
+        public static ResourceKey TrashIconGeometry { get; } = CreateResourceKey();
+        public static ResourceKey FolderPlusGeometry { get; } = CreateResourceKey();
+        public static ResourceKey FileZipperGeometry { get; } = CreateResourceKey();
+        public static ResourceKey SprWorkspaceGeometry { get; } = CreateResourceKey();
+        public static ResourceKey PakWorkspaceGeometry { get; } = CreateResourceKey();
+
         public static ResourceKey ArtWizDefaultWindowStyle { get; } = CreateResourceKey();
         public static ResourceKey UnidentifiedPreviewFrameSourceGeometry { get; } = CreateResourceKey();
 
