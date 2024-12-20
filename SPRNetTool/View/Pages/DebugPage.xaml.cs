@@ -73,6 +73,8 @@ namespace ArtWiz.View.Pages
 
         public override object ViewModel => DataContext;
 
+        public override string PageName => "Debug page";
+
         //TODO: remove this because it belong to domain layer
         private DebugPageViewModel viewModel;
         private IDebugPageCommand? commandVM;

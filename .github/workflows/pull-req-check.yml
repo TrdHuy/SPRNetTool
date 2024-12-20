@@ -81,12 +81,11 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     # Execute all unit tests in the solution
-    - name: Execute unit tests
+    - name: Setup Dezone nuget source
       run: |
         dotnet nuget remove source "trdhuy-nuget-package-source"
         dotnet nuget add source "https://nuget.pkg.github.com/TrdHuy/index.json" --name "trdhuy-nuget-package-source" --username "trdtranduchuy@gmail.com" --password "${{ secrets.WORK_FLOW_ACCESS_TOKEN }}"
         dotnet restore
-        dotnet test /p:DezoneAdminToken=${{ secrets.WORK_FLOW_ACCESS_TOKEN }} /p:ShouldResolveDezonePkgReferences=none /p:DezoneResourceKey=${{ secrets.DEZ_CLIENT_RES_KEY }} /p:ShouldSkipDezVersionCheck=true
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application

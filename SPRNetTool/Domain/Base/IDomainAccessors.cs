@@ -24,7 +24,10 @@ namespace ArtWiz.Domain.Base
                     },
                     {
                         typeof(IDeviceConfigManager), BuildValue(null, () => new DeviceConfigManager())
-                    }
+                    },
+                    {
+                        typeof(IPakWorkManager), BuildValue(null, () => new PakWorkManagerImpl())
+                    },
                 };
             }
 

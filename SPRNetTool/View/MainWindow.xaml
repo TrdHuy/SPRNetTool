@@ -11,9 +11,9 @@
 					   xmlns:def="clr-namespace:ArtWiz"
 					   mc:Ignorable="d"
 					   FontFamily="Calibri"
-					   Height="765"
+					   Height="900"
 					   StateChanged="OnWindowStateChanged"
-					   d:DesignWidth="1280">
+					   d:DesignWidth="1440">
 
 	<Window.DataContext>
 		<vm:MainWindowViewModel />

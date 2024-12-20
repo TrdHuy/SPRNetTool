@@ -31,6 +31,9 @@ namespace ArtWiz.View.Pages
     public partial class SprEditorPage : BasePageViewer
     {
         public override object ViewModel => DataContext;
+
+        public override string PageName => "SPR EDITOR";
+
         private IDebugPageCommand? commandVM;
         private DebugPageViewModel? viewModel;
         private Window ownerWindow;
