@@ -88,7 +88,7 @@ jobs:
         run: |
             ./arcrunner.bat
       - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+        uses: actions/upload-artifact@v3
         with:
             name: ArcReport # Artifact name        
             path: .sam-dir\sam-result # Directory containing files to upload
