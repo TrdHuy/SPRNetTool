@@ -26,11 +26,6 @@
 		</ScrollViewer.Resources>
 		<wg:FrameLineEditorVirtualizingPanel Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}"
 											 x:Name="FrameLinePanel">
-			<wg:FrameLineEditorVirtualizingPanel.Resources>
-				<cvt:FormulaConverter x:Key="FormulaConverter" />
-				<cvt:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
-				<cvt:BoolToObjectConverter x:Key="BoolToObjectConverter" />
-			</wg:FrameLineEditorVirtualizingPanel.Resources>
 
 			<Line X1="0"
 				  X2="{Binding ElementName=FrameLinePanel, Path=ActualWidth}"

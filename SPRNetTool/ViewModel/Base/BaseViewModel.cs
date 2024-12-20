@@ -8,6 +8,7 @@ namespace ArtWiz.ViewModel.Base
         #region Modules
         private IBitmapDisplayManager? bitmapDisplayManager;
         private ISprWorkManager? sprWorkManager;
+        private IPakWorkManager? pakWorkManager;
         private IDeviceConfigManager? deviceConfigManager;
 
         protected IDeviceConfigManager DeviceConfigManager
@@ -41,6 +42,18 @@ namespace ArtWiz.ViewModel.Base
                     .DomainContext
                     .GetDomain<ISprWorkManager>()
                     .Also(it => sprWorkManager = it);
+            }
+        }
+
+        protected IPakWorkManager PakWorkManager
+        {
+            get
+            {
+                return pakWorkManager ??
+                    IDomainAccessors
+                    .DomainContext
+                    .GetDomain<IPakWorkManager>()
+                    .Also(it => pakWorkManager = it);
             }
         }
         #endregion

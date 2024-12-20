@@ -1,6 +1,7 @@
 ﻿using ArtWiz.Utils;
 using ArtWiz.ViewModel.Widgets;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,6 +49,188 @@ namespace ArtWiz.View.Widgets
         {
             get { return GetValue(ViewModelProperty) as IBitmapViewerViewModel; }
             set { SetValue(ViewModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxMarginProperty
+            = DependencyProperty.Register("ToolBoxMargin", typeof(Thickness), typeof(BitmapViewer),
+                                          new FrameworkPropertyMetadata(
+                                                new Thickness(0, 0, 5, 0),
+                                                FrameworkPropertyMetadataOptions.AffectsMeasure),
+                                          new ValidateValueCallback(IsMarginValid));
+
+        private static bool IsMarginValid(object value)
+        {
+            Thickness m = (Thickness)value;
+            return m.IsValid(true, false, true, false);
+        }
+
+        public Thickness ToolBoxMargin
+        {
+            get { return (Thickness)GetValue(ToolBoxMarginProperty); }
+            set { SetValue(ToolBoxMarginProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxBackgroundProperty =
+             DependencyProperty.Register(
+                 "ToolBoxBackground",
+                 typeof(Brush),
+                 typeof(BitmapViewer),
+                 new FrameworkPropertyMetadata(
+                     DesignerProperties.GetIsInDesignMode(new DependencyObject())
+                         ? Brushes.White
+                         : Application.Current.FindResource(Definitions.BackgroundLevel2) ?? Brushes.Transparent, // Giá trị khi runtime
+                     FrameworkPropertyMetadataOptions.AffectsRender
+                 )
+             );
+        public Brush ToolBoxBackground
+        {
+            get { return (Brush)GetValue(ToolBoxBackgroundProperty); }
+            set { SetValue(ToolBoxBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxBorderBrushProperty =
+            DependencyProperty.Register(
+                "ToolBoxBorderBrush",
+                typeof(Brush),
+                typeof(BitmapViewer),
+                new FrameworkPropertyMetadata(
+                    Application.Current.FindResource(Definitions.BackgroundLevel10),
+                    FrameworkPropertyMetadataOptions.AffectsRender
+                )
+            );
+
+        public Brush ToolBoxBorderBrush
+        {
+            get { return (Brush)GetValue(ToolBoxBorderBrushProperty); }
+            set { SetValue(ToolBoxBorderBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxWidthProperty =
+            DependencyProperty.Register(
+                "ToolBoxWidth",
+                typeof(double),
+                typeof(BitmapViewer),
+                new FrameworkPropertyMetadata(
+                    40d,
+                    FrameworkPropertyMetadataOptions.AffectsRender
+                )
+            );
+
+        public double ToolBoxWidth
+        {
+            get { return (double)GetValue(ToolBoxWidthProperty); }
+            set { SetValue(ToolBoxWidthProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxIconSizeProperty =
+            DependencyProperty.Register(
+                "ToolBoxIconSize",
+                typeof(double),
+                typeof(BitmapViewer),
+                new FrameworkPropertyMetadata(
+                    26d,
+                    FrameworkPropertyMetadataOptions.AffectsRender
+                )
+            );
+
+        public double ToolBoxIconSize
+        {
+            get { return (double)GetValue(ToolBoxIconSizeProperty); }
+            set { SetValue(ToolBoxIconSizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxIconFillProperty =
+            DependencyProperty.Register(
+                "ToolBoxIconFill",
+                typeof(Brush),
+                typeof(BitmapViewer),
+                new FrameworkPropertyMetadata(
+                    Application.Current.FindResource(Definitions.BackgroundLevel2),
+                    FrameworkPropertyMetadataOptions.AffectsRender
+                )
+            );
+
+        public Brush ToolBoxIconFill
+        {
+            get { return (Brush)GetValue(ToolBoxIconFillProperty); }
+            set { SetValue(ToolBoxIconFillProperty, value); }
+        }
+
+        public static readonly DependencyProperty ToolBoxIconStrokeProperty =
+            DependencyProperty.Register(
+                "ToolBoxIconStroke",
+                typeof(Brush),
+                typeof(BitmapViewer),
+                new FrameworkPropertyMetadata(
+                    Application.Current.FindResource(Definitions.ForegroundLevel1),
+                    FrameworkPropertyMetadataOptions.AffectsRender
+                )
+            );
+
+        public Brush ToolBoxIconStroke
+        {
+            get { return (Brush)GetValue(ToolBoxIconStrokeProperty); }
+            set { SetValue(ToolBoxIconStrokeProperty, value); }
+        }
+
+        // UseFitToScreenFunction
+        public static readonly DependencyProperty UseFitToScreenFunctionProperty =
+            DependencyProperty.Register("UseFitToScreenFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseFitToScreenFunction
+        {
+            get { return (bool)GetValue(UseFitToScreenFunctionProperty); }
+            set { SetValue(UseFitToScreenFunctionProperty, value); }
+        }
+
+        // UseTransparentBackgroundFunction
+        public static readonly DependencyProperty UseTransparentBackgroundFunctionProperty =
+            DependencyProperty.Register("UseTransparentBackgroundFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseTransparentBackgroundFunction
+        {
+            get { return (bool)GetValue(UseTransparentBackgroundFunctionProperty); }
+            set { SetValue(UseTransparentBackgroundFunctionProperty, value); }
+        }
+
+        // UseTransparenDecodedFrameBackgroundFunction
+        public static readonly DependencyProperty UseTransparenDecodedFrameBackgroundFunctionProperty =
+            DependencyProperty.Register("UseTransparenDecodedFrameBackgroundFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseTransparenDecodedFrameBackgroundFunction
+        {
+            get { return (bool)GetValue(UseTransparenDecodedFrameBackgroundFunctionProperty); }
+            set { SetValue(UseTransparenDecodedFrameBackgroundFunctionProperty, value); }
+        }
+
+        // UseLayoutBoundFunction
+        public static readonly DependencyProperty UseLayoutBoundFunctionProperty =
+            DependencyProperty.Register("UseLayoutBoundFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseLayoutBoundFunction
+        {
+            get { return (bool)GetValue(UseLayoutBoundFunctionProperty); }
+            set { SetValue(UseLayoutBoundFunctionProperty, value); }
+        }
+
+        // UseResetViewPortPositionFunction
+        public static readonly DependencyProperty UseResetViewPortPositionFunctionProperty =
+            DependencyProperty.Register("UseResetViewPortPositionFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseResetViewPortPositionFunction
+        {
+            get { return (bool)GetValue(UseResetViewPortPositionFunctionProperty); }
+            set { SetValue(UseResetViewPortPositionFunctionProperty, value); }
+        }
+
+        // UseZoomFunction
+        public static readonly DependencyProperty UseZoomFunctionProperty =
+            DependencyProperty.Register("UseZoomFunction", typeof(bool), typeof(BitmapViewer), new PropertyMetadata(true));
+
+        public bool UseZoomFunction
+        {
+            get { return (bool)GetValue(UseZoomFunctionProperty); }
+            set { SetValue(UseZoomFunctionProperty, value); }
         }
 
         private DraggableCanvasController draggableCanvasController;

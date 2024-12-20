@@ -43,16 +43,6 @@ namespace ArtWiz.View.Base
         {
             base.OnInitialized(e);
             ViewModel.IfIs<IArtWizViewModel>((it) => it.OnArtWizViewModelOwnerCreate(this));
-        }
-
-        protected MenuItem? _sprWorkSpaceItem;
-        protected MenuItem? _devModeMenuItem;
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            _sprWorkSpaceItem = _windowTitleBar?.SprWorkSpceMenu ?? throw new Exception();
-            _devModeMenuItem = _windowTitleBar?.DeveloperModeMenu ?? throw new Exception();
-        }
+        }      
     }
 }

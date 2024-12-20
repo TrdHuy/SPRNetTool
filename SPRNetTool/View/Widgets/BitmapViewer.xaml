@@ -22,17 +22,17 @@
 			<Setter Property="IsEllipse"
 					Value="False" />
 			<Setter Property="Height"
-					Value="26" />
+					Value="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxIconSize, FallbackValue=26}" />
 			<Setter Property="Width"
-					Value="26" />
+					Value="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxIconSize, FallbackValue=26}" />
 			<Setter Property="Margin"
 					Value="0,10,0,0" />
 			<Setter Property="StrokeThickness"
 					Value="2" />
 			<Setter Property="Fill"
-					Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}" />
+					Value="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxIconFill, FallbackValue=White}" />
 			<Setter Property="Stroke"
-					Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+					Value="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxIconStroke, FallbackValue=Black}" />
 		</Style>
 	</UserControl.Resources>
 
@@ -42,10 +42,10 @@
 			<ColumnDefinition x:Name="ContentColumn" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="*" />
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
-		
+
 		<Border Grid.Column="1"
 				BorderThickness="1"
 				BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}">
@@ -269,13 +269,14 @@
 
 		<Border Grid.Column="0"
 				BorderThickness="1"
-				Margin="0,0,5,0"
+				Margin="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxMargin}"
 				Grid.RowSpan="2"
-				Width="40"
-				BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
-				Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}">
+				Width="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxWidth, FallbackValue=40}"
+				BorderBrush="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxBorderBrush}"
+				Background="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxBackground, FallbackValue={StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}}">
 			<StackPanel Orientation="Vertical">
 				<local:IconToggle x:Name="FitToScreenButton"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseFitToScreenFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  Click="FitToScreenButtonClick"
 								  ToolTip="Fit content to screen size"
 								  Style="{StaticResource ToolButtonStyle}"
@@ -283,8 +284,8 @@
 								  OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.FitToScreenIconGeometry}}"
 								  DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.UnFitToScreenIconGeometry}}" />
 
-
 				<local:IconToggle x:Name="TransparentBackgroundButton"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseTransparentBackgroundFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  Click="TransparentBackgroundButtonClick"
 								  ToolTip="Transparent global background"
 								  Style="{StaticResource ToolButtonStyle}"
@@ -293,6 +294,7 @@
 								  DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.GlobalTransparentBackgroundIconGeometry}}" />
 
 				<local:IconToggle x:Name="TransparenDecodedFrameBackgroundButton"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseTransparenDecodedFrameBackgroundFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  Click="TransparenDecodedFrameBackgroundButtonClick"
 								  ToolTip="Transparent global background"
 								  Style="{StaticResource ToolButtonStyle}"
@@ -301,6 +303,7 @@
 								  DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.FrameTransparentBackgroundIconGeometry}}" />
 
 				<local:IconToggle x:Name="LayoutBoundButton"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseLayoutBoundFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  Click="ShowLayoutBoundButtonClick"
 								  ToolTip="Transparent global background"
 								  Style="{StaticResource ToolButtonStyle}"
@@ -310,6 +313,7 @@
 								  DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.LayoutBoundIconGeometry}}" />
 
 				<local:IconToggle Click="ResetViewPortPositionButtonClick"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseResetViewPortPositionFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  ToolTip="Reset view port position"
 								  Style="{StaticResource ToolButtonStyle}"
 								  OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
@@ -317,8 +321,8 @@
 								  DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}" />
 
 				<local:IconToggle x:Name="ZoomButton"
+								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseZoomFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
 								  Style="{StaticResource ToolButtonStyle}"
-								  Margin="0,12"
 								  IsEnabled="{Binding ElementName=FitToScreenButton, Path=IsChecked}"
 								  ToolTip="Reset view port position"
 								  OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.MagnifyIconGeometry}}"

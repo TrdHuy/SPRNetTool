@@ -3,7 +3,109 @@
 					xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-					xmlns:local="clr-namespace:ArtWiz">
+					xmlns:local="clr-namespace:ArtWiz"
+					xmlns:def="clr-namespace:ArtWiz">
+
+	
+	<FontFamily x:Key="{x:Static local:Definitions.FontAwsome}">
+		/ArtWiz;component/Resources/Font Awesome 6 Free-Solid-900.otf#Font Awesome 6 Free Solid
+	</FontFamily>
+
+	<!--#region FiraSans Font-->
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Black}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Black.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_BlackItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-BlackItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Bold}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Bold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_BoldItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-BoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraBold}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-ExtraBold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraBoldItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-ExtraBoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraLight}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-ExtraLight.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ExtraLightItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-ExtraLightItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Italic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Italic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Light}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Light.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_LightItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-LightItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Medium}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Medium.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_MediumItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-MediumItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Regular}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Regular.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_SemiBold}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-SemiBold.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_SemiBoldItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-SemiBoldItalic.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_Thin}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-Thin.ttf#Fira Sans
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontFiraSans_ThinItalic}">
+		/ArtWiz;component/Resources/Fonts/Fira_Sans/FiraSans-ThinItalic.ttf#Fira Sans
+	</FontFamily>
+	<!--#endregion-->
+
+	<!--#region Roboto Font-->
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Black}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Black.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_BlackItalic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-BlackItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Bold}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Bold.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_BoldItalic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-BoldItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Italic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Italic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Light}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Light.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_LightItalic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-LightItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Medium}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Medium.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_MediumItalic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-MediumItalic.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Regular}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Regular.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_Thin}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-Thin.ttf#Roboto
+	</FontFamily>
+	<FontFamily x:Key="{x:Static local:Definitions.FontRoboto_Roboto_ThinItalic}">
+		/ArtWiz;component/Resources/Fonts/Roboto/Roboto-ThinItalic.ttf#Roboto
+	</FontFamily>
+	<!--#endregion-->
 
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel0}">#FF000000</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1}">#FF151515</Color>
@@ -21,7 +123,7 @@
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}">#3089B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel3}">#4C989898</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel4}">#4CEB2838</Color>
-	
+
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
@@ -54,14 +156,29 @@
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel3}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel4}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel4}" />
-	
+
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBackground}"
 					 Color="#FF232323" />
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MenuItemBorderBrush}"
 					 Color="#FF3B3B3B" />
 	<SolidColorBrush x:Key="{x:Static local:Definitions.MouseOverMenuItemBackgroundBrush}"
-					 Color="#FF131E0C" />
+					 Color="#55646F" />
 
+	<Geometry x:Key="{x:Static local:Definitions.PakWorkspaceGeometry}">
+		M40.1 467.1l-11.2 9c-3.2 2.5-7.1 3.9-11.1 3.9C8 480 0 472 0 462.2L0 192C0 86 86 0 192 0S384 86 384 192l0 270.2c0 9.8-8 17.8-17.8 17.8c-4 0-7.9-1.4-11.1-3.9l-11.2-9c-13.4-10.7-32.8-9-44.1 3.9L269.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6l-26.6-30.5c-12.7-14.6-35.4-14.6-48.2 0L141.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6L84.2 471c-11.3-12.9-30.7-14.6-44.1-3.9zM160 192a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.SprWorkspaceGeometry}">
+		M96 32l0 96 128 0 0-96c0-17.7-14.3-32-32-32L128 0C110.3 0 96 14.3 96 32zm0 128c-53 0-96 43-96 96L0 464c0 26.5 21.5 48 48 48l224 0c26.5 0 48-21.5 48-48l0-208c0-53-43-96-96-96L96 160zm64 96a80 80 0 1 1 0 160 80 80 0 1 1 0-160zM384 48c0-1.4-1-3-2.2-3.6L352 32 339.6 2.2C339 1 337.4 0 336 0s-3 1-3.6 2.2L320 32 290.2 44.4C289 45 288 46.6 288 48c0 1.4 1 3 2.2 3.6L320 64l12.4 29.8C333 95 334.6 96 336 96s3-1 3.6-2.2L352 64l29.8-12.4C383 51 384 49.4 384 48zm76.4 45.8C461 95 462.6 96 464 96s3-1 3.6-2.2L480 64l29.8-12.4C511 51 512 49.4 512 48c0-1.4-1-3-2.2-3.6L480 32 467.6 2.2C467 1 465.4 0 464 0s-3 1-3.6 2.2L448 32 418.2 44.4C417 45 416 46.6 416 48c0 1.4 1 3 2.2 3.6L448 64l12.4 29.8zm7.2 100.4c-.6-1.2-2.2-2.2-3.6-2.2s-3 1-3.6 2.2L448 224l-29.8 12.4c-1.2 .6-2.2 2.2-2.2 3.6c0 1.4 1 3 2.2 3.6L448 256l12.4 29.8c.6 1.2 2.2 2.2 3.6 2.2s3-1 3.6-2.2L480 256l29.8-12.4c1.2-.6 2.2-2.2 2.2-3.6c0-1.4-1-3-2.2-3.6L480 224l-12.4-29.8zM448 144c0-1.4-1-3-2.2-3.6L416 128 403.6 98.2C403 97 401.4 96 400 96s-3 1-3.6 2.2L384 128l-29.8 12.4c-1.2 .6-2.2 2.2-2.2 3.6c0 1.4 1 3 2.2 3.6L384 160l12.4 29.8c.6 1.2 2.2 2.2 3.6 2.2s3-1 3.6-2.2L416 160l29.8-12.4c1.2-.6 2.2-2.2 2.2-3.6z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.FileZipperGeometry}">
+		M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM96 48c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8l14.8 0c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4c0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5 .7-11.1 2.1-16.4l23.5-88.2zM112 336c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.FolderPlusGeometry}">
+		M512 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l128 0c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8l160 0c35.3 0 64 28.7 64 64l0 256zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24l0-64 64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0 0-64c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 64-64 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0 0 64z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.TrashIconGeometry}">
+		M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z
+	</Geometry>
 	<Geometry x:Key="{x:Static local:Definitions.PlayIconGeometry}">
 		m -89.988593,210.08636 c -0.498979,-0.26037 -1.153823,-0.80945 -1.455209,-1.22019 -0.535655,-0.73 -0.549535,-1.06012 -0.617408,-14.68437 -0.06413,-12.87337 -0.03383,-14.00686 0.396875,-14.84482 0.641841,-1.24874 1.736853,-1.99116 2.936828,-1.99116 0.831857,0 2.78298,1.09172 12.047283,6.74087 6.080068,3.70747 11.3375,7.0192 11.683184,7.3594 1.047191,1.03057 1.316365,2.26422 0.79303,3.63455 -0.408922,1.07074 -0.722344,1.33842 -3.797983,3.24362 -11.441501,7.08744 -19.629504,11.96319 -20.302382,12.08957 -0.484814,0.0911 -1.118133,-0.0321 -1.684218,-0.32747 z
 	</Geometry>
@@ -116,9 +233,6 @@
 
 	<Geometry x:Key="{x:Static local:Definitions.DeveloperModeIconGeometry}">
 		m 18.334887,-550.04094 c -4.664115,0 -8.4191246,3.75502 -8.4191246,8.41912 v 29.93412 c 0,4.6641 3.7550096,8.41912 8.4191246,8.41912 h 28.437539 c 4.664115,0 8.418608,-3.75502 8.418608,-8.41912 v -29.93412 c 0,-4.6641 -3.754493,-8.41912 -8.418608,-8.41912 z m 0.3545,12.75324 c 0.656044,0 1.312181,0.24709 1.814876,0.74155 l 9.607682,9.45059 c 0.471278,0.46358 0.721409,1.05958 0.750859,1.66397 0.0019,0.0403 0.0031,0.0806 0.0031,0.12094 0,0.60497 -0.22067,1.21015 -0.662491,1.69085 -0.02945,0.032 -0.06005,0.0632 -0.09147,0.0941 l -9.607682,9.45057 c -1.00539,0.98893 -2.624362,0.98893 -3.629752,0 -1.005391,-0.98894 -1.005391,-2.58138 0,-3.57032 l 7.793322,-7.66516 -7.793322,-7.66516 c -1.005391,-0.98894 -1.005391,-2.58141 0,-3.57034 0.502694,-0.49446 1.158831,-0.74155 1.814876,-0.74155 z m 14.506091,18.49345 h 13.671516 c 1.398558,0 2.524395,1.12582 2.524395,2.52439 0,1.39856 -1.125837,2.52439 -2.524395,2.52439 H 33.195478 c -1.398556,0 -2.524394,-1.12583 -2.524394,-2.52439 0,-1.39857 1.125838,-2.52439 2.524394,-2.52439 z
-	</Geometry>
-	<Geometry x:Key="{x:Static local:Definitions.SprWorkSpaceIconGeometry}">
-		m 97.759789,-541.98656 c -0.922238,-0.37779 -1.173616,-1.54605 -0.500796,-2.32742 0.409915,-0.47605 0.409915,-0.47605 3.400077,-0.5294 1.64459,-0.0294 2.99016,-0.0888 2.99016,-0.13209 0,-0.0433 -0.49726,-2.05951 -1.10502,-4.48045 -0.60777,-2.42094 -1.10503,-4.57073 -1.10503,-4.77731 0,-0.25924 0.89934,-1.27849 2.90301,-3.29008 2.90302,-2.91449 2.90302,-2.91449 2.36777,-3.67235 -1.33589,-1.89151 -0.49304,-4.36287 1.6641,-4.87934 1.36647,-0.32716 2.03031,-0.0524 3.67033,1.51894 l 1.39494,1.33656 3.4502,0.0526 c 3.45019,0.0526 3.45019,0.0526 3.86015,0.52868 0.24707,0.2869 0.40995,0.69012 0.40995,1.01485 0,0.48018 -0.55334,1.09106 -5.08504,5.61383 -4.99987,4.99001 -5.09455,5.07319 -5.65263,4.96614 -0.31217,-0.0599 -0.73971,-0.30409 -0.95009,-0.54268 -0.36545,-0.41447 -0.38251,-0.56585 -0.38251,-3.39356 0,-1.62786 -0.0585,-2.95974 -0.12996,-2.95974 -0.0715,0 -1.11027,0.98056 -2.30844,2.17903 l -2.17849,2.17903 1.08893,4.3108 1.08894,4.31079 3.78463,0.0848 c 3.78464,0.0848 3.78464,0.0848 4.19458,0.56088 0.52397,0.60847 0.52388,1.32398 -1.7e-4,1.93227 -0.41019,0.47605 -0.41019,0.47605 -8.45769,0.51022 -4.42613,0.0188 -8.211451,-0.033 -8.411826,-0.11507 z m 18.667861,-10.88076 c -0.73688,-0.37096 -0.73688,-0.37096 0.84666,-1.95799 0.87096,-0.87286 1.63372,-1.58702 1.69504,-1.58702 0.20015,0 0.66026,1.14224 0.65961,1.63749 -8.5e-4,0.58435 -0.51637,1.47179 -1.06266,1.82903 -0.69723,0.45594 -1.34187,0.4796 -2.13865,0.0785 z
 	</Geometry>
 	<Geometry x:Key="{x:Static local:Definitions.ArtWizLogoGeometry}">
 		m 16.200181,0.01255691 c -0.9,0 -1.8,0.3 -2.9,0.9 c -2,1.09999999 -2,0.99999999 -0.4,1.89999999 c 1.1,0.6 6.9,3.9 12.1,7 c 3.1,1.7000001 3,1.6000001 3,11.9000001 v 8.6 l 1.1,-0.5 c 3.5,-1.9 3.7,-2.4 3.7,-11.7 c 0,-10.6000001 1.3,-8.8000001 -12.5,-16.7000001 c -1.7,-0.99999999 -2.9,-1.49999999 -4.1,-1.39999999 z M 8.9001813,4.2125569 c -1.1,0 -2.2,0.5 -4,1.6 c -5.00000002,2.9 -4.90000002006,2.5 -4.90000002006,12.2000001 c 0,9.7 -0.0999999999,9.5 4.40000002006,12.1 c 8.4999997,5 9.9999997,5.8 10.7999997,6 c 1.4,0.3 2.9,0 5.3,-1.4 c 5.2,-2.9 5,-2.3 4.8,-12.9 c -0.1,-9.7 0.4,-8.6 -5.1,-11.8 c -2.3,-1.3000001 -5.5,-3.2000001 -7.1,-4.1000001 c -1.9,-1.1 -3.1,-1.7 -4.1999997,-1.7 z m -0.1,5.1 c 0.4,0.1 1.2999997,0.5 3.3999997,1.7000001 c 4.1,2.3 6.8,3.9 7.6,4.4 c 0.6,0.3 0.6,0.4 0.6,7 v 6.7 l -1.4,0.9 c -2,1.2 -3.3,1.1 -5.5,-0.2 c -1,-0.6 -3,-1.8 -4.5999997,-2.8 c -4.1,-2.3 -4.1,-2.4 -4.1,-8.9 c 0,-6.4 0.2,-6.9 3.6,-8.7000001 c 0.1,0 0.2,-0.1 0.4,-0.1 z m -1.2,2.2000001 c -0.1,0 -0.2,2.3 -0.2,5.2 c 0,6.9 -0.3,6.3 5.3999997,9.6 c 2.5,1.5 4.6,2.6 4.7,2.6 c 0.1,0 0.2,-1.2 0.2,-2.7 v -2.7 l -2.6,-1.5 l -2.7,-1.5 v -3.2 v -3.1 l -2.3,-1.4 c -1.2999997,-0.7 -2.3999997,-1.3 -2.4999997,-1.3 z
@@ -585,12 +699,6 @@
 		<Setter Property="ResizeMode"
 				Value="CanResizeWithGrip" />
 
-		<Setter Property="shell:WindowChrome.WindowChrome">
-			<Setter.Value>
-				<shell:WindowChrome CaptionHeight="40" />
-			</Setter.Value>
-		</Setter>
-
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Window}">
@@ -633,7 +741,7 @@
 									<!--Title bar-->
 									<Grid x:Name="TitleBartGrid"
 										  Grid.Row="0"
-										  Height="40"
+										  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
 										  Background="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel10}}"
 										  VerticalAlignment="Stretch">
 
@@ -645,25 +753,9 @@
 
 										</Grid.ColumnDefinitions>
 
-										<wg:WindowTitleBar x:Name="WindowTitleBar" />
-										<!--Title-->
-										<Viewbox x:Name="TitleViewBox"
-												 Grid.Column="0"
-												 HorizontalAlignment="Left"
-												 Grid.ColumnSpan="3"
-												 Margin="20,8,8,8">
-											<TextBlock x:Name="SubContentTitleText"
-													   FontWeight="Bold"
-													   FontFamily="Calibri"
-													   Text="{TemplateBinding Title}"
-													   TextAlignment="Center" />
-										</Viewbox>
-
-										<!--Window Buttons-->
-										<StackPanel x:Name="WindowControlPanel"
-													Grid.Column="1"
-													Orientation="Horizontal">
-										</StackPanel>
+										<wg:WindowTitleBar x:Name="WindowTitleBar"
+														   WindowBarHeight="69"
+														   Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}" />
 
 									</Grid>
 
@@ -790,6 +882,342 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+	</Style>
+
+	<Style x:Key="{x:Static local:Definitions.MenuParentStyle}"
+		   TargetType="MenuItem">
+		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+				Value="True" />
+		<Setter Property="Foreground"
+				Value="White" />
+		<Setter Property="BorderBrush"
+				Value="Blue" />
+		<Setter Property="ItemContainerStyle"
+				Value="{DynamicResource MenuItemContainerStyle}" />
+		<Setter Property="Template"
+				Value="{DynamicResource MenuItemControlTemplate2}" />
+		<Style.Resources>
+			<SolidColorBrush x:Key="Menu.Static.Foreground"
+							 Color="White" />
+			<SolidColorBrush x:Key="Menu.Static.Background"
+							 Color="Black" />
+			<SolidColorBrush x:Key="Menu.Static.Border"
+							 Color="Transparent" />
+			
+			<Style x:Key="MenuItemContainerStyle"
+				   TargetType="{x:Type MenuItem}">
+				<Setter Property="HorizontalContentAlignment"
+						Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="VerticalContentAlignment"
+						Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="Background"
+						Value="Transparent" />
+				<Setter Property="BorderBrush"
+						Value="Transparent" />
+				<Setter Property="Foreground"
+						Value="White" />
+
+				<Setter Property="ScrollViewer.PanningMode"
+						Value="Both" />
+				<Setter Property="Stylus.IsFlicksEnabled"
+						Value="False" />
+
+				<Setter Property="Template"
+						Value="{DynamicResource MenuItemControlTemplate1}" />
+				<Style.Triggers>
+					<Trigger Property="Role"
+							 Value="TopLevelHeader">
+						<Setter Property="Background"
+								Value="Transparent" />
+						<Setter Property="BorderBrush"
+								Value="Transparent" />
+						<Setter Property="Foreground"
+								Value="{StaticResource Menu.Static.Foreground}" />
+						<Setter Property="Template"
+								Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
+						<Setter Property="Padding"
+								Value="6,0" />
+					</Trigger>
+					<Trigger Property="Role"
+							 Value="TopLevelItem">
+						<Setter Property="Background"
+								Value="{StaticResource Menu.Static.Background}" />
+						<Setter Property="BorderBrush"
+								Value="{StaticResource Menu.Static.Border}" />
+						<Setter Property="Foreground"
+								Value="{StaticResource Menu.Static.Foreground}" />
+						<Setter Property="Template"
+								Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
+						<Setter Property="Padding"
+								Value="6,0" />
+					</Trigger>
+					<Trigger Property="Role"
+							 Value="SubmenuHeader">
+						<Setter Property="Template"
+								Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
+					</Trigger>
+					<Trigger Property="IsMouseOver"
+							 Value="true">
+						<Setter Property="Background"
+								Value="Pink" />
+					</Trigger>
+					<Trigger Property="IsKeyboardFocusWithin"
+							 Value="true">
+						<Setter Property="Background"
+								Value="{StaticResource ResourceKey={x:Static def:Definitions.MouseOverMenuItemBackgroundBrush}}" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+			<ControlTemplate x:Key="MenuItemControlTemplate1"
+							 TargetType="{x:Type MenuItem}">
+				<Border x:Name="templateRoot"
+						MinWidth="200"
+						MinHeight="40"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						Background="{TemplateBinding Background}"
+						SnapsToDevicePixels="True">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="2" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="2" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="10" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="2" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="20" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<ContentPresenter x:Name="Icon"
+										  Grid.Row="1"
+										  Content="{TemplateBinding Icon}"
+										  ContentSource="Icon"
+										  HorizontalAlignment="Center"
+										  Grid.Column="3"
+										  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										  VerticalAlignment="Center" />
+						<Border x:Name="GlyphPanel"
+								BorderBrush="#FF26A0DA"
+								BorderThickness="1"
+								Grid.Row="1"
+								Grid.Column="1"
+								Background="#3D26A0DA"
+								ClipToBounds="False"
+								HorizontalAlignment="Center"
+								Height="22"
+								Visibility="Collapsed"
+								VerticalAlignment="Center"
+								Width="22">
+							<Path x:Name="Glyph"
+								  Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z"
+								  Fill="#FF212121"
+								  FlowDirection="LeftToRight"
+								  Height="11"
+								  Width="10" />
+						</Border>
+						<TextBlock x:Name="HeaderTextBlock"
+								   Text="{TemplateBinding Header}"
+								   Grid.Column="5"
+								   Grid.Row="1"
+								   FontSize="16"
+								   FontFamily="Calibri"
+								   VerticalAlignment="Center"
+								   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</Grid>
+				</Border>
+				<ControlTemplate.Triggers>
+					<Trigger Property="Icon"
+							 Value="{x:Null}">
+						<Setter Property="Visibility"
+								TargetName="Icon"
+								Value="Collapsed" />
+					</Trigger>
+					<Trigger Property="IsChecked"
+							 Value="True">
+						<Setter Property="Visibility"
+								TargetName="GlyphPanel"
+								Value="Visible" />
+						<Setter Property="Visibility"
+								TargetName="Icon"
+								Value="Collapsed" />
+					</Trigger>
+					<Trigger Property="IsHighlighted"
+							 Value="True">
+						
+						<Setter Property="Background"
+								TargetName="templateRoot"
+								Value="#55646F" />
+					</Trigger>
+					<Trigger Property="IsEnabled"
+							 Value="False">
+						<Setter Property="TextElement.Foreground"
+								TargetName="templateRoot"
+								Value="#FF707070" />
+						<Setter Property="Fill"
+								TargetName="Glyph"
+								Value="#FF707070" />
+					</Trigger>
+					<MultiTrigger>
+						<MultiTrigger.Conditions>
+							<Condition Property="IsHighlighted"
+									   Value="True" />
+							<Condition Property="IsEnabled"
+									   Value="False" />
+						</MultiTrigger.Conditions>
+						<Setter Property="Background"
+								TargetName="templateRoot"
+								Value="#0A000000" />
+						<Setter Property="BorderBrush"
+								TargetName="templateRoot"
+								Value="#21000000" />
+					</MultiTrigger>
+				</ControlTemplate.Triggers>
+			</ControlTemplate>
+			
+			
+			<ControlTemplate x:Key="MenuItemControlTemplate2"
+							 TargetType="{x:Type MenuItem}">
+				<Border x:Name="templateRoot"
+						ClipToBounds="False"
+						SnapsToDevicePixels="True">
+
+					<Grid VerticalAlignment="Center"
+						  Margin="10,4"
+						  SnapsToDevicePixels="True">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+
+						<Border x:Name="EffectBorder"
+								Grid.ColumnSpan="2"
+								ClipToBounds="False"
+								Margin="-10,-4"
+								Background="{TemplateBinding Background}"
+								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBorderBrush}}">
+							<!--<Border.Effect>
+					<DropShadowEffect ShadowDepth="0"
+									  Color="#FF9CB297"
+									  Opacity="1"
+									  Direction="90"
+									  BlurRadius="20" />
+				</Border.Effect>-->
+						</Border>
+
+						<ContentPresenter x:Name="Icon"
+										  Content="{TemplateBinding Icon}"
+										  ContentSource="Icon"
+										  HorizontalAlignment="Center"
+										  Height="16"
+										  Margin="3"
+										  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										  VerticalAlignment="Center"
+										  Width="16" />
+						<Path x:Name="GlyphPanel"
+							  Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z"
+							  Fill="{TemplateBinding Foreground}"
+							  FlowDirection="LeftToRight"
+							  Margin="3"
+							  Visibility="Collapsed"
+							  VerticalAlignment="Center" />
+						<TextBlock x:Name="HeaderTextBlock"
+								   Text="{TemplateBinding Header}"
+								   Grid.Column="1"
+								   FontSize="14"
+								   FontFamily="{DynamicResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
+								   VerticalAlignment="Center"
+								   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						<Popup x:Name="PART_Popup"
+							   AllowsTransparency="True"
+							   Focusable="False"
+							   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+							   VerticalOffset="5"
+							   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+							   Placement="Bottom">
+							<Border x:Name="SubMenuBorder"
+									CornerRadius="20"
+									BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBorderBrush}}"
+									BorderThickness="2"
+									ClipToBounds="True"
+									Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
+									Padding="1,12">
+								<ScrollViewer x:Name="SubMenuScrollViewer"
+											  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+									<ItemsPresenter x:Name="ItemsPresenter"
+													KeyboardNavigation.DirectionalNavigation="Cycle"
+													Grid.IsSharedSizeScope="True"
+													SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+													KeyboardNavigation.TabNavigation="Cycle" />
+								</ScrollViewer>
+							</Border>
+						</Popup>
+					</Grid>
+				</Border>
+				<ControlTemplate.Triggers>
+					<Trigger Property="IsHighlighted"
+							 Value="True">
+						<Setter Property="Background"
+								TargetName="EffectBorder"
+								Value="{StaticResource ResourceKey={x:Static def:Definitions.MouseOverMenuItemBackgroundBrush}}" />
+						<Setter Property="BorderThickness"
+								TargetName="EffectBorder"
+								Value="1" />
+
+						<!--<Setter TargetName="EffectBorder2"
+					Property="Visibility"
+					Value="Visible" />-->
+					</Trigger>
+					<Trigger Property="IsSuspendingPopupAnimation"
+							 Value="True">
+						<Setter Property="PopupAnimation"
+								TargetName="PART_Popup"
+								Value="None" />
+					</Trigger>
+					<Trigger Property="Icon"
+							 Value="{x:Null}">
+						<Setter Property="Visibility"
+								TargetName="Icon"
+								Value="Collapsed" />
+					</Trigger>
+					<Trigger Property="IsChecked"
+							 Value="True">
+						<Setter Property="Visibility"
+								TargetName="GlyphPanel"
+								Value="Visible" />
+						<Setter Property="Visibility"
+								TargetName="Icon"
+								Value="Collapsed" />
+					</Trigger>
+
+					<Trigger Property="IsEnabled"
+							 Value="False">
+						<Setter Property="TextElement.Foreground"
+								TargetName="templateRoot"
+								Value="#FF707070" />
+						<Setter Property="Fill"
+								TargetName="GlyphPanel"
+								Value="#FF707070" />
+					</Trigger>
+					
+				</ControlTemplate.Triggers>
+			</ControlTemplate>
+		</Style.Resources>
+		<Style.Triggers>
+			<Trigger Property="IsHighlighted"
+					 Value="True">
+				<Setter Property="Panel.ZIndex"
+						Value="2" />
+			</Trigger>
+			<Trigger Property="IsHighlighted"
+					 Value="False">
+				<Setter Property="Panel.ZIndex"
+						Value="0" />
+			</Trigger>
+		</Style.Triggers>
 	</Style>
 
 </ResourceDictionary>

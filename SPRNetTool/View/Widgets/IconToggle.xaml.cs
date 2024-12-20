@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArtWiz.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,6 +8,26 @@ namespace ArtWiz.View.Widgets
 {
     public partial class IconToggle : UserControl
     {
+
+        public static readonly DependencyProperty IconBorderThicknessProperty
+           = DependencyProperty.Register("IconBorderThickness", typeof(Thickness), typeof(IconToggle),
+                                         new FrameworkPropertyMetadata(
+                                               new Thickness(0, 0, 0, 0),
+                                               FrameworkPropertyMetadataOptions.AffectsMeasure),
+                                         new ValidateValueCallback(IsMarginValid));
+
+        private static bool IsMarginValid(object value)
+        {
+            Thickness m = (Thickness)value;
+            return m.IsValid(true, false, true, false);
+        }
+
+        public Thickness IconBorderThickness
+        {
+            get { return (Thickness)GetValue(IconBorderThicknessProperty); }
+            set { SetValue(IconBorderThicknessProperty, value); }
+        }
+
         public static readonly DependencyProperty IsEnableToggleClickProperty =
                DependencyProperty.Register(
                        "IsEnableToggleClick",

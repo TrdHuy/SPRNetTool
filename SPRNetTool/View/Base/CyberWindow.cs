@@ -1,13 +1,27 @@
-﻿using ArtWiz.View.Widgets;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shell;
 using WinInterop = System.Windows.Interop;
 
 namespace ArtWiz.View.Base
 {
+    public interface IWindowTitleBar
+    {
+        public delegate void TitleBarHeightChangedHandler(object? sender, double oldValue, double newValue);
+
+        public Button MinimizeButton { get; }
+        public Button SmallmizeButton { get; }
+        public Button CloseButton { get; }
+
+        public Button MaximizeButton { get; }
+        public double TitleBarHeight { get; }
+
+        event TitleBarHeightChangedHandler? TitleBarHeightChanged;
+    }
     public abstract class CyberWindow : Window
     {
         private static Style? DefaultArtWizWindowStyle;
@@ -178,8 +192,36 @@ namespace ArtWiz.View.Base
                  IntPtr lParam,
                  ref bool handled)
             {
+                const int WM_NCHITTEST = 0x0084;
+                const int HTCLIENT = 1;
                 switch (msg)
                 {
+                    case WM_NCHITTEST:
+                        {
+                            // Lấy tọa độ X từ lParam
+                            // lParam chứa hai giá trị: Low-order word (tọa độ X) và High-order word (tọa độ Y).
+                            // Lấy 16-bit thấp (Low-order word) bằng cách AND với 0xFFFF.
+                            // Sau đó, chuyển đổi kết quả từ unsigned 16-bit sang signed 16-bit bằng cách ép kiểu (short).
+                            // Điều này là cần thiết vì tọa độ trên màn hình có thể là số âm (ví dụ: màn hình bên trái màn hình chính có X < 0).
+                            int x = (short)(lParam.ToInt32() & 0xFFFF);
+
+                            // Lấy tọa độ Y từ lParam
+                            // Dịch bit của lParam sang phải 16 bit để lấy High-order word (tọa độ Y).
+                            // Sau đó, AND với 0xFFFF để lấy 16-bit cao.
+                            // Tương tự như X, chuyển đổi giá trị từ unsigned 16-bit sang signed 16-bit bằng cách ép kiểu (short).
+                            // Điều này đảm bảo rằng tọa độ Y âm (nếu màn hình ở bên trên màn hình chính) được xử lý chính xác.
+                            int y = (short)((lParam.ToInt32() >> 16) & 0xFFFF);
+
+                            // Chuyển đổi từ tọa độ màn hình sang tọa độ cửa sổ
+                            var mousePositionFromScreen = _cyberWindow.PointFromScreen(new Point(x, y));
+                            //Debug.WriteLine(mousePositionFromScreen);
+                            if (_cyberWindow.ProcessHitTest(mousePositionFromScreen))
+                            {
+                                handled = true;
+                                return new IntPtr(HTCLIENT);
+                            }
+                            break;
+                        }
                     case WM_DPICHANGED:
                         {
                             //TODO: Implement DPI change
@@ -370,6 +412,43 @@ namespace ArtWiz.View.Base
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified mouse position falls within the client area or the non-client area of the window.
+        /// </summary>
+        /// <param name="mousePositionFromScreen">
+        /// The mouse position in screen coordinates. This should be converted using PointFromScreen 
+        /// to map the position relative to the window.
+        /// </param>
+        /// <returns>
+        /// A boolean value indicating whether the mouse position is within the client area or not:
+        /// <list type="bullet">
+        /// <item><c>true</c>: The mouse position is within the client area.</item>
+        /// <item><c>false</c>: The mouse position is within the non-client area.</item>
+        /// </list>
+        /// </returns>
+        /// <remarks>
+        /// This method is designed to be overridden in derived classes to provide custom hit test logic for specific UI elements 
+        /// or window regions. By default, it returns <c>false</c>, treating all positions as part of the non-client area.
+        /// </remarks>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// protected override bool ProcessHitTest(Point mousePositionFromScreen)
+        /// {
+        ///     // Custom logic to determine client area
+        ///     if (IsMouseOverCustomControl(mousePositionFromScreen))
+        ///     {
+        ///         return true; // Client area
+        ///     }
+        ///     return false; // Non-client area
+        /// }
+        /// </code>
+        /// </example>
+        protected virtual bool ProcessHitTest(Point mousePositionFromScreen)
+        {
+            return false;
+        }
+
         private void UpdateWindowShadowEffect(int shadowDef)
         {
             if (_botShadowRowDefinition != null)
@@ -405,7 +484,7 @@ namespace ArtWiz.View.Base
         private RowDefinition? _botShadowRowDefinition;
         private ColumnDefinition? _leftShadowColumnDefinition;
         private ColumnDefinition? _rightShadowColumnDefinition;
-        protected WindowTitleBar? _windowTitleBar;
+        protected IWindowTitleBar? _windowTitleBar;
 
         protected WindowSizeManager _windowSizeManager;
 
@@ -435,12 +514,11 @@ namespace ArtWiz.View.Base
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _windowTitleBar = GetTemplateChild("WindowTitleBar") as WindowTitleBar ?? throw new ArgumentNullException();
+            _windowTitleBar = GetTemplateChild("WindowTitleBar") as IWindowTitleBar ?? throw new ArgumentNullException();
             _minimizeBtn = _windowTitleBar.MinimizeButton;
             _maximizeBtn = _windowTitleBar.MaximizeButton;
             _closeBtn = _windowTitleBar.CloseButton;
             _smallmizeBtn = _windowTitleBar.SmallmizeButton;
-            _windowControlPanel = GetTemplateChild(WindowControlPanelName) as StackPanel ?? throw new ArgumentNullException();
             _botShadowRowDefinition = GetTemplateChild(BotShadowRowDefName) as RowDefinition ?? throw new ArgumentNullException();
             _leftShadowColumnDefinition = GetTemplateChild(LeftShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
             _rightShadowColumnDefinition = GetTemplateChild(RightShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
@@ -465,12 +543,41 @@ namespace ArtWiz.View.Base
                 this.WindowState = WindowState.Minimized;
             };
 
+            _windowTitleBar.TitleBarHeightChanged += (s, o, n) =>
+            {
+                UpdateCaptionHeight(this, n);
+            };
+
+            UpdateCaptionHeight(this, _windowTitleBar.TitleBarHeight);
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
             _windowSizeManager.NotifyCyberWindowStateChange();
             base.OnStateChanged(e);
+        }
+
+        private static void UpdateCaptionHeight(Window window, double newHeight)
+        {
+            // Lấy WindowChrome hiện tại
+            var windowChrome = WindowChrome.GetWindowChrome(window);
+            if (windowChrome != null)
+            {
+                // Cập nhật CaptionHeight
+                windowChrome.CaptionHeight = newHeight;
+
+                // Nếu cần, áp dụng lại
+                WindowChrome.SetWindowChrome(window, windowChrome);
+            }
+            else
+            {
+                // Nếu WindowChrome chưa được thiết lập, tạo mới và gán
+                windowChrome = new WindowChrome
+                {
+                    CaptionHeight = newHeight
+                };
+                WindowChrome.SetWindowChrome(window, windowChrome);
+            }
         }
     }
 
