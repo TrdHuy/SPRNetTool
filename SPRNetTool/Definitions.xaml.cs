@@ -7,6 +7,7 @@ namespace ArtWiz
     {
         public static ResourceKey BackgroundColorLevel0 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundColorLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey BackgroundColorLevel1_6 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundColorLevel2 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundColorLevel5 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundColorLevel8 { get; } = CreateResourceKey();
@@ -15,6 +16,7 @@ namespace ArtWiz
         public static ResourceKey ForegroundColorLevel0 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundColorLevel0_1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundColorLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundColorLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2_OP1 { get; } = CreateResourceKey();
@@ -24,6 +26,7 @@ namespace ArtWiz
 
         public static ResourceKey BackgroundLevel0 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey BackgroundLevel1_6 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundLevel2 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundLevel5 { get; } = CreateResourceKey();
         public static ResourceKey BackgroundLevel8 { get; } = CreateResourceKey();
@@ -32,6 +35,7 @@ namespace ArtWiz
         public static ResourceKey ForegroundLevel0 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundLevel0_1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey ForegroundLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel1 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel2_OP1 { get; } = CreateResourceKey();

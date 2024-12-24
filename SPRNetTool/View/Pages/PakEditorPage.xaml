@@ -197,6 +197,8 @@
 						   FontSize="16"
 						   VerticalAlignment="Center" />
 				</StackPanel>
+				<!--ItemsSource="{Binding PakFiles}"-->
+
 				<ListBox Grid.Row="1"
 						 Margin="15,0"
 						 Background="Transparent"
@@ -210,9 +212,11 @@
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="ListBoxItem">
-										<Border BorderThickness="0"
+										<Border x:Name="ItemBorder"
+												BorderThickness="2"
+												BorderBrush="#FF2E2E2E"
 												Background="#FF2E2E2E"
-												CornerRadius="5"
+												CornerRadius="10"
 												Height="60"
 												Margin="0,0,0,5">
 											<Grid>
@@ -241,7 +245,6 @@
 															   Margin="5,0"
 															   Foreground="#FF727679" />
 												</StackPanel>
-
 
 												<wg:SmoothProgressbar Height="8"
 																	  Grid.Column="1"
@@ -275,7 +278,6 @@
 																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}"
 																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}" />
 
-
 													<wg:IconToggle x:Name="RetryLoadPakFormWorkManager"
 																   IsEllipse="false"
 																   Tag="{x:Static local:PakEditorPageId.ReloadFilePak}"
@@ -291,33 +293,39 @@
 																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
 																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
 																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}" />
-
-
 												</StackPanel>
-
 											</Grid>
-
 										</Border>
+
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsSelected"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="BorderBrush"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1_6}}" />
+											</Trigger>
+											<Trigger Property="IsMouseOver"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="BorderBrush"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1_6}}" />
+											</Trigger>
+										</ControlTemplate.Triggers>
 									</ControlTemplate>
 								</Setter.Value>
 							</Setter>
 						</Style>
 					</ListBox.ItemContainerStyle>
-
-					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<!--<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item ItemName="dataWithPak.pak"
-										FileSize="8GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>
-					<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item ItemName="test.pak"
-										FileSize="4GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>-->
+					<!--<ListBoxItem IsSelected="True" />
+					<ListBoxItem />-->
 				</ListBox>
+
 			</Grid>
 
 			<Grid Grid.Row="1"
@@ -365,7 +373,7 @@
 					<Button Margin="25,30,250,0"
 							Height="40"
 							BorderThickness="0"
-							Background="#FF55646F"
+							Background="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel2}}"
 							Content="Xuất file"
 							Foreground="White"
 							FontSize="18">
@@ -402,7 +410,7 @@
 												<TextBlock Margin="0,6,0,0">
 													<Run Text="Định dạng:"
 														 Foreground="#FF7B8797"
-														 FontSize="12" />	
+														 FontSize="12" />
 												</TextBlock>
 												<TextBlock  Margin="0,3,0,0">
 													<Run Text="Kích thước:"

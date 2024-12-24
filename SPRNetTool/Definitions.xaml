@@ -109,6 +109,7 @@
 
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel0}">#FF000000</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1}">#FF151515</Color>
+	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1_6}">#FF474747</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel2}">#FF262626</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel5}">#FF2E2E2E</Color>
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel8}">#FF3B3B3B</Color>
@@ -117,6 +118,7 @@
 	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0}">#FFFFFFFF</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0_1}">#FFD9D9D9</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel1}">#FF4FE79A</Color>
+	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel2}">#307365</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel1}">#FF6D9154</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2}">#FF89B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}">#5089B46A</Color>
@@ -128,6 +130,8 @@
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1_6}}"
+					 x:Key="{x:Static local:Definitions.BackgroundLevel1_6}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel2}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel2}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel5}}"
@@ -144,6 +148,8 @@
 					 x:Key="{x:Static local:Definitions.ForegroundLevel1}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0_1}}"
 					 x:Key="{x:Static local:Definitions.ForegroundLevel0_1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel2}}"
+					 x:Key="{x:Static local:Definitions.ForegroundLevel2}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel1}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel1}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
