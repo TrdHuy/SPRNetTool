@@ -20,25 +20,72 @@ namespace ArtWiz.ViewModel
         LOADING,
         LOADED,
     }
-    internal class PakFileItemViewModel : BaseSubViewModel, ILoadPakFileCallback, IRemovePakFileCallback
-    {
-        private string _filePath;
-        private long _fileSizeInBytes;
-        private int _loadingProgress;
-        private PakItemLoadingStatus _loadingStatus = PakItemLoadingStatus.NONE;
 
-        private PakItemLoadingStatus LoadingStatus
+    internal abstract class PakItemViewModel : BaseSubViewModel
+    {
+        private PakItemLoadingStatus _loadingStatus = PakItemLoadingStatus.NONE;
+        protected long _itemSizeInBytes;
+
+        protected virtual PakItemLoadingStatus LoadingStatus
         {
             get => _loadingStatus;
             set
             {
                 _loadingStatus = value;
+
+            }
+        }
+
+        public PakItemViewModel(BaseParentsViewModel parents) : base(parents)
+        {
+
+        }
+
+        protected string FormatFileSize(long bytes)
+        {
+            const int scale = 1024;
+            string[] units = { "Bytes", "KB", "MB", "GB", "TB" };
+
+            if (bytes < scale)
+            {
+                return $"{bytes} {units[0]}";
+            }
+
+            int unitIndex = (int)Math.Log(bytes, scale);
+            double adjustedSize = bytes / Math.Pow(scale, unitIndex);
+
+            return $"{adjustedSize:0.##} {units[unitIndex]}";
+        }
+
+    }
+
+    internal class PakFileItemViewModel : PakItemViewModel, ILoadPakFileCallback, IRemovePakFileCallback
+    {
+        private string _filePath;
+        protected int _loadingProgress;
+
+        protected override PakItemLoadingStatus LoadingStatus
+        {
+            get => base.LoadingStatus;
+            set
+            {
+                base.LoadingStatus = value;
                 Invalidate(nameof(ReloadPakVisibility));
                 Invalidate(nameof(RemoveFilePakVisibility));
                 Invalidate(nameof(LoadingStatusToString));
             }
         }
 
+        private ObservableCollection<PakBlockItemViewModel> _pakBlocks;
+        public ObservableCollection<PakBlockItemViewModel> PakBlocks
+        {
+            get => _pakBlocks;
+            private set
+            {
+                _pakBlocks = value;
+                Invalidate();
+            }
+        }
 
         [Bindable(true)]
         public Visibility ReloadPakVisibility
@@ -79,7 +126,7 @@ namespace ArtWiz.ViewModel
         {
             get
             {
-                switch (_loadingStatus)
+                switch (LoadingStatus)
                 {
                     case PakItemLoadingStatus.LOADING:
                         return "loading...";
@@ -108,7 +155,7 @@ namespace ArtWiz.ViewModel
         {
             get
             {
-                return FormatFileSize(_fileSizeInBytes);
+                return FormatFileSize(_itemSizeInBytes);
             }
         }
 
@@ -132,12 +179,13 @@ namespace ArtWiz.ViewModel
 
             if (File.Exists(_filePath))
             {
-                _fileSizeInBytes = new FileInfo(_filePath).Length;
+                _itemSizeInBytes = new FileInfo(_filePath).Length;
             }
             else
             {
-                _fileSizeInBytes = 0;
+                _itemSizeInBytes = 0;
             }
+            _pakBlocks = new ObservableCollection<PakBlockItemViewModel>();
 
             LoadingStatus = PakItemLoadingStatus.PREPARING;
             PakWorkManager.LoadPakFileToWorkManagerAsync(filePath, this);
@@ -148,11 +196,11 @@ namespace ArtWiz.ViewModel
             _filePath = filePath;
             if (File.Exists(_filePath))
             {
-                _fileSizeInBytes = new FileInfo(_filePath).Length;
+                _itemSizeInBytes = new FileInfo(_filePath).Length;
             }
             else
             {
-                _fileSizeInBytes = 0;
+                _itemSizeInBytes = 0;
             }
             InvalidateAll();
         }
@@ -165,21 +213,6 @@ namespace ArtWiz.ViewModel
             }
         }
 
-        private string FormatFileSize(long bytes)
-        {
-            const int scale = 1024;
-            string[] units = { "Bytes", "KB", "MB", "GB", "TB" };
-
-            if (bytes < scale)
-            {
-                return $"{bytes} {units[0]}";
-            }
-
-            int unitIndex = (int)Math.Log(bytes, scale);
-            double adjustedSize = bytes / Math.Pow(scale, unitIndex);
-
-            return $"{adjustedSize:0.##} {units[unitIndex]}";
-        }
 
         public void OnSessionCreated()
         {
@@ -215,6 +248,49 @@ namespace ArtWiz.ViewModel
             {
                 it.PakFiles.Remove(this);
             });
+        }
+    }
+
+    internal class PakBlockItemViewModel : PakItemViewModel
+    {
+        private string _blockName;
+        private string _blockType;
+
+        [Bindable(true)]
+        public string BlockName
+        {
+            get
+            {
+                return BlockName;
+            }
+        }
+
+        [Bindable(true)]
+        public string BlockType
+        {
+            get
+            {
+                return _blockType;
+            }
+        }
+
+        [Bindable(true)]
+        public string BlockSize
+        {
+            get
+            {
+                return FormatFileSize(_itemSizeInBytes);
+            }
+        }
+
+        public PakBlockItemViewModel(BaseParentsViewModel parents,
+            string blockName,
+            string blockType,
+            long blockSize) : base(parents)
+        {
+            _itemSizeInBytes = blockSize;
+            _blockName = blockName;
+            _blockType = blockType;
         }
     }
 

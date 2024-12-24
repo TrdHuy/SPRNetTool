@@ -1,6 +1,7 @@
 ﻿using ArtWiz.Domain.Base;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Markup;
@@ -49,8 +50,9 @@ namespace ArtWiz.Domain
             }
             await Task.Run(() =>
             {
+                Debug.WriteLine("HUY.TD1: LoadPakFileToWorkManagerAsync");
                 var currentProgress = -1;
-                var result = _pakWorkManagerService.LoadPakFileToWorkManager(pakFilePath, (progress, message) =>
+                var result = _pakWorkManagerService.LoadPakFileToWorkManager(pakFilePath, (progress, message, bundle) =>
                 {
                     if (WizMachine.Services.Base.IPakWorkManager.ProcessCallbackMessage(message, out string eventType, out string data))
                     {
