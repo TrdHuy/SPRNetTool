@@ -15,7 +15,7 @@
 					 MinHeight="718"
 					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 					 xmlns:def="clr-namespace:ArtWiz"
-					 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1}}"
+					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
 
 	<UserControl.DataContext>
@@ -30,7 +30,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
 						<Border Background="Transparent"
-								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 								BorderThickness="1"
 								Padding="{TemplateBinding Padding}"
 								SnapsToDevicePixels="true">
@@ -44,14 +44,14 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<Rectangle Grid.Row="0"
-										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										   Grid.ColumnSpan="2" />
 								<Border x:Name="MainBorderContainer"
 										Grid.Row="1"
 										Grid.ColumnSpan="2"
-										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										VerticalAlignment="Top"
-										Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}">
+										Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
 									<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -75,12 +75,12 @@
 												<Trigger Property="IsChecked"
 														 Value="False">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
 												</Trigger>
 												<Trigger Property="IsChecked"
 														 Value="True">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 												</Trigger>
 											</Style.Triggers>
 										</Style>
@@ -91,7 +91,7 @@
 											Orientation="Horizontal">
 									<TextBlock x:Name="Header"
 											   Margin="18,10"
-											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 											   FontSize="15"
 											   FontWeight="Bold" />
 									<ContentPresenter Content="{TemplateBinding ExtraHeaderContent}" />
@@ -302,19 +302,19 @@
 													 Value="True">
 												<Setter TargetName="ItemBorder"
 														Property="BorderBrush"
-														Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 												<Setter TargetName="ItemBorder"
 														Property="Background"
-														Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1_6}}" />
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}" />
 											</Trigger>
 											<Trigger Property="IsMouseOver"
 													 Value="True">
 												<Setter TargetName="ItemBorder"
 														Property="BorderBrush"
-														Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 												<Setter TargetName="ItemBorder"
 														Property="Background"
-														Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1_6}}" />
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}" />
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>

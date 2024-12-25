@@ -21,7 +21,7 @@
 	<Window.Resources>
 		<cvt:FormulaConverter x:Key="FormulaConverter" />
 	</Window.Resources>
-	<Grid Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1}}">
+	<Grid Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto" />
 			<RowDefinition Height="*" />
