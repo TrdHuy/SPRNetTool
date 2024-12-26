@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using WizMachine.Services.Base;
+using WizMachine.Services.Utils.NativeEngine.Managed;
 
 namespace ArtWiz.ViewModel
 {
@@ -219,8 +221,24 @@ namespace ArtWiz.ViewModel
             LoadingStatus = PakItemLoadingStatus.LOADING;
         }
 
-        public void OnBlockLoaded()
+        public void OnBlockLoaded(Bundle? bundle)
         {
+            if (bundle != null)
+            {
+                var isSpr = bundle.GetBoolean(PakContract.EXTRA_BLOCK_IS_SPR_KEY);
+                var blockId = bundle.GetString(PakContract.EXTRA_BLOCK_ID_KEY);
+                var blockSize = bundle.GetInt(PakContract.EXTRA_BLOCK_SIZE_KEY) ?? 0;
+                var blockName = bundle.GetString(PakContract.EXTRA_BLOCK_FILE_NAME_KEY) ?? "unknown";
+                var blockIndex = bundle.GetInt(PakContract.EXTRA_BLOCK_INDEX_KEY) ?? 0;
+
+                var blockItemViewModel = new PakBlockItemViewModel(this,
+                    blockName: blockName,
+                    blockType: isSpr == true ? "SPR" : "unknown",
+                    blockSize: blockSize
+                    );
+
+                PakBlocks.Add(blockItemViewModel);
+            }
         }
 
         public void OnLoadCompleted()
@@ -261,7 +279,12 @@ namespace ArtWiz.ViewModel
         {
             get
             {
-                return BlockName;
+                return _blockName;
+            }
+            set
+            {
+                _blockName = value;
+                Invalidate();
             }
         }
 
@@ -297,15 +320,25 @@ namespace ArtWiz.ViewModel
     internal class PakPageViewModel : BaseParentsViewModel, IPakPageCommand
     {
         private static Logger logger = new Logger(typeof(PakPageViewModel).Name);
-
-        // ObservableCollection để quản lý danh sách PakFileItemViewModel
+        private PakFileItemViewModel? _currentSelectedPakFile;
         private ObservableCollection<PakFileItemViewModel> _pakFiles;
+
         public ObservableCollection<PakFileItemViewModel> PakFiles
         {
             get => _pakFiles;
             private set
             {
                 _pakFiles = value;
+                Invalidate();
+            }
+        }
+
+        public PakFileItemViewModel? CurrentSelectedPakFile
+        {
+            get => _currentSelectedPakFile;
+            set
+            {
+                _currentSelectedPakFile = value;
                 Invalidate();
             }
         }

@@ -241,9 +241,9 @@ namespace ArtWiz.ViewModel.Widgets
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnArtWizViewModelDestroy()
         {
-            base.OnDestroy();
+            base.OnArtWizViewModelDestroy();
             BitmapDisplayManager.UnregisterObserver(this);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WizMachine.Services.Utils.NativeEngine.Managed;
 
 namespace ArtWiz.Domain.Base
 {
@@ -13,7 +14,7 @@ namespace ArtWiz.Domain.Base
     public interface ILoadPakFileCallback : IJobExecutor
     {
         void OnSessionCreated();
-        void OnBlockLoaded();
+        void OnBlockLoaded(Bundle? bundle);
         void OnLoadCompleted();
         void OnLoadFailed();
         void OnProgressChanged(int newProgress);

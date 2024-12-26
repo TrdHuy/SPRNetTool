@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using WizMachine;
+using WizMachine.Services.Utils.NativeEngine.Managed;
 
 namespace ArtWiz.Domain
 {
@@ -50,7 +51,6 @@ namespace ArtWiz.Domain
             }
             await Task.Run(() =>
             {
-                Debug.WriteLine("HUY.TD1: LoadPakFileToWorkManagerAsync");
                 var currentProgress = -1;
                 var result = _pakWorkManagerService.LoadPakFileToWorkManager(pakFilePath, (progress, message, bundle) =>
                 {
@@ -60,23 +60,23 @@ namespace ArtWiz.Domain
                         {
                             _filePathToTokenMap[pakFilePath] = data;
                         }
-                        NotifyLoadPakFileObserver(loadPakCallback, eventType, progress);
+                        NotifyLoadPakFileObserver(loadPakCallback, eventType, progress, bundle);
                     }
 
                     if (currentProgress != progress)
                     {
-                        NotifyLoadPakFileObserver(loadPakCallback, "PROGRESS_CHANGED", progress);
+                        NotifyLoadPakFileObserver(loadPakCallback, "PROGRESS_CHANGED", progress, bundle);
                         currentProgress = progress;
                     }
                 });
 
                 if (!result)
                 {
-                    NotifyLoadPakFileObserver(loadPakCallback, "LOAD_FAILED", 0);
+                    NotifyLoadPakFileObserver(loadPakCallback, "LOAD_FAILED", 0, null);
                     _filePathToTokenMap.TryRemove(pakFilePath, out _);
                 }
 
-                NotifyLoadPakFileObserver(loadPakCallback, "FINISH_JOB", 100);
+                NotifyLoadPakFileObserver(loadPakCallback, "FINISH_JOB", 100, null);
 
             });
 
@@ -89,7 +89,8 @@ namespace ArtWiz.Domain
 
         private void NotifyLoadPakFileObserver(ILoadPakFileCallback loadPakCallback,
             string eventType,
-            int newProgress)
+            int newProgress,
+            Bundle? bundle)
         {
             App.Current.Dispatcher.Invoke(() =>
             {
@@ -99,7 +100,7 @@ namespace ArtWiz.Domain
                         loadPakCallback.OnSessionCreated();
                         break;
                     case "BLOCK_LOADED":
-                        loadPakCallback.OnBlockLoaded();
+                        loadPakCallback.OnBlockLoaded(bundle);
                         break;
                     case "LOAD_COMPLETED":
                         loadPakCallback.OnLoadCompleted();

@@ -116,7 +116,8 @@
 	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_4}">#3D3D3D</Color>
 	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_5}">#474747</Color>
 	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_10}">#7A7A7A</Color> <!--10 = +10-->
-	
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel1}">#161918</Color>
+
 	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0}">#FFFFFFFF</Color>
 	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0_1}">#FFD9D9D9</Color>
 	
@@ -147,6 +148,8 @@
 					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_4}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_10}}"
 					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_10}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel1}" />
 	
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0}" />
