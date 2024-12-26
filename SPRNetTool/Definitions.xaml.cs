@@ -16,6 +16,7 @@ namespace ArtWiz
         public static ResourceKey TextForegroundColorLevel0 { get; } = CreateResourceKey();
         public static ResourceKey TextForegroundColorLevel0_1 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel0 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconColorLevel0_1 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel1 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel0_m8 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2 { get; } = CreateResourceKey();

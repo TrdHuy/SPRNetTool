@@ -120,8 +120,9 @@
 
 	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0}">#FFFFFFFF</Color>
 	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0_1}">#FFD9D9D9</Color>
-	
+
 	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0}">#4FE79A</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_1}">#6FEBAD</Color>
 	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_m8}">#149052</Color> <!--m8 = -8-->
 	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel1}">#327E58</Color>
 	
@@ -685,7 +686,7 @@
 					<BeginStoryboard>
 						<Storyboard>
 							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_m8}}"
+											To="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_1}}"
 											Duration="0:0:0" />
 						</Storyboard>
 					</BeginStoryboard>
