@@ -400,10 +400,19 @@
 									<ControlTemplate TargetType="ListBoxItem">
 										<Border Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
 											<Grid>
-												<Rectangle Height="2"
+												<Rectangle Name="Sperator"
+														   Height="2"
 														   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 														   Margin="10,0"
-														   VerticalAlignment="Bottom"/>
+														   VerticalAlignment="Bottom" />
+												<Rectangle VerticalAlignment="Stretch"
+														   Name="EffectRec"
+														   RadiusX="10"
+														   RadiusY="10"
+														   Stroke="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
+														   StrokeThickness="1"
+														   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
+														   Margin="5,5,10,5" />
 												<StackPanel Orientation="Vertical"
 															Margin="12,0,0,0">
 													<TextBlock Margin="0,12,0,0">
@@ -415,14 +424,29 @@
 															 Foreground="White"
 															 FontSize="16" />
 													</TextBlock>
-													<TextBlock Margin="0,7,0,0">
-														<Run Text="Định dạng:"
-															 Foreground="#FF7B8797"
-															 FontSize="12" />
-														<Run Text="{Binding BlockType, Mode=OneWay}"
-															 Foreground="White"
-															 FontSize="16" />
-													</TextBlock>
+													<Grid Margin="0,7,0,0">
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition />
+															<ColumnDefinition />
+														</Grid.ColumnDefinitions>
+														<TextBlock Grid.Column="1">
+															<Run Text="Định dạng:"
+																 Foreground="#FF7B8797"
+																 FontSize="12" />
+															<Run Text="{Binding BlockType, Mode=OneWay}"
+																 Foreground="White"
+																 FontSize="16" />
+														</TextBlock>
+														<TextBlock Grid.Column="0">
+															<Run Text="Id:"
+																 Foreground="#FF7B8797"
+																 FontSize="12" />
+															<Run Text="{Binding BlockId, Mode=OneWay}"
+																 Foreground="White"
+																 FontSize="16" />
+														</TextBlock>
+													</Grid>
+
 													<TextBlock  Margin="0,0,0,14">
 														<Run Text="{Binding BlockSize, Mode=OneWay}"
 															 Foreground="#FF7B8797"
@@ -433,11 +457,36 @@
 
 
 										</Border>
+
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsSelected"
+													 Value="True">
+												<Setter TargetName="EffectRec"
+														Property="Stroke"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
+												<Setter TargetName="EffectRec"
+														Property="Fill"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}" />
+												<Setter TargetName="EffectRec"
+														Property="Margin"
+														Value="5,5,10,0" />
+												<Setter TargetName="Sperator"
+														Property="Visibility"
+														Value="Hidden" />
+											</Trigger>
+											<Trigger Property="IsMouseOver"
+													 Value="True">
+												<Setter TargetName="EffectRec"
+														Property="Fill"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_3}}" />
+											</Trigger>
+										</ControlTemplate.Triggers>
 									</ControlTemplate>
 								</Setter.Value>
 							</Setter>
 						</Style>
 					</ListBox.ItemContainerStyle>
+					<!--<ListBoxItem IsSelected="True" />-->
 				</ListBox>
 			</Grid>
 		</Grid>
