@@ -391,7 +391,8 @@
 						 ItemsSource="{Binding CurrentSelectedPakFile.PakBlocks}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
-						 ScrollViewer.CanContentScroll="True">
+						 ScrollViewer.CanContentScroll="True"
+						 Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}">
 					<ListBox.ItemContainerStyle>
 						<Style TargetType="ListBoxItem">
 							<Setter Property="Template">
