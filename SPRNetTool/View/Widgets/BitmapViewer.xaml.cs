@@ -78,7 +78,7 @@ namespace ArtWiz.View.Widgets
                  new FrameworkPropertyMetadata(
                      DesignerProperties.GetIsInDesignMode(new DependencyObject())
                          ? Brushes.White
-                         : Application.Current.FindResource(Definitions.BackgroundLevel2) ?? Brushes.Transparent, // Giá trị khi runtime
+                         : Application.Current.FindResource(Definitions.PanelBackgroundLevel0_1) ?? Brushes.Transparent, // Giá trị khi runtime
                      FrameworkPropertyMetadataOptions.AffectsRender
                  )
              );
@@ -94,7 +94,7 @@ namespace ArtWiz.View.Widgets
                 typeof(Brush),
                 typeof(BitmapViewer),
                 new FrameworkPropertyMetadata(
-                    Application.Current.FindResource(Definitions.BackgroundLevel10),
+                    Application.Current.FindResource(Definitions.PanelBackgroundLevel0_4),
                     FrameworkPropertyMetadataOptions.AffectsRender
                 )
             );
@@ -145,7 +145,7 @@ namespace ArtWiz.View.Widgets
                 typeof(Brush),
                 typeof(BitmapViewer),
                 new FrameworkPropertyMetadata(
-                    Application.Current.FindResource(Definitions.BackgroundLevel2),
+                    Application.Current.FindResource(Definitions.PanelBackgroundLevel0_1),
                     FrameworkPropertyMetadataOptions.AffectsRender
                 )
             );
@@ -162,7 +162,7 @@ namespace ArtWiz.View.Widgets
                 typeof(Brush),
                 typeof(BitmapViewer),
                 new FrameworkPropertyMetadata(
-                    Application.Current.FindResource(Definitions.ForegroundLevel1),
+                    Application.Current.FindResource(Definitions.ButtonAndIconBrushLevel0),
                     FrameworkPropertyMetadataOptions.AffectsRender
                 )
             );

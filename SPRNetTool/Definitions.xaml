@@ -108,16 +108,24 @@
 	<!--#endregion-->
 
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel0}">#FF000000</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1}">#FF151515</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel2}">#FF262626</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel5}">#FF2E2E2E</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel8}">#FF3B3B3B</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel10}">#FF3D3D3D</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel15}">#FF7F7F7F</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0}">#FFFFFFFF</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0_1}">#FFD9D9D9</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel1}">#FF4FE79A</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel1}">#FF6D9154</Color>
+	
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0}">#151515</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_1}">#1f1f1f</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_2}">#292929</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_3}">#333333</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_4}">#3D3D3D</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_5}">#474747</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_10}">#7A7A7A</Color> <!--10 = +10-->
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel1}">#161918</Color>
+
+	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0}">#FFFFFFFF</Color>
+	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0_1}">#FFD9D9D9</Color>
+
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0}">#4FE79A</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_1}">#6FEBAD</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_m8}">#149052</Color> <!--m8 = -8-->
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel1}">#327E58</Color>
+	
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2}">#FF89B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}">#5089B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}">#3089B46A</Color>
@@ -126,26 +134,36 @@
 
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel2}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel2}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel5}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel5}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel8}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel8}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel10}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel10}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel15}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel15}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel0}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0_1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel0_1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel1}" />
+	
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_5}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_5}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_1}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_2}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_2}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_3}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_3}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_4}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_4}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_10}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_10}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel1}" />
+	
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0_1}}"
+					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0_1}" />
+	
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.ForegroundLevel2}" />
+	
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_m8}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel0_m8}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel2}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}}"
@@ -378,7 +396,7 @@
 																				   RadiusX="5"
 																				   RadiusY="5"
 																				   Height="{TemplateBinding Height}"
-																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel15}}"
+																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_10}}"
 																				   SnapsToDevicePixels="True"
 																				   Width="{TemplateBinding Width}" />
 																		<ControlTemplate.Triggers>
@@ -386,7 +404,7 @@
 																					 Value="False">
 																				<Setter Property="Fill"
 																						TargetName="rectangle"
-																						Value="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}" />
+																						Value="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}" />
 																			</Trigger>
 																		</ControlTemplate.Triggers>
 																	</ControlTemplate>
@@ -412,7 +430,7 @@
 													 Value="True">
 											<Setter TargetName="border"
 													Property="Background"
-													Value="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}" />
+													Value="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}" />
 											<Setter Property="Cursor"
 													Value="Hand" />
 										</DataTrigger>
@@ -507,7 +525,7 @@
 																				   RadiusX="5"
 																				   RadiusY="5"
 																				   Height="{TemplateBinding Height}"
-																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}"
+																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}"
 																				   SnapsToDevicePixels="True"
 																				   Width="{TemplateBinding Width}" />
 																		<ControlTemplate.Triggers>
@@ -616,12 +634,12 @@
 		   x:Key="IconToogleStyle1"
 		   BasedOn="{StaticResource {x:Type wg:IconToggle}}">
 		<Setter Property="Stroke"
-				Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel0}}" />
+				Value="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundBrushLevel0}}" />
 		<Style.Triggers>
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Stroke"
-						Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}" />
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}" />
 				<Setter Property="Cursor"
 						Value="Hand" />
 			</Trigger>
@@ -641,7 +659,7 @@
 					<BeginStoryboard>
 						<Storyboard>
 							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel1}}"
+											To="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0}}"
 											Duration="0:0:0" />
 						</Storyboard>
 					</BeginStoryboard>
@@ -654,12 +672,12 @@
 		   x:Key="IconToogleStyle2"
 		   BasedOn="{StaticResource {x:Type wg:IconToggle}}">
 		<Setter Property="Stroke"
-				Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel0}}" />
+				Value="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundBrushLevel0}}" />
 		<Style.Triggers>
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Stroke"
-						Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}" />
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}" />
 				<Setter Property="Cursor"
 						Value="Hand" />
 			</Trigger>
@@ -668,7 +686,7 @@
 					<BeginStoryboard>
 						<Storyboard>
 							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
+											To="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_1}}"
 											Duration="0:0:0" />
 						</Storyboard>
 					</BeginStoryboard>
@@ -679,7 +697,7 @@
 					<BeginStoryboard>
 						<Storyboard>
 							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0}}"
+											To="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0}}"
 											Duration="0:0:0" />
 						</Storyboard>
 					</BeginStoryboard>
@@ -729,7 +747,7 @@
 
 							<!--Content and title bar field-->
 							<Border BorderThickness="1"
-									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}"
+									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}"
 									Grid.Column="1">
 								<Grid x:Name="ContentAndTitleGrid"
 									  Background="{TemplateBinding Background}">
@@ -742,7 +760,7 @@
 									<Grid x:Name="TitleBartGrid"
 										  Grid.Row="0"
 										  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
-										  Background="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel10}}"
+										  Background="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_4}}"
 										  VerticalAlignment="Stretch">
 
 										<Grid.ColumnDefinitions>

@@ -15,7 +15,7 @@
 					 MinHeight="718"
 					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 					 xmlns:def="clr-namespace:ArtWiz"
-					 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1}}"
+					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
 
 	<UserControl.DataContext>
@@ -30,7 +30,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
 						<Border Background="Transparent"
-								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 								BorderThickness="1"
 								Padding="{TemplateBinding Padding}"
 								SnapsToDevicePixels="true">
@@ -44,14 +44,14 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<Rectangle Grid.Row="0"
-										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										   Grid.ColumnSpan="2" />
 								<Border x:Name="MainBorderContainer"
 										Grid.Row="1"
 										Grid.ColumnSpan="2"
-										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										VerticalAlignment="Top"
-										Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}">
+										Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
 									<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -75,12 +75,12 @@
 												<Trigger Property="IsChecked"
 														 Value="False">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
 												</Trigger>
 												<Trigger Property="IsChecked"
 														 Value="True">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 												</Trigger>
 											</Style.Triggers>
 										</Style>
@@ -91,7 +91,7 @@
 											Orientation="Horizontal">
 									<TextBlock x:Name="Header"
 											   Margin="18,10"
-											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 											   FontSize="15"
 											   FontWeight="Bold" />
 									<ContentPresenter Content="{TemplateBinding ExtraHeaderContent}" />
@@ -167,12 +167,11 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="0" />
 				<RowDefinition />
-				<RowDefinition Height="10" />
 			</Grid.RowDefinitions>
 
 			<Grid Grid.Column="1"
 				  Grid.Row="1"
-				  Background="#FF262626">
+				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="50" />
 					<RowDefinition />
@@ -197,10 +196,13 @@
 						   FontSize="16"
 						   VerticalAlignment="Center" />
 				</StackPanel>
+				<!--ItemsSource="{Binding PakFiles}"-->
+
 				<ListBox Grid.Row="1"
 						 Margin="15,0"
 						 Background="Transparent"
 						 BorderThickness="0"
+						 SelectedItem="{Binding CurrentSelectedPakFile}"
 						 ItemsSource="{Binding PakFiles}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
@@ -210,9 +212,11 @@
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="ListBoxItem">
-										<Border BorderThickness="0"
-												Background="#FF2E2E2E"
-												CornerRadius="5"
+										<Border x:Name="ItemBorder"
+												BorderThickness="2"
+												BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+												Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+												CornerRadius="10"
 												Height="60"
 												Margin="0,0,0,5">
 											<Grid>
@@ -241,7 +245,6 @@
 															   Margin="5,0"
 															   Foreground="#FF727679" />
 												</StackPanel>
-
 
 												<wg:SmoothProgressbar Height="8"
 																	  Grid.Column="1"
@@ -275,7 +278,6 @@
 																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}"
 																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.TrashIconGeometry}}" />
 
-
 													<wg:IconToggle x:Name="RetryLoadPakFormWorkManager"
 																   IsEllipse="false"
 																   Tag="{x:Static local:PakEditorPageId.ReloadFilePak}"
@@ -291,95 +293,102 @@
 																   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
 																   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}"
 																   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.ResetIconGeometry}}" />
-
-
 												</StackPanel>
-
 											</Grid>
-
 										</Border>
+
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsSelected"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="BorderBrush"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}" />
+											</Trigger>
+											<Trigger Property="IsMouseOver"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_3}}" />
+											</Trigger>
+										</ControlTemplate.Triggers>
 									</ControlTemplate>
 								</Setter.Value>
 							</Setter>
 						</Style>
 					</ListBox.ItemContainerStyle>
-
-					<!-- Khởi tạo các ListBoxItem với dữ liệu mẫu -->
-					<!--<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item ItemName="dataWithPak.pak"
-										FileSize="8GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>
-					<ListBoxItem>
-						<ListBoxItem.DataContext>
-							<local:Item ItemName="test.pak"
-										FileSize="4GB" />
-						</ListBoxItem.DataContext>
-					</ListBoxItem>-->
+					<!--<ListBoxItem IsSelected="True" />
+					<ListBoxItem />-->
 				</ListBox>
+
 			</Grid>
 
-			<Grid Grid.Row="1"
-				  Grid.Column="3"
-				  Background="#FF2E2E2E">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1.5*" />
-					<RowDefinition />
-				</Grid.RowDefinitions>
+			<Border Grid.Row="1"
+					Grid.Column="3"
+					BorderThickness="1,0,1,0"
+					BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
+					Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1.5*" />
+						<RowDefinition />
+					</Grid.RowDefinitions>
 
-				<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
-								 Margin="10,40"
-								 ToolBoxIconSize="40"
-								 ToolBoxWidth="60"
-								 Padding="10"
-								 Background="#FF151515"
-								 ToolBoxBorderBrush="#FF151515"
-								 ToolBoxBackground="#FF151515"
-								 ToolBoxIconFill="#FF262626"
-								 ToolBoxIconStroke="White"
-								 UseFitToScreenFunction="True"
-								 UseLayoutBoundFunction="False"
-								 UseTransparenDecodedFrameBackgroundFunction="False"
-								 UseTransparentBackgroundFunction="False">
+					<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
+									 Margin="10,40"
+									 ToolBoxIconSize="40"
+									 ToolBoxWidth="60"
+									 Padding="10"
+									 Background="#FF151515"
+									 ToolBoxBorderBrush="#FF151515"
+									 ToolBoxBackground="#FF151515"
+									 ToolBoxIconFill="#FF262626"
+									 ToolBoxIconStroke="White"
+									 UseFitToScreenFunction="True"
+									 UseLayoutBoundFunction="False"
+									 UseTransparenDecodedFrameBackgroundFunction="False"
+									 UseTransparentBackgroundFunction="False">
 
-				</wg:BitmapViewer>
+					</wg:BitmapViewer>
 
-				<StackPanel Grid.Row="1"
-							Margin="10,0">
-					<Label Content="Chi tiết khối"
-						   Foreground="White"
-						   FontWeight="Bold"
-						   FontSize="18" />
-					<TextBlock Margin="25,10,0,0">
-				<Run Text="Kích thước:"
-						Foreground="White"
-						FontSize="16" />
-					</TextBlock>
-					<TextBlock Margin="25,5,0,0">
-				<Run Text="Định dạng:"
-						Foreground="White"
-						FontSize="16" />
-					</TextBlock>
-
-					<Button Margin="25,30,250,0"
-							Height="40"
-							BorderThickness="0"
-							Background="#FF55646F"
-							Content="Xuất file"
+					<StackPanel Grid.Row="1"
+								Margin="10,0">
+						<Label Content="Chi tiết khối"
+							   Foreground="White"
+							   FontWeight="Bold"
+							   FontSize="18" />
+						<TextBlock Margin="25,10,0,0">
+	<Run Text="Kích thước:"
 							Foreground="White"
-							FontSize="18">
+							FontSize="16" />
+						</TextBlock>
+						<TextBlock Margin="25,5,0,0">
+	<Run Text="Định dạng:"
+							Foreground="White"
+							FontSize="16" />
+						</TextBlock>
 
-					</Button>
-				</StackPanel>
-			</Grid>
+						<Button Margin="25,30,250,0"
+								Height="40"
+								BorderThickness="0"
+								Background="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel2}}"
+								Content="Xuất file"
+								Foreground="White"
+								FontSize="18">
+
+						</Button>
+					</StackPanel>
+				</Grid>
+			</Border>
 
 			<Grid Grid.Column="5"
 				  Grid.Row="1"
-				  Background="#FF262626">
-				<ListBox Margin="15,0"
-						 Background="Transparent"
+				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel1}}">
+				<ListBox Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 						 BorderThickness="0"
+						 ItemsSource="{Binding CurrentSelectedPakFile.PakBlocks}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"
 						 ScrollViewer.CanContentScroll="True">
@@ -388,28 +397,39 @@
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="ListBoxItem">
-										<Border BorderThickness="0,0,0,2"
-												BorderBrush="#FF353535"
-												Background="#FF262626"
-												Height="80">
-											<StackPanel Orientation="Vertical">
-												<TextBlock Margin="0,12,0,0">
-													<Run Text="Tên khối:"
-														 Foreground="White"
-														 FontWeight="Bold"
-														 FontSize="16" />
-												</TextBlock>
-												<TextBlock Margin="0,6,0,0">
-													<Run Text="Định dạng:"
-														 Foreground="#FF7B8797"
-														 FontSize="12" />	
-												</TextBlock>
-												<TextBlock  Margin="0,3,0,0">
-													<Run Text="Kích thước:"
-														 Foreground="#FF7B8797"
-														 FontSize="12" />
-												</TextBlock>
-											</StackPanel>
+										<Border Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
+											<Grid>
+												<Rectangle Height="2"
+														   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
+														   Margin="10,0"
+														   VerticalAlignment="Bottom"/>
+												<StackPanel Orientation="Vertical"
+															Margin="12,0,0,0">
+													<TextBlock Margin="0,12,0,0">
+														<Run Text=""
+															 Foreground="White"
+															 FontWeight="Bold"
+															 FontSize="16" />
+														<Run Text="{Binding BlockName}"
+															 Foreground="White"
+															 FontSize="16" />
+													</TextBlock>
+													<TextBlock Margin="0,7,0,0">
+														<Run Text="Định dạng:"
+															 Foreground="#FF7B8797"
+															 FontSize="12" />
+														<Run Text="{Binding BlockType, Mode=OneWay}"
+															 Foreground="White"
+															 FontSize="16" />
+													</TextBlock>
+													<TextBlock  Margin="0,0,0,14">
+														<Run Text="{Binding BlockSize, Mode=OneWay}"
+															 Foreground="#FF7B8797"
+															 FontSize="12" />
+													</TextBlock>
+												</StackPanel>
+											</Grid>
+
 
 										</Border>
 									</ControlTemplate>

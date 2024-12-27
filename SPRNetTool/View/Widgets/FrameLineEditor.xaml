@@ -19,17 +19,17 @@
 				  Grid.Row="1"
 				  HorizontalScrollBarVisibility="Auto"
 				  VerticalScrollBarVisibility="Disabled"
-				  Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}"
+				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 				  CanContentScroll="True">
 		<ScrollViewer.Resources>
 			<sys:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarHeightKey}">8</sys:Double>
 		</ScrollViewer.Resources>
-		<wg:FrameLineEditorVirtualizingPanel Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}"
+		<wg:FrameLineEditorVirtualizingPanel Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 											 x:Name="FrameLinePanel">
 
 			<Line X1="0"
 				  X2="{Binding ElementName=FrameLinePanel, Path=ActualWidth}"
-				  Stroke="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel15}}"
+				  Stroke="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_10}}"
 				  StrokeThickness="1">
 				<Line.Y1>
 					<MultiBinding Converter="{StaticResource FormulaConverter}"
@@ -47,7 +47,7 @@
 				</Line.Y2>
 			</Line>
 
-			<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+			<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
 				  Panel.ZIndex="1"
 				  Height="50"
 				  Stretch="Uniform"
@@ -91,7 +91,7 @@
 				</Canvas.Top>
 			</Path>
 
-			<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+			<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
 				  Panel.ZIndex="1"
 				  Height="50"
 				  Stretch="Uniform"

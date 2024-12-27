@@ -26,7 +26,7 @@ namespace ArtWiz.View.Base
         {
             base.OnClosed(e);
             onWindowClosed?.Invoke(this);
-            ViewModel.IfIs<IArtWizViewModel>((it) => it.OnDestroy());
+            ViewModel.IfIs<IArtWizViewModel>((it) => it.OnArtWizViewModelDestroy());
         }
 
         public void AddOnWindowClosedEvent(IWindowViewer.WindowClosedHandler onWindowClosed)

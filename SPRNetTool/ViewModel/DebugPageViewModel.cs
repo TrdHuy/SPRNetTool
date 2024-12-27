@@ -466,7 +466,7 @@ namespace ArtWiz.ViewModel
 
                             if (collectionChangedArg.Event.HasFlag(FRAME_REMOVED) && FramesSource != null)
                             {
-                                FramesSource[collectionChangedArg.OldFrameIndex].OnDestroy();
+                                FramesSource[collectionChangedArg.OldFrameIndex].OnArtWizViewModelDestroy();
                                 FramesSource.RemoveAt(collectionChangedArg.OldFrameIndex);
                             }
 

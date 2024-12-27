@@ -12,8 +12,8 @@
 			 x:Name="UC_Container"
 			 FontFamily="Calibri"
 			 FontSize="16"
-			 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
-			 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}">
+			 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
+			 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
 	<UserControl.Resources>
 		<cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	</UserControl.Resources>

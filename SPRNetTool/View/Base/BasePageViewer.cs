@@ -29,7 +29,7 @@ namespace ArtWiz.View.Base
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            DataContext.IfIs<IArtWizViewModel>((it) => it.OnDestroy());
+            DataContext.IfIs<IArtWizViewModel>((it) => it.OnArtWizViewModelDestroy());
             Unloaded -= OnUnloaded;
         }
 

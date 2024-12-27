@@ -105,7 +105,7 @@ namespace ArtWiz.View.Widgets
                     //Logger.Raw.D($"Up on: {dragEnteredEllipse.initIndex}");
                     var intersectedFrameViewCacheIndex = referCanvasContainer.GetCurrentViewCacheIndex(intersectedFrame);
                     referCanvasContainer.RaisePreviewFrameSwitchEvent(currentViewCacheIndex, intersectedFrameViewCacheIndex);
-                    //Definitions.Instance?[Definitions.ForegroundColorLevel1].IfIs<Color>(it =>
+                    //Definitions.Instance?[Definitions.ButtonAndIconColorLevel0].IfIs<Color>(it =>
                     //{
                     //    dragEnteredEllipse.BeginAnimation(it, 0);
                     //}, @else: () =>

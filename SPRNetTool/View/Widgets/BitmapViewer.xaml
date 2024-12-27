@@ -48,7 +48,7 @@
 
 		<Border Grid.Column="1"
 				BorderThickness="1"
-				BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}">
+				BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}">
 			<local:BitmapViewerInternal x:Name="BitmapViewerContainerInternal"
 										DataContext="{Binding ElementName=BitmapViewerContainer, Path=ViewModel}"
 										GlobalHeight="{Binding GlobalHeight}"
@@ -147,7 +147,7 @@
 						</Rectangle.Width>
 					</Rectangle>
 
-					<Rectangle Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+					<Rectangle Fill="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
 							   Width="{Binding ElementName=ContainerCanvas, Path=ActualWidth}"
 							   Height="2"
 							   Visibility="{Binding ElementName=LayoutBoundButton,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.HIDDEN}}">
@@ -160,7 +160,7 @@
 						</Canvas.Top>
 					</Rectangle>
 
-					<Rectangle Fill="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}"
+					<Rectangle Fill="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
 							   Height="{Binding ElementName=ContainerCanvas, Path=ActualWidth}"
 							   Width="2"
 							   Visibility="{Binding ElementName=LayoutBoundButton,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.HIDDEN}}">
@@ -273,7 +273,7 @@
 				Grid.RowSpan="2"
 				Width="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxWidth, FallbackValue=40}"
 				BorderBrush="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxBorderBrush}"
-				Background="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxBackground, FallbackValue={StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}}">
+				Background="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxBackground, FallbackValue={StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}}">
 			<StackPanel Orientation="Vertical">
 				<local:IconToggle x:Name="FitToScreenButton"
 								  Visibility="{Binding ElementName=BitmapViewerContainer,Path=UseFitToScreenFunction, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}"
@@ -339,8 +339,8 @@
 					<Border Grid.Row="0"
 							Grid.Column="1"
 							BorderThickness="3"
-							BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
-							Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}"
+							BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+							Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 							Width="286"
 							Height="40"
 							CornerRadius="10">
@@ -361,7 +361,7 @@
 									   Margin="0,0,5,0"
 									   VerticalAlignment="Center"
 									   FontWeight="Bold"
-									   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+									   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 									   HorizontalAlignment="Center"
 									   Text="{Binding ElementName=ViewBoxDeltaSlider, Path=Value, StringFormat=N2}" />
 						</Grid>

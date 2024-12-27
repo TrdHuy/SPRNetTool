@@ -2,26 +2,26 @@
 
 namespace ArtWiz.ViewModel.Base
 {
-    public class BaseParentsViewModel : BaseViewModel, IArtWizViewModel
+    public abstract class BaseParentsViewModel : BaseViewModel, IArtWizViewModel
     {
-        private List<BaseSubViewModel> subViewModels = new List<BaseSubViewModel>();
+        private List<IArtWizViewModel> subViewModels = new List<IArtWizViewModel>();
         protected IArtWizViewModelOwner? ViewModelOwner { get; private set; }
         protected bool IsViewModelDestroyed { get; private set; } = false;
-        void IArtWizViewModel.OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner)
+        public virtual void OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner)
         {
             ViewModelOwner = owner;
             foreach (var vm in subViewModels)
             {
-                ((IArtWizViewModel)vm).OnArtWizViewModelOwnerCreate(owner);
+                (vm).OnArtWizViewModelOwnerCreate(owner);
             }
         }
 
-        void IArtWizViewModel.OnDestroy()
+        public virtual void OnArtWizViewModelDestroy()
         {
             IsViewModelDestroyed = true;
             foreach (var vm in subViewModels)
             {
-                ((IArtWizViewModel)vm).OnDestroy();
+                (vm).OnArtWizViewModelDestroy();
             }
             subViewModels.Clear();
         }
