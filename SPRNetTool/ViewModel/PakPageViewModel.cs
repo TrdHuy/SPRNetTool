@@ -226,7 +226,7 @@ namespace ArtWiz.ViewModel
             if (bundle != null)
             {
                 var isSpr = bundle.GetBoolean(PakContract.EXTRA_BLOCK_IS_SPR_KEY);
-                var blockId = bundle.GetString(PakContract.EXTRA_BLOCK_ID_KEY);
+                var blockId = bundle.GetString(PakContract.EXTRA_BLOCK_ID_KEY) ?? "unknown";
                 var blockSize = bundle.GetInt(PakContract.EXTRA_BLOCK_SIZE_KEY) ?? 0;
                 var blockName = bundle.GetString(PakContract.EXTRA_BLOCK_FILE_NAME_KEY) ?? "unknown";
                 var blockIndex = bundle.GetInt(PakContract.EXTRA_BLOCK_INDEX_KEY) ?? 0;
@@ -234,6 +234,7 @@ namespace ArtWiz.ViewModel
                 var blockItemViewModel = new PakBlockItemViewModel(this,
                     blockName: blockName,
                     blockType: isSpr == true ? "SPR" : "unknown",
+                    blockId: blockId,
                     blockSize: blockSize
                     );
 
@@ -273,6 +274,7 @@ namespace ArtWiz.ViewModel
     {
         private string _blockName;
         private string _blockType;
+        private string _blockId;
 
         [Bindable(true)]
         public string BlockName
@@ -298,6 +300,15 @@ namespace ArtWiz.ViewModel
         }
 
         [Bindable(true)]
+        public string BlockId
+        {
+            get
+            {
+                return _blockId;
+            }
+        }
+
+        [Bindable(true)]
         public string BlockSize
         {
             get
@@ -309,11 +320,13 @@ namespace ArtWiz.ViewModel
         public PakBlockItemViewModel(BaseParentsViewModel parents,
             string blockName,
             string blockType,
+            string blockId,
             long blockSize) : base(parents)
         {
             _itemSizeInBytes = blockSize;
             _blockName = blockName;
             _blockType = blockType;
+            _blockId = blockId;
         }
     }
 
