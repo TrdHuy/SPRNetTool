@@ -41,15 +41,15 @@ namespace ArtWiz.ViewModel.Widgets
             BitmapDisplayManager.UnregisterObserver(this);
         }
 
-        public override void OnArtWizViewModelDestroy()
+        public override void OnArtWizViewModelOwnerDestroy()
         {
-            base.OnArtWizViewModelDestroy();
+            base.OnArtWizViewModelOwnerDestroy();
             BitmapDisplayManager.UnregisterObserver(this);
         }
 
         protected override void OnDomainChanged(IDomainChangedArgs args)
         {
-            if (IsViewModelDestroyed) return;
+            if (IsOwnerDestroyed) return;
 
             switch (args)
             {

@@ -45,7 +45,7 @@
 								  Width="10"
 								  Height="10"
 								  Fill="{TemplateBinding Foreground}"
-								  Data="{Binding Source={StaticResource CloseButton}}"
+								  Data="{Binding Source={StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}}"
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>

@@ -143,13 +143,33 @@
 				  Width="578"
 				  Margin="30,0,0,0"
 				  VerticalAlignment="Center">
-				<wg:PlaceHolderTextBox Placeholder="Tìm theo đường dẫn..."
+				<wg:PlaceHolderTextBox x:Name="SearchTextBox"
+									   Placeholder="Tìm theo đường dẫn..."
 									   Height="44"
 									   FontSize="16"
+									   TextChanged="OnSearchBoxTextChanged"
 									   PlaceholderForeground="#FF7D8184"
 									   BorderBrush="#FF7D8184"
 									   BorderThickness="1"
+									   KeyDown="OnSearchBoxKeyDown"
 									   FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}" />
+				<wg:IconToggle x:Name="ClearSearchBox"
+							   Tag="{x:Static local:PakEditorPageId.ClearSearchBox}"
+							   IsEllipse="False"
+							   HorizontalAlignment="Right"
+							   StrokeThickness="3"
+							   IsEnableToggleClick="False"
+							   Margin="0,0,10,0"
+							   Click="OnButtonClick"
+							   Cursor="Hand"
+							   IconRatio="0.8"
+							   Stroke="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
+							   Width="15"
+							   Height="15"
+							   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}"
+							   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}"
+							   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}" />
+
 			</Grid>
 
 		</StackPanel>
@@ -251,6 +271,7 @@
 																	  Grid.ColumnSpan="2"
 																	  BorderThickness="0"
 																	  Margin="85,0,10,0"
+																	  Visibility="{Binding LoadingProgressBarVisibility}"
 																	  Value="{Binding LoadingProgress}"
 																	  Grid.Row="2" />
 												<StackPanel Orientation="Horizontal"
@@ -388,6 +409,7 @@
 				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel1}}">
 				<ListBox Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 						 BorderThickness="0"
+						 SelectedItem="{Binding CurrentSelectedPakFile.CurrentSelectedPakBlock}"
 						 ItemsSource="{Binding CurrentSelectedPakFile.PakBlocks}"
 						 VirtualizingStackPanel.IsVirtualizing="True"
 						 VirtualizingStackPanel.VirtualizationMode="Recycling"

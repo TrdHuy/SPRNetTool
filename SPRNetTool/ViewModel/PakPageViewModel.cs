@@ -4,11 +4,12 @@ using ArtWiz.Utils;
 using ArtWiz.ViewModel.Base;
 using ArtWiz.ViewModel.CommandVM;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using WizMachine.Services.Base;
 using WizMachine.Services.Utils.NativeEngine.Managed;
 
@@ -21,6 +22,87 @@ namespace ArtWiz.ViewModel
         PREPARING,
         LOADING,
         LOADED,
+    }
+    internal class PakViewModelManager
+    {
+        private Dictionary<string, PakBlockItemViewModel> _blockIdToPakBlockItemMap = new Dictionary<string, PakBlockItemViewModel>();
+        private Dictionary<string, PakFileItemViewModel> _filePathToPakFileItemMap = new Dictionary<string, PakFileItemViewModel>();
+        private Dictionary<PakBlockItemViewModel, PakFileItemViewModel> _blockItemToFileItemMap = new Dictionary<PakBlockItemViewModel, PakFileItemViewModel>();
+        private Dictionary<PakFileItemViewModel, HashSet<PakBlockItemViewModel>> _fileItemToBlockItemMap = new Dictionary<PakFileItemViewModel, HashSet<PakBlockItemViewModel>>();
+
+        public ObservableCollection<PakFileItemViewModel> GetPakFileItemViewModel()
+        {
+            foreach(var pair in _fileItemToBlockItemMap)
+            {
+                var pakBlockVMs = new ObservableCollection<PakBlockItemViewModel>(pair.Value);
+                pair.Key.PakBlocks = pakBlockVMs;
+            }
+            return new ObservableCollection<PakFileItemViewModel>(_filePathToPakFileItemMap.Values);
+        }
+
+        public PakBlockItemViewModel CreatePakBlockViewModel(PakFileItemViewModel pakFileItemViewModel,
+            string blockName,
+            string blockType,
+            string blockId,
+            long blockSize)
+        {
+            var blockItemViewModel = new PakBlockItemViewModel(pakFileItemViewModel,
+                    blockName: blockName,
+                    blockType: blockType,
+                    blockId: blockId,
+                    blockSize: blockSize
+                    );
+            _blockIdToPakBlockItemMap.Add(blockId, blockItemViewModel);
+            _blockItemToFileItemMap.Add(blockItemViewModel, pakFileItemViewModel);
+            if (!_fileItemToBlockItemMap.ContainsKey(pakFileItemViewModel))
+            {
+                var h = new HashSet<PakBlockItemViewModel>();
+                h.Add(blockItemViewModel);
+                _fileItemToBlockItemMap.Add(pakFileItemViewModel, h);
+            }
+            else
+            {
+                _fileItemToBlockItemMap[pakFileItemViewModel].Add(blockItemViewModel);
+            }
+            return blockItemViewModel;
+        }
+
+        public PakFileItemViewModel CreatePakItemViewModel(PakPageViewModel pageViewModel, string filePath)
+        {
+            var newFile = new PakFileItemViewModel(this, pageViewModel, filePath);
+            _filePathToPakFileItemMap.Add(filePath, newFile);
+            return newFile;
+        }
+
+        public void DeletePakFileItemViewModel(PakFileItemViewModel pakFileItem)
+        {
+            foreach (var pakBlock in _fileItemToBlockItemMap[pakFileItem])
+            {
+                _blockItemToFileItemMap.Remove(pakBlock);
+                _blockIdToPakBlockItemMap.Remove(pakBlock.BlockId);
+            }
+            _fileItemToBlockItemMap.Remove(pakFileItem);
+            _filePathToPakFileItemMap.Remove(pakFileItem.FilePath);
+        }
+
+        public PakFileItemViewModel? GetPakFileItemViewModel(string filePath)
+        {
+            if (!_filePathToPakFileItemMap.ContainsKey(filePath))
+            {
+                return null;
+            }
+            return _filePathToPakFileItemMap[filePath];
+        }
+
+        public (PakBlockItemViewModel, PakFileItemViewModel)? FindPakBlockById(string blockId)
+        {
+            if (_blockIdToPakBlockItemMap.ContainsKey(blockId))
+            {
+                var blockViewModel = _blockIdToPakBlockItemMap[blockId];
+                return (blockViewModel, _blockItemToFileItemMap[blockViewModel]);
+            }
+            return null;
+        }
     }
 
     internal abstract class PakItemViewModel : BaseSubViewModel
@@ -61,7 +143,7 @@ namespace ArtWiz.ViewModel
 
     }
 
-    internal class PakFileItemViewModel : PakItemViewModel, ILoadPakFileCallback, IRemovePakFileCallback
+    internal class PakFileItemViewModel : PakItemViewModel, ILoadPakFileCallback
     {
         private string _filePath;
         protected int _loadingProgress;
@@ -75,17 +157,46 @@ namespace ArtWiz.ViewModel
                 Invalidate(nameof(ReloadPakVisibility));
                 Invalidate(nameof(RemoveFilePakVisibility));
                 Invalidate(nameof(LoadingStatusToString));
+                Invalidate(nameof(LoadingProgressBarVisibility));
             }
         }
 
-        private ObservableCollection<PakBlockItemViewModel> _pakBlocks;
+        private ObservableCollection<PakBlockItemViewModel> _pakBlocks = new ObservableCollection<PakBlockItemViewModel>();
+        private PakViewModelManager _viewModelManager;
+        private PakBlockItemViewModel? _currentSelectedPakBlock;
         public ObservableCollection<PakBlockItemViewModel> PakBlocks
         {
             get => _pakBlocks;
-            private set
+            set
             {
                 _pakBlocks = value;
                 Invalidate();
+            }
+        }
+        public string FilePath { get => _filePath; }
+
+        public PakBlockItemViewModel? CurrentSelectedPakBlock
+        {
+            get => _currentSelectedPakBlock;
+            set
+            {
+                _currentSelectedPakBlock = value;
+                Invalidate();
+            }
+        }
+        [Bindable(true)]
+        public Visibility LoadingProgressBarVisibility
+        {
+            get
+            {
+                if (LoadingStatus == PakItemLoadingStatus.LOADED)
+                {
+                    return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
             }
         }
 
@@ -171,12 +282,15 @@ namespace ArtWiz.ViewModel
             set
             {
                 _loadingProgress = value;
-                Invalidate(); // Thông báo UI cập nhật giá trị
+                Invalidate();
             }
         }
 
-        public PakFileItemViewModel(BaseParentsViewModel parents, string filePath) : base(parents)
+        Dispatcher ILoadPakFileCallback.ViewDispatcher => ViewModelOwner.ViewDispatcher;
+
+        public PakFileItemViewModel(PakViewModelManager viewModelManager, BaseParentsViewModel parents, string filePath) : base(parents)
         {
+            _viewModelManager = viewModelManager;
             _filePath = filePath;
 
             if (File.Exists(_filePath))
@@ -187,8 +301,6 @@ namespace ArtWiz.ViewModel
             {
                 _itemSizeInBytes = 0;
             }
-            _pakBlocks = new ObservableCollection<PakBlockItemViewModel>();
-
             LoadingStatus = PakItemLoadingStatus.PREPARING;
             PakWorkManager.LoadPakFileToWorkManagerAsync(filePath, this);
         }
@@ -207,15 +319,6 @@ namespace ArtWiz.ViewModel
             InvalidateAll();
         }
 
-        public void ClosePakSession()
-        {
-            if (PakWorkManager.IsFileAlreadyAdded(_filePath))
-            {
-                PakWorkManager.CloseSessionAsync(_filePath, this);
-            }
-        }
-
-
         public void OnSessionCreated()
         {
             LoadingStatus = PakItemLoadingStatus.LOADING;
@@ -231,18 +334,16 @@ namespace ArtWiz.ViewModel
                 var blockName = bundle.GetString(PakContract.EXTRA_BLOCK_FILE_NAME_KEY) ?? "unknown";
                 var blockIndex = bundle.GetInt(PakContract.EXTRA_BLOCK_INDEX_KEY) ?? 0;
 
-                var blockItemViewModel = new PakBlockItemViewModel(this,
-                    blockName: blockName,
+
+                var blockItemViewModel = _viewModelManager.CreatePakBlockViewModel(this, blockName: blockName,
                     blockType: isSpr == true ? "SPR" : "unknown",
                     blockId: blockId,
-                    blockSize: blockSize
-                    );
-
+                    blockSize: blockSize);
                 PakBlocks.Add(blockItemViewModel);
             }
         }
 
-        public void OnLoadCompleted()
+        public void OnBlockLoadCompleted()
         {
         }
 
@@ -261,12 +362,8 @@ namespace ArtWiz.ViewModel
             LoadingStatus = PakItemLoadingStatus.LOADED;
         }
 
-        public void OnRemoveSuccess()
+        public void OnLoadCompleted(Bundle? bundle)
         {
-            Parents.IfIs<PakPageViewModel>(it =>
-            {
-                it.PakFiles.Remove(this);
-            });
         }
     }
 
@@ -330,11 +427,12 @@ namespace ArtWiz.ViewModel
         }
     }
 
-    internal class PakPageViewModel : BaseParentsViewModel, IPakPageCommand
+    internal class PakPageViewModel : BaseParentsViewModel, IPakPageCommand, IRemovePakFileCallback
     {
         private static Logger logger = new Logger(typeof(PakPageViewModel).Name);
         private PakFileItemViewModel? _currentSelectedPakFile;
         private ObservableCollection<PakFileItemViewModel> _pakFiles;
+        private PakViewModelManager _viewModelManager = new PakViewModelManager();
 
         public ObservableCollection<PakFileItemViewModel> PakFiles
         {
@@ -375,16 +473,68 @@ namespace ArtWiz.ViewModel
                 return;
             }
 
-            var newFile = new PakFileItemViewModel(this, filePath);
-            PakFiles.Add(newFile);
+            PakFiles.Add(_viewModelManager.CreatePakItemViewModel(this, filePath));
+        }
+
+        void IPakPageCommand.OnResetSearchBox()
+        {
+            if (CurrentSelectedPakFile != null)
+                CurrentSelectedPakFile.CurrentSelectedPakBlock = null;
+            PakFiles = _viewModelManager.GetPakFileItemViewModel();
+            CurrentSelectedPakFile = null;
         }
 
         void IPakPageCommand.OnRemovePakFileClick(object pakFileViewModel)
         {
             pakFileViewModel.IfIs<PakFileItemViewModel>(it =>
             {
-                it.ClosePakSession();
+                if (PakWorkManager.IsFileAlreadyAdded(it.FilePath))
+                {
+                    PakWorkManager.CloseSessionAsync(it.FilePath, this);
+                }
             });
         }
+
+        void IPakPageCommand.OnSearchPakBlockByPath(string blockPath)
+        {
+            var blockInfo = PakWorkManager.GetBlockInfoByPath(blockPath);
+            if (blockInfo != null)
+            {
+                (PakBlockItemViewModel blockVM, PakFileItemViewModel pakFileVM)? result =
+                        _viewModelManager.FindPakBlockById(blockInfo.Value.id);
+                if (result.HasValue)
+                {
+                    var (blockVM, pakFileVM) = result.Value;
+                    PakFiles.Clear();
+                    PakFiles.Add(pakFileVM);
+                    pakFileVM.PakBlocks.Clear();
+                    pakFileVM.PakBlocks.Add(blockVM);
+                    pakFileVM.CurrentSelectedPakBlock = blockVM;
+                    CurrentSelectedPakFile = pakFileVM;
+                }
+                else
+                {
+                }
+            }
+        }
+
+        public void OnRemoveSuccess(object removedPakFile)
+        {
+            removedPakFile.IfIs<string>(it =>
+            {
+                var viewModel = _viewModelManager.GetPakFileItemViewModel(it);
+                if (viewModel != null)
+                {
+                    _viewModelManager.DeletePakFileItemViewModel(viewModel);
+                    PakFiles.Remove(viewModel);
+                }
+            });
+        }
+
+        public void OnFinishJob()
+        {
+        }
+
+
     }
 }
