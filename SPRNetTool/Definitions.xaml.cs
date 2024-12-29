@@ -77,7 +77,9 @@ namespace ArtWiz
         public static ResourceKey FileZipperGeometry { get; } = CreateResourceKey();
         public static ResourceKey SprWorkspaceGeometry { get; } = CreateResourceKey();
         public static ResourceKey PakWorkspaceGeometry { get; } = CreateResourceKey();
+        public static ResourceKey CloseButtonGeometry { get; } = CreateResourceKey();
 
+        
         public static ResourceKey ArtWizDefaultWindowStyle { get; } = CreateResourceKey();
         public static ResourceKey UnidentifiedPreviewFrameSourceGeometry { get; } = CreateResourceKey();
 

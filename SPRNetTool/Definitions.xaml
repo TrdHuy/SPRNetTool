@@ -265,7 +265,7 @@
 	<Geometry x:Key="MaximizeButton">
 		M 91.305676,113.22577 V 129.0383 H 107.1182 v -15.81253 z m 0.932541,0.81706 h 13.947443 v 12.67039 H 92.238217 Z
 	</Geometry>
-	<Geometry x:Key="CloseButton">
+	<Geometry x:Key="{x:Static local:Definitions.CloseButtonGeometry}">
 		m 75.809197,16.628119 -7.349991,7.34999 -7.349885,-7.349885 -2.132578,2.132581 7.349882,7.349882 -7.349991,7.34999 2.132581,2.132581 7.349991,-7.349991 7.349991,7.349991 2.132578,-2.132578 -7.349988,-7.349991 7.349991,-7.349992 z
 	</Geometry>
 	<Geometry x:Key="SmallmizeButton">
