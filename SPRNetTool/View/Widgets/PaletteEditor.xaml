@@ -9,6 +9,7 @@
 			 mc:Ignorable="d"
 			 d:DesignHeight="450"
 			 d:DesignWidth="800"
+			 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 			 x:Name="UC_container">
 	<UserControl.Resources>
 		<Style x:Key="SliderRepeatButton"

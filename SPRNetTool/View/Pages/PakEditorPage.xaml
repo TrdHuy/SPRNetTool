@@ -11,6 +11,7 @@
 					 d:DesignWidth="1280"
 					 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 					 xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
+					 xmlns:pe="clr-namespace:ArtWiz.View.Pages.PakEditor"
 					 MinWidth="1280"
 					 MinHeight="718"
 					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
@@ -25,84 +26,6 @@
 	<UserControl.Resources>
 		<cvt:RevertBoolConverter x:Key="RevertBoolConverter" />
 		<cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-		<Style TargetType="wg:CollapsibleControl">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
-						<Border Background="Transparent"
-								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
-								BorderThickness="1"
-								Padding="{TemplateBinding Padding}"
-								SnapsToDevicePixels="true">
-							<Grid x:Name="GridContainer">
-								<Grid.RowDefinitions>
-									<RowDefinition Height="40" />
-									<RowDefinition Height="Auto" />
-								</Grid.RowDefinitions>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition />
-								</Grid.ColumnDefinitions>
-								<Rectangle Grid.Row="0"
-										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
-										   Grid.ColumnSpan="2" />
-								<Border x:Name="MainBorderContainer"
-										Grid.Row="1"
-										Grid.ColumnSpan="2"
-										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
-										VerticalAlignment="Top"
-										Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
-									<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-								</Border>
-
-
-								<wg:IconToggle OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
-											   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
-											   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
-											   IsChecked="{TemplateBinding IsCollapse, Converter={StaticResource RevertBoolConverter}}"
-											   Grid.Column="1"
-											   Width="18"
-											   Height="18"
-											   Margin="18,10"
-											   StrokeThickness="2"
-											   HorizontalAlignment="Right"
-											   x:Name="CollapseButton">
-									<wg:IconToggle.Style>
-										<Style TargetType="wg:IconToggle">
-											<Style.Triggers>
-												<Trigger Property="IsChecked"
-														 Value="False">
-													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
-												</Trigger>
-												<Trigger Property="IsChecked"
-														 Value="True">
-													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
-												</Trigger>
-											</Style.Triggers>
-										</Style>
-									</wg:IconToggle.Style>
-								</wg:IconToggle>
-
-								<StackPanel HorizontalAlignment="Left"
-											Orientation="Horizontal">
-									<TextBlock x:Name="Header"
-											   Margin="18,10"
-											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
-											   FontSize="15"
-											   FontWeight="Bold" />
-									<ContentPresenter Content="{TemplateBinding ExtraHeaderContent}" />
-								</StackPanel>
-
-							</Grid>
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
 	</UserControl.Resources>
 	<Grid x:Name="PagePanelWithHeader">
 		<Grid.RowDefinitions>
@@ -110,6 +33,7 @@
 						   x:Name="HeaderRowDef" />
 			<RowDefinition x:Name="ConentRowDef" />
 		</Grid.RowDefinitions>
+		<!--Tool bar-->
 		<StackPanel Orientation="Horizontal">
 			<Menu Panel.ZIndex="1"
 				  Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
@@ -174,7 +98,49 @@
 
 		</StackPanel>
 
-		<Grid Grid.Row="1">
+		<Grid Grid.Row="1"
+			  Visibility="{Binding InitPanelVisibility}"
+			  x:Name="InitPanel"
+			  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
+			<Image Stretch="Uniform"
+				   Width="450"
+				   Height="400"
+				   Opacity="0.3"
+				   Source="/ArtWiz;component/resources/logo_500.png">
+			</Image>
+
+			<Border Width="628"
+					Height="166"
+					BorderThickness="2"
+					CornerRadius="10"
+					BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
+					Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}">
+				<Grid Margin="30,35">
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<TextBlock FontSize="24"
+							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
+							   Text="No PAK files loaded. Please add a file to get started." />
+					<Button Grid.Row="1"
+							HorizontalAlignment="Left"
+							Content="+ Add PAK file"
+							FontSize="18"
+							Click="OnButtonClick"
+							Tag="{x:Static local:PakEditorPageId.AddFilePak}"
+							BorderThickness="0"
+							Background="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
+							Padding="40,0" />
+				</Grid>
+			</Border>
+
+		</Grid>
+
+		<!--Visibility="{Binding DetailPanelVisibility}"-->
+		<Grid Grid.Row="1"
+			  Visibility="{Binding DetailPanelVisibility}"
+			  x:Name="DetailPanel">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="0" />
 				<ColumnDefinition Width="3*" />
@@ -215,9 +181,9 @@
 						   Foreground="White"
 						   FontSize="16"
 						   VerticalAlignment="Center" />
+
 				</StackPanel>
 				<!--ItemsSource="{Binding PakFiles}"-->
-
 				<ListBox Grid.Row="1"
 						 Margin="15,0"
 						 Background="Transparent"
@@ -381,14 +347,14 @@
 							   FontWeight="Bold"
 							   FontSize="18" />
 						<TextBlock Margin="25,10,0,0">
-	<Run Text="Kích thước:"
-							Foreground="White"
-							FontSize="16" />
+							<Run Text="Kích thước:"
+								 Foreground="White"
+								 FontSize="16" />
 						</TextBlock>
 						<TextBlock Margin="25,5,0,0">
-	<Run Text="Định dạng:"
-							Foreground="White"
-							FontSize="16" />
+							<Run Text="Định dạng:"
+								 Foreground="White"
+								 FontSize="16" />
 						</TextBlock>
 
 						<Button Margin="25,30,250,0"
@@ -511,6 +477,118 @@
 					<!--<ListBoxItem IsSelected="True" />-->
 				</ListBox>
 			</Grid>
+
+			<Grid Grid.ColumnSpan="3"
+				  Grid.Column="1"
+				  Visibility="{Binding Path=CurrentSelectedPakFile.CurrentSelectedPakBlock, 
+						Converter={StaticResource NullToVisibilityConverter}, 
+						ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}, 
+						FallbackValue=Visible, 
+						TargetNullValue=Visible}"
+				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
+				  Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<StackPanel Orientation="Horizontal">
+					<wg:IconToggle Tag="{x:Static local:PakEditorPageId.AddFilePak}"
+								   IsEllipse="False"
+								   StrokeThickness="3"
+								   IsEnableToggleClick="False"
+								   Margin="10,0,0,0"
+								   Click="OnButtonClick"
+								   Style="{StaticResource IconToogleStyle2}"
+								   IconRatio="0.8"
+								   Width="25"
+								   Height="25"
+								   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}"
+								   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}"
+								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.FolderPlusGeometry}}" />
+					<Label Content="Thêm file pak"
+						   Foreground="White"
+						   FontSize="16"
+						   VerticalAlignment="Center" />
+
+				</StackPanel>
+				<!--SelectedItem="{Binding CurrentSelectedPakFile}"
+ItemsSource="{Binding PakFiles}"-->
+				<ListBox Grid.Row="1"
+						 Margin="15,0"
+						 SelectedItem="{Binding CurrentSelectedPakFile}"
+						 ItemsSource="{Binding PakFiles}"
+						 Background="Transparent"
+						 BorderThickness="0"
+						 VirtualizingStackPanel.IsVirtualizing="True"
+						 VirtualizingStackPanel.VirtualizationMode="Recycling"
+						 ScrollViewer.CanContentScroll="True">
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="ListBoxItem">
+										<Border x:Name="ItemBorder"
+												BorderThickness="2"
+												ClipToBounds="True"
+												BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+												Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+												CornerRadius="10"
+												Margin="0,0,0,5">
+											<pe:OriginalPakFileItem />
+										</Border>
+
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsSelected"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="BorderBrush"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}" />
+											</Trigger>
+											<Trigger Property="IsMouseOver"
+													 Value="True">
+												<Setter TargetName="ItemBorder"
+														Property="Background"
+														Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_3}}" />
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</ListBox.ItemContainerStyle>
+				</ListBox>
+			</Grid>
+
+			<Border Grid.Column="5"
+					Grid.Row="1"
+					Visibility="{Binding Path=CurrentSelectedPakFile, 
+						Converter={StaticResource NullToVisibilityConverter}, 
+						ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}, 
+						FallbackValue=Visible, 
+						TargetNullValue=Visible}"
+					BorderThickness="1,0,0,0"
+					BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_10}}">
+				<Grid x:Name="GuidePanel"
+					  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
+					<Image Stretch="Uniform"
+						   Width="263"
+						   Height="263"
+						   Opacity="0.3"
+						   Source="/ArtWiz;component/resources/logo_500.png">
+					</Image>
+					<TextBlock VerticalAlignment="Center"
+							   FontSize="32"
+							   TextWrapping="Wrap"
+							   TextAlignment="Center"
+							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_10}}"
+							   HorizontalAlignment="Center"
+							   Text="Hãy chọn 1 file pak để xem chi tiết!" />
+				</Grid>
+			</Border>
+
 		</Grid>
 	</Grid>
 

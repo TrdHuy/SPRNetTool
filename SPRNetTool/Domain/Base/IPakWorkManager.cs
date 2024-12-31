@@ -11,7 +11,7 @@ namespace ArtWiz.Domain.Base
     public interface ILoadPakFileCallback : IJobExecutor
     {
         Dispatcher ViewDispatcher { get; }
-        void OnSessionCreated();
+        void OnSessionCreated(Bundle? bundle);
         void OnBlockLoaded(Bundle? bundle);
         void OnBlockLoadCompleted();
         void OnLoadCompleted(Bundle? bundle);

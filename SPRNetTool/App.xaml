@@ -10,9 +10,11 @@
 			</ResourceDictionary.MergedDictionaries>
 
 			<cvt:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+			<cvt:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 			<cvt:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
 			<cvt:BoolToObjectConverter x:Key="BoolToObjectConverter" />
 			<cvt:FormulaConverter x:Key="FormulaConverter" />
+			<cvt:RevertBoolConverter x:Key="RevertBoolConverter" />
 
 		</ResourceDictionary>
 	</Application.Resources>
