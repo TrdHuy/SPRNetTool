@@ -1,6 +1,7 @@
 ﻿using ArtWiz.Utils;
 using ArtWiz.View.Base;
 using ArtWiz.View.Pages;
+using ArtWiz.View.Pages.PakEditor;
 using ArtWiz.View.Utils;
 using ArtWiz.View.Widgets;
 using System;

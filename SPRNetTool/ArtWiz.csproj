@@ -20,7 +20,7 @@
 		<StartupObject>ArtWiz.App</StartupObject>
 		<Platforms>x64;x86</Platforms>
 		<BuildTag>ARTWIZ_BUILD_TAG</BuildTag>
-		<WizMachineVersion>1.0.18</WizMachineVersion>
+		<WizMachineVersion>1.0.19</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Data\**" />
@@ -64,6 +64,14 @@
 		<None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
 		<None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
 		<None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
+		<None Remove="Resources\img_clock_icon.png" />
+		<None Remove="Resources\img_folder_icon.png" />
+		<None Remove="Resources\img_key_icon.png" />
+		<None Remove="Resources\img_map_icon.png" />
+		<None Remove="Resources\img_package_icon.png" />
+		<None Remove="Resources\img_reload_icon.png" />
+		<None Remove="Resources\img_save_icon.png" />
+		<None Remove="Resources\img_size_icon.png" />
 		<None Remove="Resources\logo_40.png" />
 		<None Remove="Resources\logo_500.png" />
 		<None Remove="Resources\spr_global_background.png" />
@@ -179,6 +187,30 @@
 		</Content>
 		<Content Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_clock_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_folder_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_key_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_map_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_package_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_reload_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_save_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\img_size_icon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\spr_global_background.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -106,7 +106,7 @@ namespace ArtWiz.Domain
                 switch (eventType)
                 {
                     case EVENT_TOKEN_CREATED_MESSAGE:
-                        loadPakCallback.OnSessionCreated();
+                        loadPakCallback.OnSessionCreated(bundle);
                         break;
                     case EVENT_BLOCK_LOADED_MESSAGE: // one block loaded successfully
                         loadPakCallback.OnBlockLoaded(bundle);

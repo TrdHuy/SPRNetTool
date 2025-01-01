@@ -14,10 +14,13 @@ namespace ArtWiz
         public static ResourceKey PanelBackgroundColorLevel0_4 { get; } = CreateResourceKey();
         public static ResourceKey PanelBackgroundColorLevel0_10 { get; } = CreateResourceKey();
         public static ResourceKey TextForegroundColorLevel0 { get; } = CreateResourceKey();
-        public static ResourceKey TextForegroundColorLevel0_1 { get; } = CreateResourceKey();
+        public static ResourceKey TextForegroundColorLevel0_1 { get; } = CreateResourceKey(); 
+        public static ResourceKey TextForegroundColorLevel0_5 { get; } = CreateResourceKey(); 
         public static ResourceKey ButtonAndIconColorLevel0 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel0_1 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconColorLevel2{ get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconColorLevel2_m8{ get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconColorLevel0_m8 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectColorLevel2_OP1 { get; } = CreateResourceKey();
@@ -38,7 +41,12 @@ namespace ArtWiz
         public static ResourceKey PanelBackgroundLevel0_10 { get; } = CreateResourceKey();
         public static ResourceKey TextForegroundBrushLevel0 { get; } = CreateResourceKey();
         public static ResourceKey TextForegroundBrushLevel0_1 { get; } = CreateResourceKey();
+        public static ResourceKey TextForegroundBrushLevel0_5 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconBrushLevel0 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconBrushLevel0_1 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconBrushLevel1 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconBrushLevel2 { get; } = CreateResourceKey();
+        public static ResourceKey ButtonAndIconBrushLevel2_m8 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundLevel2 { get; } = CreateResourceKey();
         public static ResourceKey ButtonAndIconBrushLevel0_m8 { get; } = CreateResourceKey();
         public static ResourceKey ForegroundEffectLevel2 { get; } = CreateResourceKey();
@@ -78,8 +86,10 @@ namespace ArtWiz
         public static ResourceKey SprWorkspaceGeometry { get; } = CreateResourceKey();
         public static ResourceKey PakWorkspaceGeometry { get; } = CreateResourceKey();
         public static ResourceKey CloseButtonGeometry { get; } = CreateResourceKey();
+        public static ResourceKey SlashEyeGeometry { get; } = CreateResourceKey();
+        public static ResourceKey EyeGeometry { get; } = CreateResourceKey();
+        public static ResourceKey MapGeometry { get; } = CreateResourceKey();
 
-        
         public static ResourceKey ArtWizDefaultWindowStyle { get; } = CreateResourceKey();
         public static ResourceKey UnidentifiedPreviewFrameSourceGeometry { get; } = CreateResourceKey();
 

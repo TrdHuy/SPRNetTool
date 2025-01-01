@@ -4,7 +4,7 @@ namespace ArtWiz.ViewModel.Base
 {
     public abstract class BaseSubViewModel : BaseParentsViewModel
     {
-        protected BaseViewModel Parents;
+        public BaseViewModel Parents { get; private set; }
 
         public BaseSubViewModel(BaseParentsViewModel parents)
         {
