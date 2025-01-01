@@ -24,5 +24,10 @@ namespace ArtWiz.View.Pages.PakEditor
         {
             InitializeComponent();
         }
+
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

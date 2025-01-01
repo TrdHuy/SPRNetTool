@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System;
 using ArtWiz.ViewModel;
 
-namespace ArtWiz.View.Pages
+namespace ArtWiz.View.Pages.PakEditor
 {
     public class Item
     {
