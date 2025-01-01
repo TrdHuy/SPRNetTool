@@ -12,19 +12,6 @@ using ArtWiz.ViewModel;
 
 namespace ArtWiz.View.Pages.PakEditor
 {
-    public class Item
-    {
-        public string ItemName { get; set; }
-        public string FileSize { get; set; }
-    }
-
-    public enum PakEditorPageId
-    {
-        AddFilePak,
-        RemoveFilePak,
-        ReloadFilePak,
-        ClearSearchBox,
-    }
     /// <summary>
     /// Interaction logic for PakEditorPage.xaml
     /// </summary>

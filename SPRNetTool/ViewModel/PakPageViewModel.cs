@@ -82,12 +82,15 @@ namespace ArtWiz.ViewModel
 
         public void DeletePakFileItemViewModel(PakFileItemViewModel pakFileItem)
         {
-            foreach (var pakBlock in _fileItemToBlockItemMap[pakFileItem])
+            if (_fileItemToBlockItemMap.ContainsKey(pakFileItem))
             {
-                _blockItemToFileItemMap.Remove(pakBlock);
-                _blockIdToPakBlockItemMap.Remove(pakBlock.BlockId);
+                foreach (var pakBlock in _fileItemToBlockItemMap[pakFileItem])
+                {
+                    _blockItemToFileItemMap.Remove(pakBlock);
+                    _blockIdToPakBlockItemMap.Remove(pakBlock.BlockId);
+                }
+                _fileItemToBlockItemMap.Remove(pakFileItem);
             }
-            _fileItemToBlockItemMap.Remove(pakFileItem);
             _filePathToPakFileItemMap.Remove(pakFileItem.FilePath);
         }
 
@@ -165,6 +168,7 @@ namespace ArtWiz.ViewModel
             set
             {
                 base.LoadingStatus = value;
+                Invalidate();
                 Invalidate(nameof(ReloadPakVisibility));
                 Invalidate(nameof(RemoveFilePakVisibility));
                 Invalidate(nameof(LoadingStatusToString));
@@ -698,6 +702,15 @@ namespace ArtWiz.ViewModel
                 if (PakWorkManager.IsFileAlreadyAdded(it.FilePath))
                 {
                     PakWorkManager.CloseSessionAsync(it.FilePath, this);
+                }
+                else if (it.LoadingStatus == PakItemLoadingStatus.NONE)
+                {
+                    var vm = _viewModelManager.GetPakFileItemViewModel(it.FilePath);
+                    if (vm != null)
+                    {
+                        _viewModelManager.DeletePakFileItemViewModel(vm);
+                        PakFiles.Remove(vm);
+                    }
                 }
             });
         }
