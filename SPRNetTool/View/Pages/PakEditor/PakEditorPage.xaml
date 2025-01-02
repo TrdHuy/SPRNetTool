@@ -311,64 +311,10 @@
 				</ListBox>
 
 			</Grid>
-
-			<Border Grid.Row="1"
-					Grid.Column="3"
-					BorderThickness="1,0,1,0"
-					BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
-					Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="1.5*" />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-
-					<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
-									 Margin="10,40"
-									 ToolBoxIconSize="40"
-									 ToolBoxWidth="60"
-									 Padding="10"
-									 Background="#FF151515"
-									 ToolBoxBorderBrush="#FF151515"
-									 ToolBoxBackground="#FF151515"
-									 ToolBoxIconFill="#FF262626"
-									 ToolBoxIconStroke="White"
-									 UseFitToScreenFunction="True"
-									 UseLayoutBoundFunction="False"
-									 UseTransparenDecodedFrameBackgroundFunction="False"
-									 UseTransparentBackgroundFunction="False">
-
-					</wg:BitmapViewer>
-
-					<StackPanel Grid.Row="1"
-								Margin="10,0">
-						<Label Content="Chi tiết khối"
-							   Foreground="White"
-							   FontWeight="Bold"
-							   FontSize="18" />
-						<TextBlock Margin="25,10,0,0">
-							<Run Text="Kích thước:"
-								 Foreground="White"
-								 FontSize="16" />
-						</TextBlock>
-						<TextBlock Margin="25,5,0,0">
-							<Run Text="Định dạng:"
-								 Foreground="White"
-								 FontSize="16" />
-						</TextBlock>
-
-						<Button Margin="25,30,250,0"
-								Height="40"
-								BorderThickness="0"
-								Background="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel2}}"
-								Content="Xuất file"
-								Foreground="White"
-								FontSize="18">
-
-						</Button>
-					</StackPanel>
-				</Grid>
-			</Border>
+			
+			<pe:BlockPreviewer Grid.Row="1"
+							   Grid.Column="3"
+							   BorderThickness="1,0,1,0" />
 
 			<Grid Grid.Column="5"
 				  Grid.Row="1"

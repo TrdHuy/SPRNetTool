@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="ArtWiz.View.Pages.PakEditor.BlockPreviewer"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:ArtWiz.View.Pages.PakEditor"
+			 mc:Ignorable="d"
+			 d:DesignHeight="800"
+			 d:DesignWidth="800"
+			 d:DataContext="{d:DesignInstance vm:PakPageViewModel, IsDesignTimeCreatable=False}"
+			 xmlns:def="clr-namespace:ArtWiz"
+			 xmlns:wg="clr-namespace:ArtWiz.View.Widgets"
+			 xmlns:vm="clr-namespace:ArtWiz.ViewModel"
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+			 xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
+			 BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
+			 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1.5*" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<wg:BitmapViewer ToolBoxMargin="0,0,10,0"
+						 Margin="10,40"
+						 ToolBoxIconSize="40"
+						 ToolBoxWidth="60"
+						 Padding="10"
+						 Background="#FF151515"
+						 ToolBoxBorderBrush="#FF151515"
+						 ToolBoxBackground="#FF151515"
+						 ToolBoxIconFill="#FF262626"
+						 ToolBoxIconStroke="White"
+						 UseFitToScreenFunction="True"
+						 UseLayoutBoundFunction="False"
+						 UseTransparenDecodedFrameBackgroundFunction="False"
+						 UseTransparentBackgroundFunction="False">
+
+		</wg:BitmapViewer>
+
+		<StackPanel Grid.Row="1"
+					Margin="10,0">
+			<Label Content="Chi tiết khối"
+				   Foreground="White"
+				   FontWeight="Bold"
+				   FontSize="18" />
+			<TextBlock Margin="25,10,0,0">
+				<Run Text="Kích thước:"
+					 Foreground="White"
+					 FontSize="16" />
+			</TextBlock>
+			<TextBlock Margin="25,5,0,0">
+				<Run Text="Định dạng:"
+					 Foreground="White"
+					 FontSize="16" />
+			</TextBlock>
+
+			<Button Margin="25,30,250,0"
+					Height="40"
+					BorderThickness="0"
+					Background="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel2}}"
+					Content="Xuất file"
+					Foreground="White"
+					FontSize="18">
+
+			</Button>
+		</StackPanel>
+
+		<wg:IconToggle x:Name="ClearSearchBox"
+					   VerticalAlignment="Top"
+					   Tag="{x:Static local:PakEditorPageId.CloseBlockDetailPanel}"
+					   IsEllipse="False"
+					   HorizontalAlignment="Right"
+					   StrokeThickness="3"
+					   IsEnableToggleClick="False"
+					   Margin="0,10,10,0"
+					   Click="OnButtonClick"
+					   Cursor="Hand"
+					   IconRatio="0.8"
+					   Stroke="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_5}}"
+					   Width="15"
+					   Height="15"
+					   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}"
+					   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}"
+					   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.CloseButtonGeometry}}" />
+	</Grid>
+</UserControl>

@@ -14,6 +14,6 @@ namespace ArtWiz.View.Pages.PakEditor
         ReloadFilePak,
         ClearSearchBox,
         StartLoadPakFile,
-
+        CloseBlockDetailPanel,
     }
 }
