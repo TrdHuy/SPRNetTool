@@ -21,6 +21,11 @@ namespace ArtWiz.Domain
             _pakWorkManagerService = EngineKeeper.GetPakWorkManagerService();
         }
 
+        public bool ExtractPakBlockById(string blockId, string outputPath)
+        {
+            return _pakWorkManagerService.ExtractBlockById(blockId, outputPath);
+        }
+
         public bool IsBlockPathExist(string blockPath)
         {
             return _pakWorkManagerService.IsBlockExistByPath(blockPath);
@@ -149,5 +154,6 @@ namespace ArtWiz.Domain
 
             });
         }
+
     }
 }

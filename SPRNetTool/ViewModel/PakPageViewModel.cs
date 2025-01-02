@@ -1,6 +1,7 @@
 ﻿using ArtWiz.Domain.Base;
 using ArtWiz.LogUtil;
 using ArtWiz.Utils;
+using ArtWiz.View.Utils;
 using ArtWiz.ViewModel.Base;
 using ArtWiz.ViewModel.CommandVM;
 using System;
@@ -10,6 +11,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using WizMachine.Services.Base;
 using WizMachine.Services.Utils.NativeEngine.Managed;
@@ -596,7 +598,20 @@ namespace ArtWiz.ViewModel
         private Visibility _searchBoxVisibility = Visibility.Visible;
         private Visibility _initPanelVisibility = Visibility.Visible;
         private Visibility _detailPanelVisibility = Visibility.Visible;
+        private string _blockFolderOutputPath = "";
 
+        public string BlockFolderOutputPath
+        {
+            get
+            {
+                return _blockFolderOutputPath;
+            }
+            set
+            {
+                _blockFolderOutputPath = value;
+                Invalidate();
+            }
+        }
         public Visibility DetailPanelVisibility
         {
             get
@@ -738,6 +753,58 @@ namespace ArtWiz.ViewModel
             }
         }
 
+        void IPakPageCommand.OnExtractCurrentSelectedBlock()
+        {
+            if (CurrentSelectedPakFile != null && CurrentSelectedPakFile.CurrentSelectedPakBlock != null)
+            {
+                PakBlockItemViewModel pakBlock = CurrentSelectedPakFile!.CurrentSelectedPakBlock!;
+
+                string? outputPath = _blockFolderOutputPath;
+                if (string.IsNullOrEmpty(outputPath) || !Directory.Exists(outputPath))
+                {
+                    using (var folderDialog = new FolderBrowserDialog())
+                    {
+                        folderDialog.Description = "Chọn thư mục để lưu block đã extract:";
+                        folderDialog.ShowNewFolderButton = true;
+
+                        if (folderDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            outputPath = folderDialog.SelectedPath;
+                            _blockFolderOutputPath = outputPath;
+                        }
+                        else
+                        {
+                            logger.I("Người dùng không chọn thư mục.");
+                            return;
+                        }
+                    }
+                }
+
+                if (pakBlock.BlockType == "SPR")
+                {
+                    outputPath = Path.Combine(outputPath, pakBlock.BlockName + ".spr");
+                }
+                else
+                {
+                    outputPath = Path.Combine(outputPath, pakBlock.BlockName + ".txt");
+                }
+
+                bool success = PakWorkManager.ExtractPakBlockById(pakBlock.BlockId, outputPath!);
+                if (success)
+                {
+                    logger.I($"Extract block '{pakBlock.BlockId}' thành công vào '{outputPath}'.");
+                }
+                else
+                {
+                    logger.I($"Extract block '{pakBlock.BlockId}' thất bại.");
+                }
+            }
+            else
+            {
+                logger.E("Không có PakFile hoặc PakBlock nào được chọn.");
+            }
+        }
+
         public void OnRemoveSuccess(object removedPakFile)
         {
             removedPakFile.IfIs<string>(it =>
@@ -770,6 +837,5 @@ namespace ArtWiz.ViewModel
                 SearchBoxVisibility = Visibility.Visible;
             }
         }
-
     }
 }

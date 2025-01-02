@@ -21,6 +21,11 @@ namespace ArtWiz.View.Base
 
         public virtual RowDefinition? HeaderRow => null;
 
+        public BasePageViewer()
+        {
+
+        }
+
         public BasePageViewer(IWindowViewer ownerWindow)
         {
             _ownerWindow = ownerWindow;

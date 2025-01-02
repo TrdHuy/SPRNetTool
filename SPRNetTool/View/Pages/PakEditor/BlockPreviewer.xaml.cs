@@ -15,13 +15,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ArtWiz.View.Base.Windows;
+using ArtWiz.View.Base;
+using System.IO;
+using ArtWiz.LogUtil;
+using System.Windows.Forms;
 
 namespace ArtWiz.View.Pages.PakEditor
 {
     /// <summary>
     /// Interaction logic for BlockPreviewer.xaml
     /// </summary>
-    public partial class BlockPreviewer : UserControl
+    public partial class BlockPreviewer : BasePageViewerChild
     {
         public BlockPreviewer()
         {
@@ -43,9 +48,47 @@ namespace ArtWiz.View.Pages.PakEditor
                             }
                         });
                         break;
-                    case PakEditorPageId.RemoveFilePak:
+                    case PakEditorPageId.ExtractBlock:
+                        DataContext.IfIs<PakPageViewModel>(it2 =>
+                        {
+                            if (it2.CurrentSelectedPakFile != null && it2.CurrentSelectedPakFile.CurrentSelectedPakBlock != null)
+                            {
+                                if (OwnerPage != null && OwnerPage.OwnerWindow is Window w)
+                                {
+                                    if (string.IsNullOrEmpty(it2.BlockFolderOutputPath) || !Directory.Exists(it2.BlockFolderOutputPath))
+                                    {
+                                        using (var folderDialog = new FolderBrowserDialog())
+                                        {
+                                            folderDialog.Description = "Chọn thư mục để lưu block đã extract:";
+                                            folderDialog.ShowNewFolderButton = true;
 
+                                            if (folderDialog.ShowDialog() == DialogResult.OK)
+                                            {
+                                                it2.BlockFolderOutputPath = folderDialog.SelectedPath;
+                                            }
+                                            else
+                                            {
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    LoadingWindow l = new LoadingWindow(w, "Extracting block!");
+                                    l.Show(block: async () =>
+                                    {
+                                        await Task.Run(() =>
+                                        {
+                                            (it2 as IPakPageCommand).OnExtractCurrentSelectedBlock();
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    (it2 as IPakPageCommand).OnExtractCurrentSelectedBlock();
+                                }
+                            }
+                        });
                         break;
+
                 }
             });
         }

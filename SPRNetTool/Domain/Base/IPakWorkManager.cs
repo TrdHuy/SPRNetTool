@@ -36,5 +36,7 @@ namespace ArtWiz.Domain.Base
         bool IsBlockPathExist(string blockPath);
 
         CompressedFileInfo? GetBlockInfoByPath(string blockPath);
+      
+        bool ExtractPakBlockById(string blockId, string outputPath);
     }
 }

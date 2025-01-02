@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static ArtWiz.View.InputWindow;
 using static ArtWiz.View.Widgets.PaletteEditor;
+using ArtWiz.View.Base.Windows;
 
 namespace ArtWiz.View.Pages
 {

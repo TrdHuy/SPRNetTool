@@ -21,6 +21,7 @@ namespace ArtWiz.View.Pages.PakEditor
         public override string PageName => "PAK EDITOR";
         private Window ownerWindow;
         private IPakPageCommand? commandVM;
+        
 
         public PakEditorPage(IWindowViewer ownerWindow) : base(ownerWindow)
         {
