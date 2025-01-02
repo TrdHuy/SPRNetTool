@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace ArtWiz.Domain.Base
 {
-    public interface IBitmapDisplayManager : IObservableDomain, IDomainAdapter
+    public interface ISprEditorBitmapDisplayManager : IObservableDomain, IDomainAdapter
     {
         void ResetSprWorkSpace();
         void OpenBitmapFromFile(string filePath);
