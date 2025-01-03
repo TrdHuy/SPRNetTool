@@ -8,11 +8,12 @@
 			 xmlns:def="clr-namespace:ArtWiz"
 			 xmlns:wg="clr-namespace:ArtWiz.View.Widgets"
 			 xmlns:vm="clr-namespace:ArtWiz.ViewModel"
+			 xmlns:pakvm="clr-namespace:ArtWiz.ViewModel.PakEditor"
 			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 			 xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
 			 d:DesignHeight="500"
 			 d:DesignWidth="1200"
-			 d:DataContext="{d:DesignInstance vm:PakFileItemViewModel, IsDesignTimeCreatable=False}">
+			 d:DataContext="{d:DesignInstance pakvm:PakFileItemViewModel, IsDesignTimeCreatable=False}">
 	<UserControl.Resources>
 
 	</UserControl.Resources>
@@ -116,12 +117,12 @@
 											Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 									<Style.Triggers>
 										<DataTrigger Binding="{Binding LoadingStatus}"
-													 Value="{x:Static vm:PakItemLoadingStatus.NONE}">
+													 Value="{x:Static pakvm:PakItemLoadingStatus.NONE}">
 											<Setter Property="Foreground"
 													Value="Yellow" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding LoadingStatus}"
-													 Value="{x:Static vm:PakItemLoadingStatus.LOADED}">
+													 Value="{x:Static pakvm:PakItemLoadingStatus.LOADED}">
 											<Setter Property="Foreground"
 													Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 										</DataTrigger>
@@ -158,7 +159,7 @@
 								<Binding.ConverterParameter>
 									<x:Array Type="{x:Type sys:Object}">
 										<cvt:InvisibleType>COLLAPSED</cvt:InvisibleType>
-										<vm:PakItemLoadingStatus>NONE</vm:PakItemLoadingStatus>
+										<pakvm:PakItemLoadingStatus>NONE</pakvm:PakItemLoadingStatus>
 									</x:Array>
 								</Binding.ConverterParameter>
 							</Binding>

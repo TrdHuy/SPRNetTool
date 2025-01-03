@@ -1,6 +1,6 @@
 ﻿using ArtWiz.Utils;
-using ArtWiz.ViewModel;
 using ArtWiz.ViewModel.CommandVM;
+using ArtWiz.ViewModel.PakEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;

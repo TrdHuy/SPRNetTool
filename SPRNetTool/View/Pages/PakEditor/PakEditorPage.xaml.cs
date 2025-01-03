@@ -8,7 +8,7 @@ using System.Windows.Input;
 using ArtWiz.View.Widgets;
 using System.ComponentModel;
 using System;
-using ArtWiz.ViewModel;
+using ArtWiz.ViewModel.PakEditor;
 
 namespace ArtWiz.View.Pages.PakEditor
 {

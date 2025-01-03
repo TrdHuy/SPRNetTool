@@ -1,6 +1,5 @@
 ﻿using ArtWiz.Utils;
 using ArtWiz.ViewModel.CommandVM;
-using ArtWiz.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +19,7 @@ using ArtWiz.View.Base;
 using System.IO;
 using ArtWiz.LogUtil;
 using System.Windows.Forms;
+using ArtWiz.ViewModel.PakEditor;
 
 namespace ArtWiz.View.Pages.PakEditor
 {

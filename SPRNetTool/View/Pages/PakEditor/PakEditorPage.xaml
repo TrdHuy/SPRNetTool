@@ -17,10 +17,11 @@
 					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 					 xmlns:def="clr-namespace:ArtWiz"
 					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
-					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
+					 xmlns:vm="clr-namespace:ArtWiz.ViewModel"
+					 xmlns:pakvm="clr-namespace:ArtWiz.ViewModel.PakEditor">
 
 	<UserControl.DataContext>
-		<vm:ViewModelGeneratorHelper DataContextType="{x:Type vm:PakPageViewModel}"
+		<vm:ViewModelGeneratorHelper DataContextType="{x:Type pakvm:PakPageViewModel}"
 									 GeneratorType="Reuse"/>
 	</UserControl.DataContext>
 

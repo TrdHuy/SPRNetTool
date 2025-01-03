@@ -16,7 +16,7 @@ using System.Windows.Threading;
 using WizMachine.Services.Base;
 using WizMachine.Services.Utils.NativeEngine.Managed;
 
-namespace ArtWiz.ViewModel
+namespace ArtWiz.ViewModel.PakEditor
 {
     internal enum PakItemLoadingStatus
     {
