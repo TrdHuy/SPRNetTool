@@ -20,7 +20,8 @@
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
 
 	<UserControl.DataContext>
-		<vm:PakPageViewModel />
+		<vm:ViewModelGeneratorHelper DataContextType="{x:Type vm:PakPageViewModel}"
+									 GeneratorType="Reuse"/>
 	</UserControl.DataContext>
 
 	<UserControl.Resources>
@@ -311,7 +312,7 @@
 				</ListBox>
 
 			</Grid>
-			
+
 			<pe:BlockPreviewer Grid.Row="1"
 							   OwnerPage="{Binding RelativeSource={RelativeSource AncestorType=base:BasePageViewer}}"
 							   Grid.Column="3"
