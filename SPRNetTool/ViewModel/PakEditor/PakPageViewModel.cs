@@ -2,8 +2,10 @@
 using ArtWiz.LogUtil;
 using ArtWiz.Utils;
 using ArtWiz.View.Utils;
+using ArtWiz.View.Widgets;
 using ArtWiz.ViewModel.Base;
 using ArtWiz.ViewModel.CommandVM;
+using ArtWiz.ViewModel.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

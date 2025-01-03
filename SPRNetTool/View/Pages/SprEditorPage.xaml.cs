@@ -2,7 +2,6 @@
 using ArtWiz.Utils;
 using ArtWiz.View.Base;
 using ArtWiz.View.Widgets;
-using ArtWiz.ViewModel;
 using ArtWiz.ViewModel.CommandVM;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using System.Windows.Media.Imaging;
 using static ArtWiz.View.InputWindow;
 using static ArtWiz.View.Widgets.PaletteEditor;
 using ArtWiz.View.Base.Windows;
+using ArtWiz.ViewModel.SprEditor;
 
 namespace ArtWiz.View.Pages
 {

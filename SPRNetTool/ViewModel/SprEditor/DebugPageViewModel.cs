@@ -18,7 +18,7 @@ using System.Windows.Threading;
 using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
 using static ArtWiz.Domain.SprFrameCollectionChangedArg.ChangedEvent;
 
-namespace ArtWiz.ViewModel
+namespace ArtWiz.ViewModel.SprEditor
 {
     public class DebugPageViewModel : BaseParentsViewModel, IDebugPageCommand
     {
@@ -205,9 +205,9 @@ namespace ArtWiz.ViewModel
 
         public DebugPageViewModel()
         {
-            paletteEditorVM = new PaletteEditorViewModel(this);
-            bitmapViewerVM = new BitmapViewerViewModel(this);
-            fileHeadEditorVM = new FileHeadEditorViewModel(this);
+            paletteEditorVM = new SprPaletteEditorViewModel(this);
+            bitmapViewerVM = new SprBitmapViewerViewModel(this);
+            fileHeadEditorVM = new SprFileHeadEditorViewModel(this);
             BindingOperations.EnableCollectionSynchronization(_rawOriginalSource, new object());
             BitmapDisplayManager.RegisterObserver(this);
         }
@@ -1033,22 +1033,5 @@ namespace ArtWiz.ViewModel
         }
     }
 
-    public class PaletteEditorColorItemViewModel : BaseViewModel, IPaletteEditorColorItemViewModel
-    {
-        private SolidColorBrush mBrush;
-        public PaletteEditorColorItemViewModel(SolidColorBrush brush)
-        {
-            mBrush = brush;
-        }
-
-        public SolidColorBrush ColorBrush
-        {
-            get => mBrush;
-            set
-            {
-                mBrush = value;
-                Invalidate();
-            }
-        }
-    }
+  
 }

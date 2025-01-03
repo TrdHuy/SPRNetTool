@@ -14,7 +14,7 @@
 					 MinHeight="718"
 					 xmlns:def="clr-namespace:ArtWiz"
 					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
-					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
+					 xmlns:vm="clr-namespace:ArtWiz.ViewModel.SprEditor">
 
 	<UserControl.DataContext>
 		<vm:DebugPageViewModel />
