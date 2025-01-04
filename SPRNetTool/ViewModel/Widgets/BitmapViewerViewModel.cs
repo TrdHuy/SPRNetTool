@@ -116,7 +116,7 @@ namespace ArtWiz.ViewModel.Widgets
 
         protected override void OnDomainChanged(IDomainChangedArgs args)
         {
-            if (IsViewModelDestroyed) return;
+            if (IsOwnerDestroyed) return;
 
             switch (args)
             {
@@ -161,7 +161,7 @@ namespace ArtWiz.ViewModel.Widgets
                             {
                                 dispatcherPriority = DispatcherPriority.Render;
                             }
-                            if (IsViewModelDestroyed) return;
+                            if (IsOwnerDestroyed) return;
                             ViewModelOwner?.ViewDispatcher.Invoke(() =>
                             {
                                 FrameSource = castArgs.CurrentDisplayingSource;
@@ -241,9 +241,9 @@ namespace ArtWiz.ViewModel.Widgets
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnArtWizViewModelOwnerDestroy()
         {
-            base.OnDestroy();
+            base.OnArtWizViewModelOwnerDestroy();
             BitmapDisplayManager.UnregisterObserver(this);
         }
     }

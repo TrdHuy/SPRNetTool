@@ -4,7 +4,7 @@
     {
         void OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner);
 
-        void OnDestroy();
+        void OnArtWizViewModelOwnerDestroy();
 
     }
 }

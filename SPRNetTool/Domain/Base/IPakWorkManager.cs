@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Threading;
+using WizMachine.Data;
+using WizMachine.Services.Utils.NativeEngine.Managed;
 
 namespace ArtWiz.Domain.Base
 {
@@ -12,16 +10,18 @@ namespace ArtWiz.Domain.Base
     }
     public interface ILoadPakFileCallback : IJobExecutor
     {
-        void OnSessionCreated();
-        void OnBlockLoaded();
-        void OnLoadCompleted();
+        Dispatcher ViewDispatcher { get; }
+        void OnSessionCreated(Bundle? bundle);
+        void OnBlockLoaded(Bundle? bundle);
+        void OnBlockLoadCompleted();
+        void OnLoadCompleted(Bundle? bundle);
         void OnLoadFailed();
         void OnProgressChanged(int newProgress);
     }
 
     public interface IRemovePakFileCallback : IJobExecutor
     {
-        void OnRemoveSuccess();
+        void OnRemoveSuccess(object removedPakFile);
     }
 
     public interface IPakWorkManager : IObservableDomain, IDomainAdapter
@@ -32,5 +32,9 @@ namespace ArtWiz.Domain.Base
         void CloseSessionAsync(string filePath, IRemovePakFileCallback removeFileCallback);
 
         bool IsFileAlreadyAdded(string filePath);
+
+        bool IsBlockPathExist(string blockPath);
+
+        CompressedFileInfo? GetBlockInfoByPath(string blockPath);
     }
 }

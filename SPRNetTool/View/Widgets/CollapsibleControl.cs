@@ -1,5 +1,7 @@
 ﻿using ArtWiz.Utils;
+using ArtWiz.View.Utils;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -8,6 +10,7 @@ namespace ArtWiz.View.Widgets
 {
     public class CollapsibleControl : UserControl
     {
+        public static string TAG_COLAPSE_BUTTON = "ColapsibleControl_ColapseButton";
         public static readonly DependencyProperty CollapseVelocityProperty =
            DependencyProperty.Register(
                "CollapseVelocity",
@@ -30,12 +33,46 @@ namespace ArtWiz.View.Widgets
 
         private static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            // Kiểm tra chế độ thiết kế
+            //if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(d) && d is CollapsibleControl c)
+            //{
+            //    if (e.NewValue.Equals(true))
+            //    {
+            //        c.mainBoderContainer.Height = 0;
+            //    }
+            //    else
+            //    {
+            //        c.mainBoderContainer.Height = c.oldHeightCache;
+            //    }
+            //}
         }
 
         public bool IsCollapse
         {
             get { return (bool)GetValue(IsCollapseProperty); }
             set { SetValue(IsCollapseProperty, value); }
+        }
+
+        public static readonly DependencyProperty CustomHeaderContentProperty =
+           DependencyProperty.Register(
+               "CustomHeaderContent",
+               typeof(object),
+               typeof(CollapsibleControl),
+               new PropertyMetadata(default(object), OnCustomHeaderContentChanged));
+
+        private static void OnCustomHeaderContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CollapsibleControl control)
+            {
+                control.UpdateHeaderRowHeight();
+                control.OnCustomHeaderContentChanged(e.OldValue, e.NewValue);
+            }
+        }
+
+        public object CustomHeaderContent
+        {
+            get { return GetValue(CustomHeaderContentProperty); }
+            set { SetValue(CustomHeaderContentProperty, value); }
         }
 
         public static readonly DependencyProperty ExtraHeaderContentProperty =
@@ -74,13 +111,18 @@ namespace ArtWiz.View.Widgets
 
         private TextBlock? headerTextBlock;
         private Border? mainBoderContainer;
-
+        private RowDefinition? fixedRowDef;
+        private Grid? fixedRowPanel;
+        private ContentPresenter? customHeaderPresenter;
         public CollapsibleControl()
         {
         }
 
         public override void OnApplyTemplate()
         {
+            customHeaderPresenter = GetTemplateChild("CustomHeaderPresenter") as ContentPresenter;
+            fixedRowPanel = GetTemplateChild("FixedRowPanel") as Grid;
+            fixedRowDef = GetTemplateChild("FixedHeaderRow") as RowDefinition;
             headerTextBlock = GetTemplateChild("Header") as TextBlock;
             mainBoderContainer = GetTemplateChild("MainBorderContainer") as Border;
             headerTextBlock?.Apply(it => it.Text = Header);
@@ -94,6 +136,45 @@ namespace ArtWiz.View.Widgets
                 it.Click -= CollapseButton_Click;
                 it.Click += CollapseButton_Click;
             });
+            UpdateHeaderRowHeight();
+            OnCustomHeaderContentChanged(null, CustomHeaderContent);
+        }
+
+        private void OnCustomHeaderContentChanged(object? oldContent, object? newContent)
+        {
+            if (customHeaderPresenter == null) return;
+
+            // Gán sự kiện cho các nút trong nội dung mới
+            if (newContent is UIElement newUIContent)
+            {
+                var buttons = newUIContent.FindElementsByTag<Button>(TAG_COLAPSE_BUTTON);
+                foreach (var button in buttons)
+                {
+                    button.Click -= CollapseButton_Click;
+                    button.Click += CollapseButton_Click;
+                }
+                var iconbuttons = newUIContent.FindElementsByTag<IconToggle>(TAG_COLAPSE_BUTTON);
+                foreach (var button in iconbuttons)
+                {
+                    button.Click -= CollapseButton_Click;
+                    button.Click += CollapseButton_Click;
+                }
+            }
+
+            // Hủy sự kiện nếu nội dung cũ có
+            if (oldContent is UIElement oldUIContent)
+            {
+                var buttons = oldUIContent.FindElementsByTag<Button>(TAG_COLAPSE_BUTTON);
+                foreach (var button in buttons)
+                {
+                    button.Click -= CollapseButton_Click;
+                }
+                var iconbuttons = oldUIContent.FindElementsByTag<IconToggle>(TAG_COLAPSE_BUTTON);
+                foreach (var button in iconbuttons)
+                {
+                    button.Click -= CollapseButton_Click;
+                }
+            }
         }
 
         private void CollapseButton_Click(object sender, RoutedEventArgs e)
@@ -128,6 +209,7 @@ namespace ArtWiz.View.Widgets
             return base.MeasureOverride(constraint);
         }
 
+        #region colapse animation
         private double oldHeightCache = Double.NaN;
         private object? uiContentCache;
         private void BeginCollapseAnimation()
@@ -169,6 +251,26 @@ namespace ArtWiz.View.Widgets
                     IsCollapse = !IsCollapse;
                 };
                 this.BeginStoryboard(animationStoryboard);
+            }
+        }
+        #endregion
+
+        private void UpdateHeaderRowHeight()
+        {
+            if (fixedRowDef == null || fixedRowPanel == null || customHeaderPresenter == null) return;
+
+
+            if (CustomHeaderContent == null)
+            {
+                fixedRowDef.Height = new GridLength(40);
+                fixedRowPanel.Visibility = Visibility.Visible;
+                customHeaderPresenter.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                fixedRowDef.Height = new GridLength(0);
+                fixedRowPanel.Visibility = Visibility.Collapsed;
+                customHeaderPresenter.Visibility = Visibility.Visible;
             }
         }
     }

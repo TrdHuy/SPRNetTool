@@ -10,6 +10,7 @@ namespace ArtWiz.View.Widgets
     /// </summary>
     public partial class PlaceHolderTextBox : UserControl
     {
+        public event TextChangedEventHandler? TextChanged;
         // Dependency Property for Placeholder
         public static readonly DependencyProperty PlaceholderProperty =
             DependencyProperty.Register(nameof(Placeholder), typeof(string), typeof(PlaceHolderTextBox), new PropertyMetadata(string.Empty));
@@ -22,12 +23,28 @@ namespace ArtWiz.View.Widgets
 
         // Dependency Property for Text
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(PlaceHolderTextBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(
+                nameof(Text),
+                typeof(string),
+                typeof(PlaceHolderTextBox),
+                new FrameworkPropertyMetadata(
+                    string.Empty,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    OnTextChanged)
+            );
 
         public string Text
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is PlaceHolderTextBox textBox)
+            {
+                textBox.OnTextChanged((string)e.OldValue, (string)e.NewValue);
+            }
         }
 
         public static readonly DependencyProperty CornerRadiusProperty
@@ -63,6 +80,12 @@ namespace ArtWiz.View.Widgets
         public PlaceHolderTextBox()
         {
             InitializeComponent();
+        }
+
+        protected virtual void OnTextChanged(string oldValue, string newValue)
+        {
+            // Kích hoạt sự kiện TextChanged
+            TextChanged?.Invoke(this, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None));
         }
     }
 }

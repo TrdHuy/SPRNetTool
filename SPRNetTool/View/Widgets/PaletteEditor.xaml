@@ -9,6 +9,7 @@
 			 mc:Ignorable="d"
 			 d:DesignHeight="450"
 			 d:DesignWidth="800"
+			 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 			 x:Name="UC_container">
 	<UserControl.Resources>
 		<Style x:Key="SliderRepeatButton"
@@ -24,7 +25,7 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="RepeatButton">
-						<Border Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+						<Border Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 								BorderThickness="0"
 								BorderBrush="Black"
 								CornerRadius="0,2.5,2.5,0"
@@ -165,7 +166,7 @@
 			<ListBox x:Name="ColorsList"
 					 Background="Transparent"
 					 BorderThickness="0,0,0,1"
-					 BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+					 BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 					 SelectedItem="{Binding ElementName=InternalContainer,Path=SelectedColorItem}"
 					 ItemsSource="{Binding ElementName=InternalContainer, Path=ColorItemSource}">
 				<ItemsControl.ItemsPanel>
@@ -238,7 +239,7 @@
 					<DataTemplate DataType="vmw:IPaletteEditorColorItemViewModel">
 						<Border x:Name="Item"
 								Background="{Binding ColorBrush}"
-								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0_1}}"
+								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0_1}}"
 								BorderThickness="2"
 								CornerRadius="10"
 								Height="51"
@@ -251,7 +252,7 @@
 										Value="3" />
 								<Setter TargetName="Item"
 										Property="BorderBrush"
-										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 							</Trigger>
 
 							<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}, Path=IsSelected}"
@@ -261,7 +262,7 @@
 										Value="3" />
 								<Setter TargetName="Item"
 										Property="BorderBrush"
-										Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+										Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 							</DataTrigger>
 						</DataTemplate.Triggers>
 					</DataTemplate>
@@ -284,7 +285,7 @@
 						<RowDefinition Height="29" />
 					</Grid.RowDefinitions>
 					<TextBlock Text="Red"
-							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 							   FontSize="16"
 							   Grid.Row="0"
 							   VerticalAlignment="Center" />
@@ -297,7 +298,7 @@
 							Grid.Column="1" />
 					<local:BalloonBox x:Name="RedValueText"
 									  TextContent="{Binding ElementName=RedSlider, Path=Value, Mode=TwoWay}"
-									  Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+									  Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 									  Grid.Row="0"
 									  Maximum="255"
 									  Grid.Column="2"
@@ -306,7 +307,7 @@
 									  FontWeight="Bold" />
 					<TextBlock Text="Green"
 							   FontSize="16"
-							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 							   VerticalAlignment="Center"
 							   Grid.Row="1" />
 					<Slider  x:Name="GreenSlider"
@@ -319,7 +320,7 @@
 					<local:BalloonBox  x:Name="GreenValueText"
 									   TextContent="{Binding ElementName=GreenSlider, Path=Value, Mode=TwoWay}"
 									   Margin="5,0"
-									   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+									   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 									   Grid.Row="1"
 									   Maximum="255"
 									   Grid.Column="2"
@@ -328,7 +329,7 @@
 					<TextBlock Text="Blue"
 							   FontSize="16"
 							   VerticalAlignment="Center"
-							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 							   Grid.Row="2" />
 					<Slider x:Name="BlueSlider"
 							Style="{StaticResource Horizontal_Slider}"
@@ -339,7 +340,7 @@
 							Grid.Column="1" />
 					<local:BalloonBox x:Name="BlueValueText"
 									  TextContent="{Binding ElementName=BlueSlider, Path=Value, Mode=TwoWay}"
-									  Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+									  Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 									  Grid.Row="2"
 									  Margin="5,0"
 									  Maximum="255"
@@ -362,7 +363,7 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Border x:Name="SelectedColorView"
-							BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+							BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 							BorderThickness="1"
 							Background="{Binding ElementName=InternalContainer, Path=SelectedColorItem.ColorBrush}"
 							Height="37.4"
@@ -376,7 +377,7 @@
 											HorizontalAlignment="Center"
 											VerticalAlignment="Top"
 											Fill="{Binding ElementName=InternalContainer, Path=SelectedColorItem.ColorBrush}"
-											Stroke="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+											Stroke="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 											StrokeThickness="1"
 											FontSize="32"
 											Grid.Row="2"

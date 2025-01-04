@@ -42,7 +42,7 @@
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"
 					   PreviewTextContentUpdated="OnBalloonBoxPreviewTextContentUpdated"
-					   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}" />
+					   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
 
 		<wg:IconToggle Width="14"
 					   IsEnableToggleClick="False"

@@ -1,26 +1,17 @@
 ﻿using ArtWiz.View.Base;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ArtWiz.View.Utils;
 using ArtWiz.Utils;
 using ArtWiz.ViewModel.CommandVM;
+using System.Windows.Input;
+using ArtWiz.View.Widgets;
+using System.ComponentModel;
+using System;
+using ArtWiz.ViewModel;
 
-namespace ArtWiz.View.Pages
+namespace ArtWiz.View.Pages.PakEditor
 {
-    public class Item
-    {
-        public string ItemName { get; set; }
-        public string FileSize { get; set; }
-    }
-
-    public enum PakEditorPageId
-    {
-        AddFilePak,
-        RemoveFilePak,
-        ReloadFilePak
-    }
     /// <summary>
     /// Interaction logic for PakEditorPage.xaml
     /// </summary>
@@ -36,8 +27,30 @@ namespace ArtWiz.View.Pages
             InitializeComponent();
             this.ownerWindow = (Window)ownerWindow;
             DataContext.IfIsThenAlso<IPakPageCommand>((it) => commandVM = it);
-
+            DataContext.IfIsThenAlso<INotifyPropertyChanged>((it) =>
+            {
+                it.PropertyChanged += OnViewModelPropertyChanged;
+                return it;
+            });
+            if (DataContext is PakPageViewModel viewModel)
+            {
+                SearchTextBox.Visibility = viewModel.SearchBoxVisibility;
+                ClearSearchBox.Visibility = viewModel.SearchBoxVisibility;
+            }
         }
+
+        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (DataContext is PakPageViewModel viewModel)
+            {
+                if (e.PropertyName == nameof(viewModel.SearchBoxVisibility))
+                {
+                    SearchTextBox.Visibility = viewModel.SearchBoxVisibility;
+                    ClearSearchBox.Visibility = viewModel.SearchBoxVisibility;
+                }
+            }
+        }
+
         public override object? CustomHeaderView => CustomHeaderViewPanel;
 
         public override bool ProcessMenuItem(PreProcessMenuItemInfo menuItem)
@@ -86,8 +99,36 @@ namespace ArtWiz.View.Pages
                     case PakEditorPageId.RemoveFilePak:
                         commandVM?.OnRemovePakFileClick((sender as FrameworkElement)!.DataContext);
                         break;
+                    case PakEditorPageId.ClearSearchBox:
+                        SearchTextBox.Text = string.Empty;
+                        break;
                 }
             });
+        }
+
+        private void OnSearchBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var textBox = sender as PlaceHolderTextBox; // Hoặc kiểu của wg:PlaceHolderTextBox nếu khác
+                if (textBox != null)
+                {
+                    string searchText = textBox.Text;
+                    commandVM?.OnSearchPakBlockByPath(searchText);
+                }
+            }
+        }
+
+
+        private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender.Equals(SearchTextBox))
+            {
+                if (string.IsNullOrEmpty(SearchTextBox.Text))
+                {
+                    commandVM?.OnResetSearchBox();
+                }
+            }
         }
     }
 }

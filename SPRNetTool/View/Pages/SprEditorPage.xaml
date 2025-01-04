@@ -13,7 +13,7 @@
 					 MinWidth="1280"
 					 MinHeight="718"
 					 xmlns:def="clr-namespace:ArtWiz"
-					 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel1}}"
+					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
 					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
 
 	<UserControl.DataContext>
@@ -23,12 +23,12 @@
 	<UserControl.Resources>
 		<cvt:RevertBoolConverter x:Key="RevertBoolConverter" />
 		<cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-		<Style TargetType="wg:CollapsibleControl">
+		<!--<Style TargetType="wg:CollapsibleControl">
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
 						<Border Background="Transparent"
-								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+								BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 								BorderThickness="1"
 								Padding="{TemplateBinding Padding}"
 								SnapsToDevicePixels="true">
@@ -42,14 +42,14 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<Rectangle Grid.Row="0"
-										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										   Grid.ColumnSpan="2" />
 								<Border x:Name="MainBorderContainer"
 										Grid.Row="1"
 										Grid.ColumnSpan="2"
-										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel5}}"
+										BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
 										VerticalAlignment="Top"
-										Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}">
+										Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
 									<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -73,12 +73,12 @@
 												<Trigger Property="IsChecked"
 														 Value="False">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
 												</Trigger>
 												<Trigger Property="IsChecked"
 														 Value="True">
 													<Setter Property="Stroke"
-															Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 												</Trigger>
 											</Style.Triggers>
 										</Style>
@@ -89,7 +89,7 @@
 											Orientation="Horizontal">
 									<TextBlock x:Name="Header"
 											   Margin="18,10"
-											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel0}}"
+											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 											   FontSize="15"
 											   FontWeight="Bold" />
 									<ContentPresenter Content="{TemplateBinding ExtraHeaderContent}" />
@@ -100,7 +100,7 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-		</Style>
+		</Style>-->
 	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -123,7 +123,7 @@
 				<wg:FrameLineEditor Grid.Row="1"
 									Height="101"
 									BorderThickness="1,0,1,1"
-									BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+									BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 									OnPreviewFrameIndexSwitched="OnPreviewFrameIndexSwitched"
 									OnPreviewAddingFrame="OnPreviewAddingFrame"
 									OnPreviewRemovingFrame="OnPreviewRemovingFrame"
@@ -156,6 +156,7 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<wg:CollapsibleControl Header="IMAGE INFO"
+								   BorderThickness="1"
 								   IsCollapse="True">
 				<wg:CollapsibleControl.ExtraHeaderContent>
 					<StackPanel Orientation="Horizontal">
@@ -230,14 +231,14 @@
 					</StackPanel>
 				</wg:CollapsibleControl.ExtraHeaderContent>
 
-				<wg:FileHeadEditor Margin="10,0"
-								   MinHeight="230"
+				<wg:FileHeadEditor MinHeight="230"
 								   ViewModel="{Binding FileHeadEditorVM}" />
 
 			</wg:CollapsibleControl>
 
 			<wg:CollapsibleControl Header="SPR PALETTE INFO"
 								   Grid.Row="2"
+								   BorderThickness="1"
 								   IsCollapse="True">
 				<wg:PaletteEditor Grid.Row="1"
 								  Height="379"

@@ -2,12 +2,27 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ArtWiz.View.Widgets
 {
     public partial class IconToggle : UserControl
     {
+
+        public static readonly DependencyProperty IsClickedProperty =
+        DependencyProperty.Register(
+            "IsClicked",
+            typeof(bool),
+            typeof(IconToggle),
+            new PropertyMetadata(false));
+
+        public bool IsClicked
+        {
+            get { return (bool)GetValue(IsClickedProperty); }
+            set { SetValue(IsClickedProperty, value); }
+        }
+
 
         public static readonly DependencyProperty IconBorderThicknessProperty
            = DependencyProperty.Register("IconBorderThickness", typeof(Thickness), typeof(IconToggle),
@@ -231,6 +246,25 @@ namespace ArtWiz.View.Widgets
         public IconToggle()
         {
             InitializeComponent();
+        }
+
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            IsClicked = true;
+        }
+
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            IsClicked = false;
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+            IsClicked = false;
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)

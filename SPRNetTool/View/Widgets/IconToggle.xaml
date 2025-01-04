@@ -16,39 +16,7 @@
 		<cvt:FormulaConverter x:Key="FormulaConverter" />
 		<ControlTemplate x:Key="ToggleButtonTemplate"
 						 TargetType="{x:Type ButtonBase}">
-			<Grid>
-				<Border Background="#00FFFFFF"
-						BorderThickness="{Binding ElementName=IconToggleContainer,Path=IconBorderThickness, FallbackValue=Red}"
-						x:Name="Rectangle"
-						Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}}" />
-
-				<Ellipse Fill="#00FFFFFF"
-						 x:Name="Ellipse"
-						 Visibility="{Binding ElementName=IconToggleContainer, Path=IsEllipse, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter={x:Static cvt:InvisibleType.COLLAPSED}}" />
-			</Grid>
-
-			<ControlTemplate.Triggers>
-				<Trigger Property="IsMouseOver"
-						 Value="true">
-					<Setter Property="Cursor"
-							Value="Hand" />
-					<Setter Property="Fill"
-							TargetName="Ellipse"
-							Value="#15FFFFFF" />
-					<Setter Property="Background"
-							TargetName="Rectangle"
-							Value="#15FFFFFF" />
-				</Trigger>
-				<Trigger Property="IsPressed"
-						 Value="true">
-					<Setter Property="Fill"
-							TargetName="Ellipse"
-							Value="#25FFFFFF" />
-					<Setter Property="Background"
-							TargetName="Rectangle"
-							Value="#25FFFFFF" />
-				</Trigger>
-			</ControlTemplate.Triggers>
+			<Grid Background="#00FFFFFF" />
 		</ControlTemplate>
 		<ControlTemplate x:Key="UserControlTemplate1"
 						 TargetType="{x:Type UserControl}">

@@ -350,7 +350,7 @@ namespace ArtWiz.ViewModel
 
         protected override void OnDomainChanged(IDomainChangedArgs args)
         {
-            if (IsViewModelDestroyed) return;
+            if (IsOwnerDestroyed) return;
 
             switch (args)
             {
@@ -371,7 +371,7 @@ namespace ArtWiz.ViewModel
                                 dispatcherPriority = DispatcherPriority.Render;
                             }
 
-                            if (IsViewModelDestroyed) return;
+                            if (IsOwnerDestroyed) return;
 
                             ViewModelOwner?.ViewDispatcher.Invoke(() =>
                             {
@@ -466,7 +466,7 @@ namespace ArtWiz.ViewModel
 
                             if (collectionChangedArg.Event.HasFlag(FRAME_REMOVED) && FramesSource != null)
                             {
-                                FramesSource[collectionChangedArg.OldFrameIndex].OnDestroy();
+                                FramesSource[collectionChangedArg.OldFrameIndex].OnArtWizViewModelOwnerDestroy();
                                 FramesSource.RemoveAt(collectionChangedArg.OldFrameIndex);
                             }
 

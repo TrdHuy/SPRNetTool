@@ -4,9 +4,10 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
 					xmlns:local="clr-namespace:ArtWiz"
-					xmlns:def="clr-namespace:ArtWiz">
-
-	
+					xmlns:def="clr-namespace:ArtWiz"
+					xmlns:cvt="clr-namespace:ArtWiz.View.Utils">
+	<cvt:RevertBoolConverter x:Key="RevertBoolConverter" />
+	<cvt:NotNullConverter x:Key="NotNullConverter" />
 	<FontFamily x:Key="{x:Static local:Definitions.FontAwsome}">
 		/ArtWiz;component/Resources/Font Awesome 6 Free-Solid-900.otf#Font Awesome 6 Free Solid
 	</FontFamily>
@@ -108,16 +109,29 @@
 	<!--#endregion-->
 
 	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel0}">#FF000000</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel1}">#FF151515</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel2}">#FF262626</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel5}">#FF2E2E2E</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel8}">#FF3B3B3B</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel10}">#FF3D3D3D</Color>
-	<Color x:Key="{x:Static local:Definitions.BackgroundColorLevel15}">#FF7F7F7F</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0}">#FFFFFFFF</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel0_1}">#FFD9D9D9</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundColorLevel1}">#FF4FE79A</Color>
-	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel1}">#FF6D9154</Color>
+
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0}">#151515</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_1}">#1f1f1f</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_2}">#292929</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_3}">#333333</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_4}">#3D3D3D</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_5}">#474747</Color>
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel0_10}">#7A7A7A</Color>
+	<!--10 = +10-->
+	<Color x:Key="{x:Static local:Definitions.PanelBackgroundColorLevel1}">#161918</Color>
+
+	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0}">#FFFFFFFF</Color>
+	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0_1}">#FFD9D9D9</Color>
+	<Color x:Key="{x:Static local:Definitions.TextForegroundColorLevel0_5}">#FF7B8797</Color>
+
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0}">#4FE79A</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_1}">#6FEBAD</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel0_m8}">#149052</Color>
+	<!--m8 = -8-->
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel1}">#327E58</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel2}">#ed4d4d</Color>
+	<Color x:Key="{x:Static local:Definitions.ButtonAndIconColorLevel2_m8}">#B03939</Color>
+
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2}">#FF89B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}">#5089B46A</Color>
 	<Color x:Key="{x:Static local:Definitions.ForegroundEffectColorLevel2_OP2}">#3089B46A</Color>
@@ -126,26 +140,46 @@
 
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel0}}"
 					 x:Key="{x:Static local:Definitions.BackgroundLevel0}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel2}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel2}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel5}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel5}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel8}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel8}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel10}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel10}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundColorLevel15}}"
-					 x:Key="{x:Static local:Definitions.BackgroundLevel15}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel0}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0_1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundLevel0_1}" />
-	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel1}}"
-					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel1}" />
+
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_5}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_5}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_1}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_2}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_2}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_3}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_3}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_4}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_4}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel0_10}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel0_10}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.PanelBackgroundLevel1}" />
+
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0_1}}"
+					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0_1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundColorLevel0_5}}"
+					 x:Key="{x:Static local:Definitions.TextForegroundBrushLevel0_5}" />
+
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel0}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_1}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel0_1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.ForegroundLevel2}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel0_m8}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel0_m8}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel1}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel1}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel2}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel2}" />
+	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconColorLevel2_m8}}"
+					 x:Key="{x:Static local:Definitions.ButtonAndIconBrushLevel2_m8}" />
+
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
 					 x:Key="{x:Static local:Definitions.ForegroundEffectLevel2}" />
 	<SolidColorBrush Color="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2_OP1}}"
@@ -247,7 +281,7 @@
 	<Geometry x:Key="MaximizeButton">
 		M 91.305676,113.22577 V 129.0383 H 107.1182 v -15.81253 z m 0.932541,0.81706 h 13.947443 v 12.67039 H 92.238217 Z
 	</Geometry>
-	<Geometry x:Key="CloseButton">
+	<Geometry x:Key="{x:Static local:Definitions.CloseButtonGeometry}">
 		m 75.809197,16.628119 -7.349991,7.34999 -7.349885,-7.349885 -2.132578,2.132581 7.349882,7.349882 -7.349991,7.34999 2.132581,2.132581 7.349991,-7.349991 7.349991,7.349991 2.132578,-2.132578 -7.349988,-7.349991 7.349991,-7.349992 z
 	</Geometry>
 	<Geometry x:Key="SmallmizeButton">
@@ -264,6 +298,15 @@
 
 	<Geometry x:Key="{x:Static local:Definitions.UnidentifiedPreviewFrameSourceGeometry}">
 		m 90.499902,146.85925 c -3.788626,0.003 -7.452864,0.89995 -8.860958,2.31407 c -1.980228,1.98871 -2.466447,4.5264 -1.124479,5.86838 c 1.578809,1.57881 3.807665,1.18466 4.868954,-0.86093 l 0.514697,-0.99219 h 4.58525 h 4.584733 l 0.548287,0.69712 c 0.670109,0.85197 0.700145,1.71072 0.08527,2.43757 c -0.25466,0.30104 -1.951304,1.42644 -3.770312,2.50114 c -1.935099,1.14329 -3.442657,2.21846 -3.633887,2.59106 c -0.39756,0.77464 -0.434649,3.31296 -0.06408,4.37596 c 0.14867,0.42649 0.595158,0.97647 0.992188,1.22267 c 0.397029,0.24619 1.218458,0.45075 1.825728,0.45475 c 0.885429,0.006 1.26538,-0.15382 1.918229,-0.80667 c 0.44776,-0.44776 0.814421,-1.09173 0.814421,-1.43092 c 0,-0.49941 0.434513,-0.8606 2.285131,-1.89808 c 3.992926,-2.23846 5.294306,-3.77631 5.947436,-7.02851 c 0.41418,-2.06232 -0.34884,-4.61816 -1.90738,-6.38876 c -1.907234,-2.16674 -5.820599,-3.05919 -9.609225,-3.05666 z m 26.067658,0 c -3.78862,0.003 -7.45235,0.89995 -8.86044,2.31407 c -1.98023,1.98871 -2.46645,4.5264 -1.12448,5.86838 c 1.57881,1.57881 3.80715,1.18466 4.86844,-0.86093 l 0.5147,-0.99219 h 4.58525 h 4.58525 l 0.54828,0.69712 c 0.67011,0.85197 0.70015,1.71072 0.0853,2.43757 c -0.25466,0.30104 -1.95131,1.42644 -3.77031,2.50114 c -1.9351,1.14329 -3.44318,2.21846 -3.63441,2.59106 c -0.39756,0.77464 -0.43465,3.31296 -0.0641,4.37596 c 0.14867,0.42649 0.59516,0.97647 0.99219,1.22267 c 0.39703,0.24619 1.21898,0.45075 1.82625,0.45475 c 0.88543,0.006 1.26538,-0.15382 1.91823,-0.80667 c 0.44775,-0.44776 0.8139,-1.09173 0.8139,-1.43092 c 0,-0.49941 0.43451,-0.8606 2.28513,-1.89808 c 3.99293,-2.23846 5.29431,-3.77631 5.94744,-7.02851 c 0.41418,-2.06232 -0.34884,-4.61816 -1.90738,-6.38876 c -1.90724,-2.16674 -5.8206,-3.05919 -9.60923,-3.05666 z m -25.690936,25.14627 c -1.28584,-0.005 -2.568842,0.59238 -3.371371,1.79369 c -1.291559,1.93335 -0.346695,5.08646 1.780253,5.93969 c 0.21828,0.088 1.087526,0.12415 1.931665,0.0816 c 1.363329,-0.0686 1.642433,-0.18465 2.495972,-1.03818 c 0.840759,-0.84076 0.974152,-1.15253 1.068152,-2.49546 c 0.08986,-1.28394 0.0058,-1.68614 -0.516248,-2.46083 c -0.813844,-1.20776 -2.102584,-1.81542 -3.388423,-1.82056 z m 26.067656,0 c -1.28584,-0.005 -2.56884,0.59238 -3.37137,1.79369 c -1.29156,1.93335 -0.34618,5.08646 1.78077,5.93969 c 0.21828,0.088 1.08753,0.12415 1.93167,0.0816 c 1.36333,-0.0686 1.64191,-0.18465 2.49545,-1.03818 c 0.84076,-0.84076 0.97467,-1.15253 1.06867,-2.49546 c 0.0899,-1.28394 0.005,-1.68614 -0.51676,-2.46083 c -0.81385,-1.20776 -2.10259,-1.81542 -3.38843,-1.82056 z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.SlashEyeGeometry}">
+		M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.EyeGeometry}">
+		M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z
+	</Geometry>
+	<Geometry x:Key="{x:Static local:Definitions.MapGeometry}">
+		M384 476.1L192 421.2l0-385.3L384 90.8l0 385.3zm32-1.2l0-386.5L543.1 37.5c15.8-6.3 32.9 5.3 32.9 22.3l0 334.8c0 9.8-6 18.6-15.1 22.3L416 474.8zM15.1 95.1L160 37.2l0 386.5L32.9 474.5C17.1 480.8 0 469.2 0 452.2L0 117.4c0-9.8 6-18.6 15.1-22.3z
 	</Geometry>
 
 	<!--TODO: Optimize this view-->
@@ -378,7 +421,7 @@
 																				   RadiusX="5"
 																				   RadiusY="5"
 																				   Height="{TemplateBinding Height}"
-																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel15}}"
+																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_10}}"
 																				   SnapsToDevicePixels="True"
 																				   Width="{TemplateBinding Width}" />
 																		<ControlTemplate.Triggers>
@@ -386,7 +429,7 @@
 																					 Value="False">
 																				<Setter Property="Fill"
 																						TargetName="rectangle"
-																						Value="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}" />
+																						Value="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}" />
 																			</Trigger>
 																		</ControlTemplate.Triggers>
 																	</ControlTemplate>
@@ -412,7 +455,7 @@
 													 Value="True">
 											<Setter TargetName="border"
 													Property="Background"
-													Value="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}" />
+													Value="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}" />
 											<Setter Property="Cursor"
 													Value="Hand" />
 										</DataTrigger>
@@ -507,7 +550,7 @@
 																				   RadiusX="5"
 																				   RadiusY="5"
 																				   Height="{TemplateBinding Height}"
-																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel8}}"
+																				   Fill="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_3}}"
 																				   SnapsToDevicePixels="True"
 																				   Width="{TemplateBinding Width}" />
 																		<ControlTemplate.Triggers>
@@ -562,7 +605,7 @@
 		</Setter>
 	</Style>
 
-	<Style TargetType="wg:CollapsibleControl">
+	<!--<Style TargetType="wg:CollapsibleControl">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
@@ -598,7 +641,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-	</Style>
+	</Style>-->
 
 	<Style TargetType="{x:Type wg:IconToggle}">
 		<Setter Property="OverridesDefaultStyle"
@@ -616,37 +659,20 @@
 		   x:Key="IconToogleStyle1"
 		   BasedOn="{StaticResource {x:Type wg:IconToggle}}">
 		<Setter Property="Stroke"
-				Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel0}}" />
+				Value="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundBrushLevel0}}" />
 		<Style.Triggers>
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Stroke"
-						Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}" />
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0_m8}}" />
 				<Setter Property="Cursor"
 						Value="Hand" />
 			</Trigger>
-			<EventTrigger RoutedEvent="MouseLeftButtonDown">
-				<EventTrigger.Actions>
-					<BeginStoryboard>
-						<Storyboard>
-							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
-											Duration="0:0:0" />
-						</Storyboard>
-					</BeginStoryboard>
-				</EventTrigger.Actions>
-			</EventTrigger>
-			<EventTrigger RoutedEvent="MouseLeftButtonUp">
-				<EventTrigger.Actions>
-					<BeginStoryboard>
-						<Storyboard>
-							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel1}}"
-											Duration="0:0:0" />
-						</Storyboard>
-					</BeginStoryboard>
-				</EventTrigger.Actions>
-			</EventTrigger>
+			<Trigger Property="IsClicked"
+					 Value="True">
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectLevel2}}" />
+			</Trigger>
 		</Style.Triggers>
 	</Style>
 
@@ -654,38 +680,217 @@
 		   x:Key="IconToogleStyle2"
 		   BasedOn="{StaticResource {x:Type wg:IconToggle}}">
 		<Setter Property="Stroke"
-				Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel0}}" />
+				Value="{StaticResource ResourceKey={x:Static local:Definitions.TextForegroundBrushLevel0}}" />
 		<Style.Triggers>
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Stroke"
-						Value="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}" />
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0_m8}}" />
 				<Setter Property="Cursor"
 						Value="Hand" />
 			</Trigger>
-			<EventTrigger RoutedEvent="MouseLeftButtonDown">
-				<EventTrigger.Actions>
-					<BeginStoryboard>
-						<Storyboard>
-							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundEffectColorLevel2}}"
-											Duration="0:0:0" />
-						</Storyboard>
-					</BeginStoryboard>
-				</EventTrigger.Actions>
-			</EventTrigger>
-			<EventTrigger RoutedEvent="MouseLeftButtonUp">
-				<EventTrigger.Actions>
-					<BeginStoryboard>
-						<Storyboard>
-							<ColorAnimation Storyboard.TargetProperty="(wg:IconToggle.Stroke).(SolidColorBrush.Color)"
-											To="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundColorLevel0}}"
-											Duration="0:0:0" />
-						</Storyboard>
-					</BeginStoryboard>
-				</EventTrigger.Actions>
-			</EventTrigger>
+			<Trigger Property="IsClicked"
+					 Value="True">
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}" />
+			</Trigger>
 		</Style.Triggers>
+	</Style>
+	<Style TargetType="wg:IconToggle"
+		   x:Key="IconToogleStyle3"
+		   BasedOn="{StaticResource {x:Type wg:IconToggle}}">
+
+		<Style.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnableToggleClick"
+							   Value="True" />
+					<Condition Property="IsMouseOver"
+							   Value="False" />
+					<Condition Property="IsChecked"
+							   Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0_m8}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnableToggleClick"
+							   Value="True" />
+					<Condition Property="IsMouseOver"
+							   Value="True" />
+					<Condition Property="IsChecked"
+							   Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Cursor"
+						Value="Hand" />
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnableToggleClick"
+							   Value="True" />
+					<Condition Property="IsMouseOver"
+							   Value="False" />
+					<Condition Property="IsChecked"
+							   Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel2_m8}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnableToggleClick"
+							   Value="True" />
+					<Condition Property="IsMouseOver"
+							   Value="True" />
+					<Condition Property="IsChecked"
+							   Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Cursor"
+						Value="Hand" />
+				<Setter Property="Stroke"
+						Value="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel2}}" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<Style TargetType="wg:CollapsibleControl">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type wg:CollapsibleControl}">
+					<Border Background="Transparent"
+							BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="true">
+						<Grid x:Name="GridContainer">
+							<Grid.RowDefinitions>
+								<!-- Hàng cố định có chiều cao 40 -->
+								<RowDefinition Height="0"
+											   x:Name="FixedHeaderRow" />
+								<!-- Hàng phụ thuộc vào nội dung -->
+								<RowDefinition Height="Auto"
+											   x:Name="CustomHeaderRow" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<ContentPresenter x:Name="CustomHeaderPresenter"
+											  Grid.Row="1"
+											  Grid.ColumnSpan="2"
+											  Visibility="Visible"
+											  Content="{TemplateBinding CustomHeaderContent}" />
+
+							<!--#region Main content -->
+							<Border x:Name="MainBorderContainer"
+									Grid.Row="2"
+									Grid.ColumnSpan="2"
+									BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+									VerticalAlignment="Top"
+									Background="Transparent">
+								<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+												  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+							</Border>
+							<!--endregion-->
+
+							<!--#region Fixed row content -->
+							<Grid x:Name="FixedRowPanel"
+								  Grid.Row="0"
+								  Grid.ColumnSpan="2"
+								  Visibility="Collapsed">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<Rectangle Grid.Row="0"
+										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+										   Grid.ColumnSpan="2" />
+								<wg:IconToggle  x:Name="CollapseButton"
+												Grid.Row="0"
+												OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
+												OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
+												DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
+												IsChecked="{TemplateBinding IsCollapse, Converter={StaticResource RevertBoolConverter}}"
+												Grid.Column="1"
+												Width="18"
+												Height="18"
+												Margin="18,10"
+												StrokeThickness="2"
+												HorizontalAlignment="Right">
+									<wg:IconToggle.Style>
+										<Style TargetType="wg:IconToggle">
+											<Style.Triggers>
+												<Trigger Property="IsChecked"
+														 Value="False">
+													<Setter Property="Stroke"
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}" />
+												</Trigger>
+												<Trigger Property="IsChecked"
+														 Value="True">
+													<Setter Property="Stroke"
+															Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
+												</Trigger>
+												<Trigger Property="IsMouseOver"
+														 Value="True">
+													<Setter Property="Cursor"
+															Value="Hand" />
+												</Trigger>
+											</Style.Triggers>
+										</Style>
+									</wg:IconToggle.Style>
+								</wg:IconToggle>
+								<StackPanel HorizontalAlignment="Left"
+											Grid.Row="0"
+											Orientation="Horizontal">
+									<TextBlock x:Name="Header"
+											   Margin="18,10"
+											   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
+											   FontSize="15"
+											   FontWeight="Bold" />
+									<ContentPresenter Content="{TemplateBinding ExtraHeaderContent}" />
+								</StackPanel>
+							</Grid>
+
+							<!--endregion-->
+
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<!--<Trigger Property="CustomHeaderContent"
+								 Value="{x:Null}">
+							<Setter TargetName="CustomHeaderPresenter"
+									Property="Visibility"
+									Value="Collapsed" />
+							<Setter TargetName="FixedRowPanel"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="FixedHeaderRow"
+									Property="Height"
+									Value="40" />
+						</Trigger>-->
+						<!--<DataTrigger Binding="{Binding CustomHeaderContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NotNullConverter}}"
+									 Value="True">
+							<Setter TargetName="CustomHeaderPresenter"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="FixedRowPanel"
+									Property="Visibility"
+									Value="Collapsed" />
+							<Setter TargetName="FixedHeaderRow"
+									Property="Height"
+									Value="0" />
+						</DataTrigger>-->
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 	<Style TargetType="{x:Type Window}"
@@ -729,7 +934,7 @@
 
 							<!--Content and title bar field-->
 							<Border BorderThickness="1"
-									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ForegroundLevel1}}"
+									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}"
 									Grid.Column="1">
 								<Grid x:Name="ContentAndTitleGrid"
 									  Background="{TemplateBinding Background}">
@@ -742,7 +947,7 @@
 									<Grid x:Name="TitleBartGrid"
 										  Grid.Row="0"
 										  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
-										  Background="{StaticResource ResourceKey={x:Static local:Definitions.BackgroundLevel10}}"
+										  Background="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_4}}"
 										  VerticalAlignment="Stretch">
 
 										<Grid.ColumnDefinitions>
@@ -903,7 +1108,7 @@
 							 Color="Black" />
 			<SolidColorBrush x:Key="Menu.Static.Border"
 							 Color="Transparent" />
-			
+
 			<Style x:Key="MenuItemContainerStyle"
 				   TargetType="{x:Type MenuItem}">
 				<Setter Property="HorizontalContentAlignment"
@@ -1047,7 +1252,7 @@
 					</Trigger>
 					<Trigger Property="IsHighlighted"
 							 Value="True">
-						
+
 						<Setter Property="Background"
 								TargetName="templateRoot"
 								Value="#55646F" />
@@ -1077,8 +1282,8 @@
 					</MultiTrigger>
 				</ControlTemplate.Triggers>
 			</ControlTemplate>
-			
-			
+
+
 			<ControlTemplate x:Key="MenuItemControlTemplate2"
 							 TargetType="{x:Type MenuItem}">
 				<Border x:Name="templateRoot"
@@ -1202,7 +1407,7 @@
 								TargetName="GlyphPanel"
 								Value="#FF707070" />
 					</Trigger>
-					
+
 				</ControlTemplate.Triggers>
 			</ControlTemplate>
 		</Style.Resources>

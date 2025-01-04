@@ -12,7 +12,7 @@
 			 MouseLeftButtonUp="OnMouseUp"
 			 MouseLeftButtonDown="OnMouseLeftButtonDown"
 			 d:DesignHeight="450"
-			 Background="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel2}}"
+			 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"
 			 d:DesignWidth="800">
 	<UserControl.ContextMenu>
 		<ContextMenu Name="cm"
@@ -36,14 +36,14 @@
 					<Setter Property="BorderThickness"
 							Value="2" />
 					<Setter Property="BorderBrush"
-							Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+							Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 				</DataTrigger>
 				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsIntersected}"
 							 Value="false">
 					<Setter Property="BorderThickness"
 							Value="1" />
 					<Setter Property="BorderBrush"
-							Value="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel15}}" />
+							Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_10}}" />
 				</DataTrigger>
 
 				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
@@ -51,7 +51,7 @@
 					<Setter Property="BorderThickness"
 							Value="2" />
 					<Setter Property="BorderBrush"
-							Value="{StaticResource ResourceKey={x:Static def:Definitions.ForegroundLevel1}}" />
+							Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 				</DataTrigger>
 			</Style.Triggers>
 		</Style>
@@ -62,7 +62,7 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.BackgroundLevel10}}"
+		<Path Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"
 			  Data="{StaticResource ResourceKey={x:Static def:Definitions.UnidentifiedPreviewFrameSourceGeometry}}"
 			  Stretch="Uniform"
 			  Visibility="{Binding ElementName=UC_Container, Path=ViewModel.PreviewImageSource, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter={x:Static cvt:InvisibleType.REVERSE_COLLAPSED}}">

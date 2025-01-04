@@ -1,27 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ArtWiz.ViewModel.Base
 {
-    public class BaseParentsViewModel : BaseViewModel, IArtWizViewModel
+    public abstract class BaseParentsViewModel : BaseViewModel, IArtWizViewModel
     {
-        private List<BaseSubViewModel> subViewModels = new List<BaseSubViewModel>();
-        protected IArtWizViewModelOwner? ViewModelOwner { get; private set; }
-        protected bool IsViewModelDestroyed { get; private set; } = false;
-        void IArtWizViewModel.OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner)
+        private List<IArtWizViewModel> subViewModels = new List<IArtWizViewModel>();
+        private IArtWizViewModelOwner? _viewModelOwner;
+        public IArtWizViewModelOwner ViewModelOwner
+        {
+            get
+            {
+                if (_viewModelOwner == null)
+                {
+                    throw new Exception("Owner must not be null");
+                }
+                return _viewModelOwner;
+            }
+            private set
+            {
+                _viewModelOwner = value;
+            }
+        }
+        protected bool IsOwnerDestroyed { get; private set; } = false;
+        public bool IsOwnerCreated { get; private set; } = false;
+        public virtual void OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner)
         {
             ViewModelOwner = owner;
             foreach (var vm in subViewModels)
             {
-                ((IArtWizViewModel)vm).OnArtWizViewModelOwnerCreate(owner);
+                (vm).OnArtWizViewModelOwnerCreate(owner);
             }
+            IsOwnerCreated = true;
         }
 
-        void IArtWizViewModel.OnDestroy()
+        public virtual void OnArtWizViewModelOwnerDestroy()
         {
-            IsViewModelDestroyed = true;
+            IsOwnerDestroyed = true;
             foreach (var vm in subViewModels)
             {
-                ((IArtWizViewModel)vm).OnDestroy();
+                (vm).OnArtWizViewModelOwnerDestroy();
             }
             subViewModels.Clear();
         }
