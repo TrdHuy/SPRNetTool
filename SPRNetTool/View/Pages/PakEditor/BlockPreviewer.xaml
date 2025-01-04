@@ -28,6 +28,7 @@
 						 ToolBoxIconSize="40"
 						 ToolBoxWidth="60"
 						 Padding="10"
+						 ViewModel="{Binding BitmapViewerVM}"
 						 Background="#FF151515"
 						 ToolBoxBorderBrush="#FF151515"
 						 ToolBoxBackground="#FF151515"

@@ -52,13 +52,13 @@ namespace ArtWiz.ViewModel.PakEditor
 
         public PakBlockItemViewModel CreatePakBlockViewModel(PakFileItemViewModel pakFileItemViewModel,
             string blockName,
-            string blockType,
+            bool isSpr,
             string blockId,
             long blockSize)
         {
             var blockItemViewModel = new PakBlockItemViewModel(pakFileItemViewModel,
                     blockName: blockName,
-                    blockType: blockType,
+                    isSpr: isSpr,
                     blockId: blockId,
                     blockSize: blockSize
                     );
@@ -492,7 +492,7 @@ namespace ArtWiz.ViewModel.PakEditor
         {
             if (bundle != null)
             {
-                var isSpr = bundle.GetBoolean(PakContract.EXTRA_BLOCK_IS_SPR_KEY);
+                var isSpr = bundle.GetBoolean(PakContract.EXTRA_BLOCK_IS_SPR_KEY) ?? false;
                 var blockId = bundle.GetString(PakContract.EXTRA_BLOCK_ID_KEY) ?? "unknown";
                 var blockSize = bundle.GetInt(PakContract.EXTRA_BLOCK_SIZE_KEY) ?? 0;
                 var blockName = bundle.GetString(PakContract.EXTRA_BLOCK_FILE_NAME_KEY) ?? "unknown";
@@ -500,7 +500,7 @@ namespace ArtWiz.ViewModel.PakEditor
 
 
                 var blockItemViewModel = _viewModelManager.CreatePakBlockViewModel(this, blockName: blockName,
-                    blockType: isSpr == true ? "SPR" : "unknown",
+                    isSpr: isSpr ,
                     blockId: blockId,
                     blockSize: blockSize);
                 PakBlocks.Add(blockItemViewModel);
@@ -534,9 +534,8 @@ namespace ArtWiz.ViewModel.PakEditor
     internal class PakBlockItemViewModel : PakItemViewModel
     {
         private string _blockName;
-        private string _blockType;
         private string _blockId;
-
+        public bool IsSpr { get; private set; }
         [Bindable(true)]
         public string BlockName
         {
@@ -556,7 +555,7 @@ namespace ArtWiz.ViewModel.PakEditor
         {
             get
             {
-                return _blockType;
+                return IsSpr ? "SPR" : "unknown";
             }
         }
 
@@ -580,13 +579,13 @@ namespace ArtWiz.ViewModel.PakEditor
 
         public PakBlockItemViewModel(BaseParentsViewModel parents,
             string blockName,
-            string blockType,
+            bool isSpr,
             string blockId,
             long blockSize) : base(parents)
         {
             _itemSizeInBytes = blockSize;
             _blockName = blockName;
-            _blockType = blockType;
+            IsSpr = isSpr;
             _blockId = blockId;
         }
     }
@@ -601,6 +600,13 @@ namespace ArtWiz.ViewModel.PakEditor
         private Visibility _initPanelVisibility = Visibility.Visible;
         private Visibility _detailPanelVisibility = Visibility.Visible;
         private string _blockFolderOutputPath = "";
+        private IBitmapViewerViewModel _bitmapViewerVM;
+
+        [Bindable(true)]
+        public IBitmapViewerViewModel BitmapViewerVM
+        {
+            get => _bitmapViewerVM;
+        }
 
         public string BlockFolderOutputPath
         {
@@ -677,6 +683,7 @@ namespace ArtWiz.ViewModel.PakEditor
             _pakFiles = new ObservableCollection<PakFileItemViewModel>();
             _pakFiles.CollectionChanged += OnPakItemViewModelCollectionChanged;
             _viewModelManager = new PakViewModelManager();
+            _bitmapViewerVM = new BitmapViewerViewModel(this);
             UpdatePakEditorComponentVisibility();
         }
 
@@ -699,7 +706,31 @@ namespace ArtWiz.ViewModel.PakEditor
                 return;
             }
 
-            PakFiles.Add(_viewModelManager.CreatePakItemViewModel(this, filePath));
+            var pakItemViewModel = _viewModelManager.CreatePakItemViewModel(this, filePath);
+            pakItemViewModel.PropertyChanged += OnPakItemPropertyChanged;
+            PakFiles.Add(pakItemViewModel);
+        }
+
+        private void OnPakItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is PakFileItemViewModel pIVM && e.PropertyName == nameof(PakFileItemViewModel.CurrentSelectedPakBlock))
+            {
+                if (pIVM.CurrentSelectedPakBlock != null)
+                {
+                    if (pIVM.CurrentSelectedPakBlock.IsSpr)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+
+                }
+            }
         }
 
         void IPakPageCommand.OnResetSearchBox()
@@ -725,6 +756,7 @@ namespace ArtWiz.ViewModel.PakEditor
                     var vm = _viewModelManager.GetPakFileItemViewModel(it.FilePath);
                     if (vm != null)
                     {
+                        vm.PropertyChanged -= OnPakItemPropertyChanged;
                         _viewModelManager.DeletePakFileItemViewModel(vm);
                         PakFiles.Remove(vm);
                     }
@@ -814,6 +846,7 @@ namespace ArtWiz.ViewModel.PakEditor
                 var viewModel = _viewModelManager.GetPakFileItemViewModel(it);
                 if (viewModel != null)
                 {
+                    viewModel.PropertyChanged -= OnPakItemPropertyChanged;
                     _viewModelManager.DeletePakFileItemViewModel(viewModel);
                     PakFiles.Remove(viewModel);
                 }
