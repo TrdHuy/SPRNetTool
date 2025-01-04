@@ -14,6 +14,7 @@
 					 xmlns:pe="clr-namespace:ArtWiz.View.Pages.PakEditor"
 					 MinWidth="1280"
 					 MinHeight="718"
+					 d:DataContext="{d:DesignInstance pakvm:PakPageViewModel, IsDesignTimeCreatable=False}"
 					 FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 					 xmlns:def="clr-namespace:ArtWiz"
 					 Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}"
@@ -22,7 +23,7 @@
 
 	<UserControl.DataContext>
 		<vm:ViewModelGeneratorHelper DataContextType="{x:Type pakvm:PakPageViewModel}"
-									 GeneratorType="Reuse"/>
+									 GeneratorType="Reuse" />
 	</UserControl.DataContext>
 
 	<UserControl.Resources>
@@ -315,6 +316,7 @@
 			</Grid>
 
 			<pe:BlockPreviewer Grid.Row="1"
+							   DataContext="{Binding CurrentSelectedPakFile.CurrentSelectedPakBlock}"
 							   OwnerPage="{Binding RelativeSource={RelativeSource AncestorType=base:BasePageViewer}}"
 							   Grid.Column="3"
 							   BorderThickness="1,0,1,0" />

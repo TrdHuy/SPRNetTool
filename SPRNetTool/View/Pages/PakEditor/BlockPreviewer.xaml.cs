@@ -40,22 +40,22 @@ namespace ArtWiz.View.Pages.PakEditor
                 switch (it)
                 {
                     case PakEditorPageId.CloseBlockDetailPanel:
-                        DataContext.IfIs<PakPageViewModel>(it2 =>
+                        DataContext.IfIs<PakBlockItemViewModel>(it2 =>
                         {
-                            if (it2.CurrentSelectedPakFile != null)
+                            if (it2.Parents is PakFileItemViewModel vm)
                             {
-                                it2.CurrentSelectedPakFile.CurrentSelectedPakBlock = null;
+                                vm.CurrentSelectedPakBlock = null;
                             }
                         });
                         break;
                     case PakEditorPageId.ExtractBlock:
-                        DataContext.IfIs<PakPageViewModel>(it2 =>
+                        DataContext.IfIs<PakBlockItemViewModel>(it2 =>
                         {
-                            if (it2.CurrentSelectedPakFile != null && it2.CurrentSelectedPakFile.CurrentSelectedPakBlock != null)
+                            if (it2.Parents is PakFileItemViewModel pfVM && pfVM.Parents is PakPageViewModel ppVM)
                             {
                                 if (OwnerPage != null && OwnerPage.OwnerWindow is Window w)
                                 {
-                                    if (string.IsNullOrEmpty(it2.BlockFolderOutputPath) || !Directory.Exists(it2.BlockFolderOutputPath))
+                                    if (string.IsNullOrEmpty(ppVM.BlockFolderOutputPath) || !Directory.Exists(ppVM.BlockFolderOutputPath))
                                     {
                                         using (var folderDialog = new FolderBrowserDialog())
                                         {
@@ -64,7 +64,7 @@ namespace ArtWiz.View.Pages.PakEditor
 
                                             if (folderDialog.ShowDialog() == DialogResult.OK)
                                             {
-                                                it2.BlockFolderOutputPath = folderDialog.SelectedPath;
+                                                ppVM.BlockFolderOutputPath = folderDialog.SelectedPath;
                                             }
                                             else
                                             {
@@ -77,18 +77,17 @@ namespace ArtWiz.View.Pages.PakEditor
                                     {
                                         await Task.Run(() =>
                                         {
-                                            (it2 as IPakPageCommand).OnExtractCurrentSelectedBlock();
+                                            (ppVM as IPakPageCommand).OnExtractCurrentSelectedBlock();
                                         });
                                     });
                                 }
                                 else
                                 {
-                                    (it2 as IPakPageCommand).OnExtractCurrentSelectedBlock();
+                                    (ppVM as IPakPageCommand).OnExtractCurrentSelectedBlock();
                                 }
                             }
                         });
                         break;
-
                 }
             });
         }

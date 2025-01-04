@@ -10,21 +10,7 @@
 		WindowStartupLocation="CenterOwner"
 		ResizeMode="NoResize"
 		MinWidth="300">
-	<Window.Resources>
-		<Storyboard x:Key="RotationStoryboard"
-					RepeatBehavior="Forever">
-			<DoubleAnimation Storyboard.TargetName="RotatingTextBlock"
-							 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-							 From="0"
-							 To="360"
-							 Duration="0:0:1" />
-		</Storyboard>
-	</Window.Resources>
-	<Window.Triggers>
-		<EventTrigger RoutedEvent="Loaded">
-			<BeginStoryboard Storyboard="{StaticResource RotationStoryboard}" />
-		</EventTrigger>
-	</Window.Triggers>
+
 	<StackPanel Orientation="Horizontal"
 				VerticalAlignment="Center"
 				Margin="30">
@@ -35,10 +21,28 @@
 				   RenderTransformOrigin="0.5,0.5"
 				   Foreground="Green"
 				   FontWeight="ExtraBold">
-
+			<TextBlock.Resources>
+				<Storyboard x:Key="RotationStoryboard"
+							RepeatBehavior="Forever">
+					<DoubleAnimation Storyboard.TargetName="RotatingTextBlock"
+									 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+									 From="0"
+									 To="360"
+									 Duration="0:0:1" />
+				</Storyboard>
+			</TextBlock.Resources>
 			<TextBlock.RenderTransform>
 				<RotateTransform />
 			</TextBlock.RenderTransform>
+			<TextBlock.Triggers>
+				<EventTrigger RoutedEvent="Loaded">
+					<BeginStoryboard x:Name="RotationBeginStoryboard"
+									 Storyboard="{StaticResource RotationStoryboard}" />
+				</EventTrigger>
+				<EventTrigger RoutedEvent="Unloaded">
+					<StopStoryboard BeginStoryboardName="RotationBeginStoryboard" />
+				</EventTrigger>
+			</TextBlock.Triggers>
 		</TextBlock>
 
 		<TextBlock Text="Content"

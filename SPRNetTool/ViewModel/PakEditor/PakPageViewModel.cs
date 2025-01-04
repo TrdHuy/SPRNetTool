@@ -1,4 +1,5 @@
 ﻿using ArtWiz.Domain.Base;
+using ArtWiz.Domain.Utils;
 using ArtWiz.LogUtil;
 using ArtWiz.Utils;
 using ArtWiz.View.Utils;
@@ -12,9 +13,14 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WizMachine.Data;
 using WizMachine.Services.Base;
 using WizMachine.Services.Utils.NativeEngine.Managed;
 
@@ -434,7 +440,7 @@ namespace ArtWiz.ViewModel.PakEditor
             }
         }
 
-        Dispatcher ILoadPakFileCallback.ViewDispatcher => ViewModelOwner.ViewDispatcher;
+        public Dispatcher ViewDispatcher => ViewModelOwner.ViewDispatcher;
 
         public PakFileItemViewModel(PakViewModelManager viewModelManager, BaseParentsViewModel parents, string filePath) : base(parents)
         {
@@ -500,7 +506,7 @@ namespace ArtWiz.ViewModel.PakEditor
 
 
                 var blockItemViewModel = _viewModelManager.CreatePakBlockViewModel(this, blockName: blockName,
-                    isSpr: isSpr ,
+                    isSpr: isSpr,
                     blockId: blockId,
                     blockSize: blockSize);
                 PakBlocks.Add(blockItemViewModel);
@@ -531,11 +537,38 @@ namespace ArtWiz.ViewModel.PakEditor
         }
     }
 
-    internal class PakBlockItemViewModel : PakItemViewModel
+    internal class PakBlockItemViewModel : PakItemViewModel, IParseBlockDataCallback
     {
         private string _blockName;
         private string _blockId;
+        private FrameRGBA[] _frameData;
+        private SprFileHead _sprFileHead;
+        private BitmapSource[] _frameSource;
+        private string _stringBlockData;
+        private bool _isLoadingBlock;
+        private IBitmapViewerViewModel _bitmapViewerVM;
+
         public bool IsSpr { get; private set; }
+
+        [Bindable(true)]
+        public IBitmapViewerViewModel BitmapViewerVM
+        {
+            get => _bitmapViewerVM;
+        }
+
+        [Bindable(true)]
+        public bool IsLoadingBlock
+        {
+            get
+            {
+                return _isLoadingBlock;
+            }
+            set
+            {
+                _isLoadingBlock = value;
+                Invalidate();
+            }
+        }
         [Bindable(true)]
         public string BlockName
         {
@@ -577,16 +610,66 @@ namespace ArtWiz.ViewModel.PakEditor
             }
         }
 
+        public Dispatcher ViewDispatcher => ViewModelOwner.ViewDispatcher;
+
         public PakBlockItemViewModel(BaseParentsViewModel parents,
             string blockName,
             bool isSpr,
             string blockId,
             long blockSize) : base(parents)
         {
+            _bitmapViewerVM = new BitmapViewerViewModel(this);
             _itemSizeInBytes = blockSize;
             _blockName = blockName;
             IsSpr = isSpr;
             _blockId = blockId;
+        }
+
+        public bool IsDataLoaded()
+        {
+            if (IsSpr)
+            {
+                return _frameData != null;
+            }
+            else
+            {
+                return !string.IsNullOrEmpty(_stringBlockData);
+            }
+        }
+
+        public void StartLoadingBlockData()
+        {
+            if (IsDataLoaded())
+            {
+                return;
+            }
+            IsLoadingBlock = true;
+            PakWorkManager.ParseSprBlockDataById(_blockId, this);
+        }
+
+
+        public void OnParseSprSuccessfully(string blockId, SprFileHead sprFileHead, FrameRGBA[] frameData, BitmapSource bitmapSource)
+        {
+            var s = new BitmapSource[sprFileHead.FrameCounts];
+            s[0] = bitmapSource;
+            _frameData = frameData;
+            _sprFileHead = sprFileHead;
+            _frameSource = s;
+            IsLoadingBlock = false;
+            var frameInfo = frameData[0];
+            _bitmapViewerVM.FrameOffX = frameInfo.frameOffX;
+            _bitmapViewerVM.FrameOffY = frameInfo.frameOffY;
+            _bitmapViewerVM.FrameHeight = frameInfo.frameHeight;
+            _bitmapViewerVM.FrameWidth = frameInfo.frameWidth;
+            _bitmapViewerVM.GlobalWidth = sprFileHead.GlobalWidth;
+            _bitmapViewerVM.GlobalHeight = sprFileHead.GlobalHeight;
+            _bitmapViewerVM.GlobalOffX = sprFileHead.OffX;
+            _bitmapViewerVM.GlobalOffY = sprFileHead.OffY;
+            _bitmapViewerVM.FrameSource = bitmapSource;
+        }
+
+        public void OnFinishJob()
+        {
         }
     }
 
@@ -600,13 +683,6 @@ namespace ArtWiz.ViewModel.PakEditor
         private Visibility _initPanelVisibility = Visibility.Visible;
         private Visibility _detailPanelVisibility = Visibility.Visible;
         private string _blockFolderOutputPath = "";
-        private IBitmapViewerViewModel _bitmapViewerVM;
-
-        [Bindable(true)]
-        public IBitmapViewerViewModel BitmapViewerVM
-        {
-            get => _bitmapViewerVM;
-        }
 
         public string BlockFolderOutputPath
         {
@@ -678,12 +754,13 @@ namespace ArtWiz.ViewModel.PakEditor
             }
         }
 
+        public Dispatcher ViewDispatcher => ViewModelOwner.ViewDispatcher;
+
         public PakPageViewModel()
         {
             _pakFiles = new ObservableCollection<PakFileItemViewModel>();
             _pakFiles.CollectionChanged += OnPakItemViewModelCollectionChanged;
             _viewModelManager = new PakViewModelManager();
-            _bitmapViewerVM = new BitmapViewerViewModel(this);
             UpdatePakEditorComponentVisibility();
         }
 
@@ -715,11 +792,11 @@ namespace ArtWiz.ViewModel.PakEditor
         {
             if (sender is PakFileItemViewModel pIVM && e.PropertyName == nameof(PakFileItemViewModel.CurrentSelectedPakBlock))
             {
-                if (pIVM.CurrentSelectedPakBlock != null)
+                if (pIVM.CurrentSelectedPakBlock != null && pIVM.CurrentSelectedPakBlock.IsDataLoaded() == false)
                 {
                     if (pIVM.CurrentSelectedPakBlock.IsSpr)
                     {
-
+                        pIVM.CurrentSelectedPakBlock.StartLoadingBlockData();
                     }
                     else
                     {
@@ -728,7 +805,6 @@ namespace ArtWiz.ViewModel.PakEditor
                 }
                 else
                 {
-
                 }
             }
         }
@@ -872,5 +948,6 @@ namespace ArtWiz.ViewModel.PakEditor
                 SearchBoxVisibility = Visibility.Visible;
             }
         }
+
     }
 }

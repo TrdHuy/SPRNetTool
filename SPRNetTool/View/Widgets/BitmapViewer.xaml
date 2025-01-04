@@ -267,6 +267,42 @@
 
 		</Border>
 
+		<TextBlock Text="&#xf110;"
+				   Grid.Row="0"
+				   Grid.Column="1"
+				   Visibility="{Binding ElementName=BitmapViewerContainer, Path=ShowLoadingIcon, Converter={StaticResource BoolToVisibilityConverter}}"
+				   x:Name="RotatingTextBlock"
+				   FontSize="50"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontFamily="/ArtWiz;component/Resources/Font Awesome 6 Free-Solid-900.otf#Font Awesome 6 Free Solid"
+				   RenderTransformOrigin="0.5,0.5"
+				   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}"
+				   FontWeight="ExtraBold">
+			<TextBlock.Resources>
+				<Storyboard x:Key="RotationStoryboard"
+							RepeatBehavior="Forever">
+					<DoubleAnimation Storyboard.TargetName="RotatingTextBlock"
+									 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+									 From="0"
+									 To="360"
+									 Duration="0:0:1" />
+				</Storyboard>
+			</TextBlock.Resources>
+			<TextBlock.RenderTransform>
+				<RotateTransform />
+			</TextBlock.RenderTransform>
+			<TextBlock.Triggers>
+				<EventTrigger RoutedEvent="Loaded">
+					<BeginStoryboard x:Name="RotationBeginStoryboard"
+									 Storyboard="{StaticResource RotationStoryboard}" />
+				</EventTrigger>
+				<EventTrigger RoutedEvent="Unloaded">
+					<StopStoryboard BeginStoryboardName="RotationBeginStoryboard" />
+				</EventTrigger>
+			</TextBlock.Triggers>
+		</TextBlock>
+
 		<Border Grid.Column="0"
 				BorderThickness="1"
 				Margin="{Binding ElementName=BitmapViewerContainer, Path=ToolBoxMargin}"

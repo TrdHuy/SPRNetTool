@@ -1,8 +1,12 @@
 ﻿using ArtWiz.Domain.Base;
+using ArtWiz.Domain.Utils;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WizMachine;
 using WizMachine.Data;
 using WizMachine.Services.Utils.NativeEngine.Managed;
@@ -34,6 +38,39 @@ namespace ArtWiz.Domain
         public CompressedFileInfo? GetBlockInfoByPath(string blockPath)
         {
             return _pakWorkManagerService.GetBlockInfoByPath(blockPath);
+        }
+
+        public byte[]? ReadBlockDataFromPakByBlockId(string blockId)
+        {
+            return _pakWorkManagerService.ReadBlockDataFromPakByBlockId(blockId);
+        }
+
+        public async void ParseSprBlockDataById(string blockId, IParseBlockDataCallback parseBlockDataCallback)
+        {
+            await Task.Run(() =>
+            {
+                var blockData = _pakWorkManagerService.ReadBlockDataFromPakByBlockId(blockId);
+                if (blockData != null)
+                {
+                    SprUtil.ParseSprData(blockData,
+                        out SprFileHead fileHead, out _,
+                        out _,
+                        out FrameRGBA[] frameData);
+                    var frameIndex = 0;
+                    var frameInfo = frameData[frameIndex];
+                    var callbackData = new Dictionary<string, object>();
+                    var source = ArtWiz.Utils.BitmapUtil.GetBitmapFromRGBArray(frameInfo.originDecodedBGRAData
+                        , frameInfo.frameWidth
+                        , frameInfo.frameHeight, PixelFormats.Bgra32);
+                    source.Freeze();
+                    callbackData.Add(IParseBlockDataCallback.FRAME_DATA_EXTRA, frameData);
+                    callbackData.Add(IParseBlockDataCallback.BITMAP_SOURCE_EXTRA, source);
+                    callbackData.Add(IParseBlockDataCallback.SPR_FILE_HEAD_EXTRA, fileHead);
+                    callbackData.Add(IParseBlockDataCallback.BLOCK_ID_EXTRA, blockId);
+                    NotifyParseBlockDataObserver(parseBlockDataCallback, "PARSE_BLOCK_SUCCESS", callbackData);
+                }
+            });
+
         }
 
         public async void CloseSessionAsync(string filePath, IRemovePakFileCallback removeFileCallback)
@@ -155,5 +192,27 @@ namespace ArtWiz.Domain
             });
         }
 
+        private void NotifyParseBlockDataObserver(IParseBlockDataCallback parseBlockCallback,
+            string eventType,
+            Dictionary<string, object> callbackData)
+        {
+            parseBlockCallback.ViewDispatcher.Invoke(() =>
+            {
+
+                switch (eventType)
+                {
+                    case "PARSE_BLOCK_SUCCESS":
+                        var fileHead = (SprFileHead)callbackData[IParseBlockDataCallback.SPR_FILE_HEAD_EXTRA];
+                        var frameData = (FrameRGBA[])callbackData[IParseBlockDataCallback.FRAME_DATA_EXTRA];
+                        var bitmapSource = (BitmapSource)callbackData[IParseBlockDataCallback.BITMAP_SOURCE_EXTRA];
+                        var blockId = (string)callbackData[IParseBlockDataCallback.BLOCK_ID_EXTRA];
+                        parseBlockCallback.OnParseSprSuccessfully(blockId, fileHead, frameData, bitmapSource);
+                        break;
+                    case "FINISH_JOB":
+                        parseBlockCallback.OnFinishJob();
+                        break;
+                }
+            });
+        }
     }
 }

@@ -138,7 +138,7 @@ namespace ArtWiz.Domain
 
             return SprWorkManager.GetDecodedBGRAData(frameIndex,
                 out rgbColorChangedArgs)?
-                .Let((it) => this.GetBitmapFromRGBArray(it
+                .Let((it) => ArtWiz.Utils.BitmapUtil.GetBitmapFromRGBArray(it
                     , frameInfo.frameWidth
                     , frameInfo.frameHeight, PixelFormats.Bgra32))
                 .Also((it) => it.Freeze());
@@ -389,7 +389,7 @@ namespace ArtWiz.Domain
                 DisplayedBitmapSourceCache.DisplayedBitmapSource = this.LoadBitmapFromFile(filePath)?.Let(it =>
                 {
                     var extractedData = this.ConvertBitmapSourceToByteArray(it);
-                    var extractedSource = this.GetBitmapFromRGBArray(extractedData,
+                    var extractedSource = ArtWiz.Utils.BitmapUtil.GetBitmapFromRGBArray(extractedData,
                         it.PixelWidth,
                         it.PixelHeight,
                         it.Format);

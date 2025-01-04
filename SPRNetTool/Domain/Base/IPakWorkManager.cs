@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WizMachine.Data;
 using WizMachine.Services.Utils.NativeEngine.Managed;
 
@@ -19,6 +20,15 @@ namespace ArtWiz.Domain.Base
         void OnProgressChanged(int newProgress);
     }
 
+    public interface IParseBlockDataCallback : IJobExecutor
+    {
+        public const string SPR_FILE_HEAD_EXTRA = "SPRFileHeadExtra";
+        public const string BITMAP_SOURCE_EXTRA = "BitmapSourceExtra";
+        public const string FRAME_DATA_EXTRA = "FrameDataExtra";
+        public const string BLOCK_ID_EXTRA = "BlockIdExtra";
+        Dispatcher ViewDispatcher { get; }
+        void OnParseSprSuccessfully(string blockId, SprFileHead sprFileHead, FrameRGBA[] frameData, BitmapSource bitmapSource);
+    }
     public interface IRemovePakFileCallback : IJobExecutor
     {
         void OnRemoveSuccess(object removedPakFile);
@@ -36,7 +46,10 @@ namespace ArtWiz.Domain.Base
         bool IsBlockPathExist(string blockPath);
 
         CompressedFileInfo? GetBlockInfoByPath(string blockPath);
-      
+
         bool ExtractPakBlockById(string blockId, string outputPath);
+
+        void ParseSprBlockDataById(string blockId, IParseBlockDataCallback parseBlockDataCallback);
+        byte[]? ReadBlockDataFromPakByBlockId(string blockId);
     }
 }

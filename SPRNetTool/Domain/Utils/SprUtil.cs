@@ -10,7 +10,7 @@ namespace ArtWiz.Domain.Utils
 {
     internal static class SprUtil
     {
-        public static bool LoadSprFromMemory(byte[] sprData, out SprFileHead sprFileHead,
+        public static bool ParseSprData(byte[] sprData, out SprFileHead sprFileHead,
             out Palette palette,
             out int frameDataBeginPos,
             out FrameRGBA[] frameRGBA)
