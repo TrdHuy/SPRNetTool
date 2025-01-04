@@ -41,9 +41,12 @@ namespace ArtWiz.ViewModel.PakEditor
         private Dictionary<string, PakFileItemViewModel> _filePathToPakFileItemMap = new Dictionary<string, PakFileItemViewModel>();
         private Dictionary<PakBlockItemViewModel, PakFileItemViewModel> _blockItemToFileItemMap = new Dictionary<PakBlockItemViewModel, PakFileItemViewModel>();
         private Dictionary<PakFileItemViewModel, HashSet<PakBlockItemViewModel>> _fileItemToBlockItemMap = new Dictionary<PakFileItemViewModel, HashSet<PakBlockItemViewModel>>();
-
-        public PakViewModelManager()
+        private readonly Queue<PakBlockItemViewModel> _loadedDataBlockItemQueue;
+        private int _blockDataSize;
+        public PakViewModelManager(int blockDataSizeCache = 3)
         {
+            _blockDataSize = blockDataSizeCache;
+            _loadedDataBlockItemQueue = new Queue<PakBlockItemViewModel>();
         }
 
         public ObservableCollection<PakFileItemViewModel> GetPakFileItemViewModel()
@@ -66,7 +69,8 @@ namespace ArtWiz.ViewModel.PakEditor
                     blockName: blockName,
                     isSpr: isSpr,
                     blockId: blockId,
-                    blockSize: blockSize
+                    blockSize: blockSize,
+                    vmmanager: this
                     );
             _blockIdToPakBlockItemMap.Add(blockId, blockItemViewModel);
             _blockItemToFileItemMap.Add(blockItemViewModel, pakFileItemViewModel);
@@ -121,6 +125,18 @@ namespace ArtWiz.ViewModel.PakEditor
                 return (blockViewModel, _blockItemToFileItemMap[blockViewModel]);
             }
             return null;
+        }
+
+        public void EnqueueLoadedSuccessfullyBlockData(PakBlockItemViewModel item)
+        {
+            if (_loadedDataBlockItemQueue.Count >= _blockDataSize)
+            {
+                // Remove the oldest item and dispose of it to free up memory
+                var oldestItem = _loadedDataBlockItemQueue.Dequeue();
+                oldestItem.Dispose();
+            }
+
+            _loadedDataBlockItemQueue.Enqueue(item);
         }
     }
 
@@ -537,23 +553,28 @@ namespace ArtWiz.ViewModel.PakEditor
         }
     }
 
-    internal class PakBlockItemViewModel : PakItemViewModel, IParseBlockDataCallback
+    internal class PakBlockItemViewModel : PakItemViewModel, IParseBlockDataCallback, IDisposable
     {
         private string _blockName;
         private string _blockId;
-        private FrameRGBA[] _frameData;
+        private FrameRGBA[]? _frameData;
         private SprFileHead _sprFileHead;
-        private BitmapSource[] _frameSource;
+        private BitmapSource[]? _frameSource;
         private string _stringBlockData;
         private bool _isLoadingBlock;
         private IBitmapViewerViewModel _bitmapViewerVM;
-
+        private PakViewModelManager _viewModelManager;
         public bool IsSpr { get; private set; }
 
         [Bindable(true)]
         public IBitmapViewerViewModel BitmapViewerVM
         {
             get => _bitmapViewerVM;
+            set
+            {
+                _bitmapViewerVM = value;
+                Invalidate();
+            }
         }
 
         [Bindable(true)]
@@ -616,13 +637,14 @@ namespace ArtWiz.ViewModel.PakEditor
             string blockName,
             bool isSpr,
             string blockId,
-            long blockSize) : base(parents)
+            long blockSize, PakViewModelManager vmmanager) : base(parents)
         {
             _bitmapViewerVM = new BitmapViewerViewModel(this);
             _itemSizeInBytes = blockSize;
             _blockName = blockName;
             IsSpr = isSpr;
             _blockId = blockId;
+            _viewModelManager = vmmanager;
         }
 
         public bool IsDataLoaded()
@@ -666,10 +688,18 @@ namespace ArtWiz.ViewModel.PakEditor
             _bitmapViewerVM.GlobalOffX = sprFileHead.OffX;
             _bitmapViewerVM.GlobalOffY = sprFileHead.OffY;
             _bitmapViewerVM.FrameSource = bitmapSource;
+            _viewModelManager.EnqueueLoadedSuccessfullyBlockData(this);
         }
 
         public void OnFinishJob()
         {
+        }
+
+        public void Dispose()
+        {
+            _frameData = null;
+            _frameSource = null;
+            BitmapViewerVM = new BitmapViewerViewModel(this);
         }
     }
 
