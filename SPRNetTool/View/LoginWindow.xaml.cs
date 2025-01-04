@@ -1,4 +1,5 @@
-﻿using ArtWiz.View.Widgets;
+﻿using ArtWiz.View.Base;
+using ArtWiz.View.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace ArtWiz.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class LoginWindow : BaseArtWizWindow
     {
-        public Window1()
+        public LoginWindow()
         {
             InitializeComponent();
         }
     }
+    
     
 }
