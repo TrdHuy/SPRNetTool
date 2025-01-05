@@ -315,6 +315,10 @@
 
 			</Grid>
 
+			<!--TODO: Find a better way to set the owner
+			page for the page's child, ideally, the set 
+			method should be private, and the child should 
+			find the owner page in code behind-->
 			<pe:BlockPreviewer Grid.Row="1"
 							   DataContext="{Binding CurrentSelectedPakFile.CurrentSelectedPakBlock}"
 							   OwnerPage="{Binding RelativeSource={RelativeSource AncestorType=base:BasePageViewer}}"
