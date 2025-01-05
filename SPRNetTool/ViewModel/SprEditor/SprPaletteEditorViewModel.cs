@@ -2,15 +2,35 @@
 using ArtWiz.Domain.Base;
 using ArtWiz.Utils;
 using ArtWiz.ViewModel.Base;
+using ArtWiz.ViewModel.Widgets;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
 using static ArtWiz.Domain.SprPaletteChangedArg.ChangedEvent;
 
-namespace ArtWiz.ViewModel.Widgets
+namespace ArtWiz.ViewModel.SprEditor
 {
-    internal class PaletteEditorViewModel : BaseSubViewModel, IPaletteEditorViewModel
+    internal class PaletteEditorColorItemViewModel : BaseViewModel, IPaletteEditorColorItemViewModel
+    {
+        private SolidColorBrush mBrush;
+        public PaletteEditorColorItemViewModel(SolidColorBrush brush)
+        {
+            mBrush = brush;
+        }
+
+        public SolidColorBrush ColorBrush
+        {
+            get => mBrush;
+            set
+            {
+                mBrush = value;
+                Invalidate();
+            }
+        }
+    }
+
+    internal class SprPaletteEditorViewModel : BaseSubViewModel, IPaletteEditorViewModel
     {
         private ObservableCollection<IPaletteEditorColorItemViewModel>? _paletteColorItemSource;
 
@@ -31,14 +51,14 @@ namespace ArtWiz.ViewModel.Widgets
             }
         }
 
-        public PaletteEditorViewModel(BaseParentsViewModel parents) : base(parents)
+        public SprPaletteEditorViewModel(BaseParentsViewModel parents) : base(parents)
         {
-            BitmapDisplayManager.RegisterObserver(this);
         }
 
-        ~PaletteEditorViewModel()
+        public override void OnArtWizViewModelOwnerCreate(IArtWizViewModelOwner owner)
         {
-            BitmapDisplayManager.UnregisterObserver(this);
+            base.OnArtWizViewModelOwnerCreate(owner);
+            BitmapDisplayManager.RegisterObserver(this);
         }
 
         public override void OnArtWizViewModelOwnerDestroy()

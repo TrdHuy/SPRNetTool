@@ -33,6 +33,19 @@ namespace ArtWiz.View.Widgets
             set { SetValue(FooterProperty, value); }
         }
 
+        public static readonly DependencyProperty ShowLoadingIconProperty =
+           DependencyProperty.Register(
+               "ShowLoadingIcon",
+               typeof(bool),
+               typeof(BitmapViewer),
+               new PropertyMetadata(default(bool)));
+
+        public bool ShowLoadingIcon
+        {
+            get { return (bool)GetValue(ShowLoadingIconProperty); }
+            set { SetValue(ShowLoadingIconProperty, value); }
+        }
+
         public static readonly DependencyProperty ViewModelProperty =
            DependencyProperty.Register(
                "ViewModel",
@@ -493,7 +506,6 @@ namespace ArtWiz.View.Widgets
                         new FrameworkPropertyMetadata(
                                 new BitmapImage(new Uri(@"/Resources/spr_global_background.png", UriKind.Relative)),
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                                new PropertyChangedCallback(OnImageSourceChanged),
                                 null),
                         null);
 

@@ -17,7 +17,8 @@ using static ArtWiz.Domain.SprPaletteChangedArg.ChangedEvent;
 
 namespace ArtWiz.Domain
 {
-    public class BitmapDisplayManager : BaseDomain, IBitmapDisplayManager
+    // This domain work only for Spr editor page
+    public class SprEditorBitmapDisplayManager : BaseDomain, ISprEditorBitmapDisplayManager
     {
         private static Logger logger = new Logger("BitmapDisplayManager");
         private ISprWorkManager? sprWorkManager;
@@ -46,12 +47,12 @@ namespace ArtWiz.Domain
         private BitmapSourceCache DisplayedBitmapSourceCache { get; } = new BitmapSourceCache();
 
         #region public interface
-        uint IBitmapDisplayManager.GetCurrentDisplayFrameIndex()
+        uint ISprEditorBitmapDisplayManager.GetCurrentDisplayFrameIndex()
         {
             return DisplayedBitmapSourceCache.CurrentFrameIndex ?? 0;
         }
 
-        void IBitmapDisplayManager.ResetSprWorkSpace()
+        void ISprEditorBitmapDisplayManager.ResetSprWorkSpace()
         {
             SprWorkManager.ResetWorkSpace();
             if (DisplayedBitmapSourceCache.IsSprImage)
@@ -66,7 +67,7 @@ namespace ArtWiz.Domain
 
         }
 
-        void IBitmapDisplayManager.SetNewColorToPalette(uint paletteIndex, Color newColor)
+        void ISprEditorBitmapDisplayManager.SetNewColorToPalette(uint paletteIndex, Color newColor)
         {
             if (!SprWorkManager.IsWorkSpaceEmpty)
             {
@@ -98,7 +99,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.ChangeCurrentDisplayMode(bool isSpr)
+        void ISprEditorBitmapDisplayManager.ChangeCurrentDisplayMode(bool isSpr)
         {
             if (isSpr && !SprWorkManager.IsWorkSpaceEmpty)
             {
@@ -137,25 +138,25 @@ namespace ArtWiz.Domain
 
             return SprWorkManager.GetDecodedBGRAData(frameIndex,
                 out rgbColorChangedArgs)?
-                .Let((it) => this.GetBitmapFromRGBArray(it
+                .Let((it) => ArtWiz.Utils.BitmapUtil.GetBitmapFromRGBArray(it
                     , frameInfo.frameWidth
                     , frameInfo.frameHeight, PixelFormats.Bgra32))
                 .Also((it) => it.Freeze());
         }
 
-        bool IBitmapDisplayManager.InsertFrame(uint frameIndex, BitmapSource bmpSource)
+        bool ISprEditorBitmapDisplayManager.InsertFrame(uint frameIndex, BitmapSource bmpSource)
         {
             return InsertBimapSourceToSprWorkSpace(frameIndex, bmpSource);
         }
 
-        bool IBitmapDisplayManager.InsertFrame(uint frameIndex, string filePath)
+        bool ISprEditorBitmapDisplayManager.InsertFrame(uint frameIndex, string filePath)
         {
             var bitmapSource = this.LoadBitmapFromFile(filePath, isFreeze: true)
                 ?? throw new Exception($"Failed to load bitmap from path {filePath}.");
             return InsertBimapSourceToSprWorkSpace(frameIndex, bitmapSource, filePath);
         }
 
-        bool IBitmapDisplayManager.DeleteFrame(uint frameIndex)
+        bool ISprEditorBitmapDisplayManager.DeleteFrame(uint frameIndex)
         {
             if (!DisplayedBitmapSourceCache.IsSprImage) return false;
             return SprWorkManager.RemoveFrame(frameIndex).Also(success =>
@@ -209,7 +210,7 @@ namespace ArtWiz.Domain
             });
         }
 
-        bool IBitmapDisplayManager.SwitchFrame(uint frameIndex1, uint frameIndex2)
+        bool ISprEditorBitmapDisplayManager.SwitchFrame(uint frameIndex1, uint frameIndex2)
         {
             if (!DisplayedBitmapSourceCache.IsSprImage) return false;
 
@@ -248,7 +249,7 @@ namespace ArtWiz.Domain
             });
         }
 
-        void IBitmapDisplayManager.SetSprInterval(ushort interval)
+        void ISprEditorBitmapDisplayManager.SetSprInterval(ushort interval)
         {
             SprWorkManager.SetSprInterval((ushort)interval);
             NotifyChanged(new BitmapDisplayMangerChangedArg(
@@ -256,7 +257,7 @@ namespace ArtWiz.Domain
                 sprFileHead: SprWorkManager.FileHead));
         }
 
-        void IBitmapDisplayManager.SetSprGlobalSize(ushort width, ushort height)
+        void ISprEditorBitmapDisplayManager.SetSprGlobalSize(ushort width, ushort height)
         {
             if (!DisplayedBitmapSourceCache.IsSprImage) return;
 
@@ -273,7 +274,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.SetSprGlobalOffset(short offX, short offY)
+        void ISprEditorBitmapDisplayManager.SetSprGlobalOffset(short offX, short offY)
         {
             if (!DisplayedBitmapSourceCache.IsSprImage) return;
 
@@ -290,7 +291,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.SetCurrentlyDisplayedSprFrameIndex(uint index)
+        void ISprEditorBitmapDisplayManager.SetCurrentlyDisplayedSprFrameIndex(uint index)
         {
             if (index < 0 || index >= SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts) return;
             var currentFrameIndex = DisplayedBitmapSourceCache.CurrentFrameIndex ?? 0;
@@ -327,7 +328,7 @@ namespace ArtWiz.Domain
 
         }
 
-        void IBitmapDisplayManager.SetCurrentlyDisplayedFrameSize(ushort frameWidth, ushort frameHeight)
+        void ISprEditorBitmapDisplayManager.SetCurrentlyDisplayedFrameSize(ushort frameWidth, ushort frameHeight)
         {
             InitAnimationSourceCacheIfAsynchronous();
             uint index = DisplayedBitmapSourceCache.CurrentFrameIndex ?? 0;
@@ -342,7 +343,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.SetCurrentlyDisplayedFrameOffset(short frameOffX, short frameOffY)
+        void ISprEditorBitmapDisplayManager.SetCurrentlyDisplayedFrameOffset(short frameOffX, short frameOffY)
         {
             InitAnimationSourceCacheIfAsynchronous();
             uint index = DisplayedBitmapSourceCache.CurrentFrameIndex ?? 0;
@@ -357,7 +358,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        async void IBitmapDisplayManager.StartSprAnimation()
+        async void ISprEditorBitmapDisplayManager.StartSprAnimation()
         {
             if (!DisplayedBitmapSourceCache.IsPlaying && DisplayedBitmapSourceCache.IsSprImage
                 && SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts > 1)
@@ -370,7 +371,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.StopSprAnimation()
+        void ISprEditorBitmapDisplayManager.StopSprAnimation()
         {
             if (DisplayedBitmapSourceCache.IsPlaying && DisplayedBitmapSourceCache.IsSprImage
                 && SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts > 1)
@@ -380,7 +381,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        void IBitmapDisplayManager.OpenBitmapFromFile(string filePath)
+        void ISprEditorBitmapDisplayManager.OpenBitmapFromFile(string filePath)
         {
             string fileExtension = Path.GetExtension(filePath).ToLower();
             if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png")
@@ -388,7 +389,7 @@ namespace ArtWiz.Domain
                 DisplayedBitmapSourceCache.DisplayedBitmapSource = this.LoadBitmapFromFile(filePath)?.Let(it =>
                 {
                     var extractedData = this.ConvertBitmapSourceToByteArray(it);
-                    var extractedSource = this.GetBitmapFromRGBArray(extractedData,
+                    var extractedSource = ArtWiz.Utils.BitmapUtil.GetBitmapFromRGBArray(extractedData,
                         it.PixelWidth,
                         it.PixelHeight,
                         it.Format);
@@ -558,7 +559,7 @@ namespace ArtWiz.Domain
             }
             else
             {
-                bitmapSource = (this as IBitmapDisplayManager).OptimzeImageColorNA256(bitmapSource)
+                bitmapSource = (this as ISprEditorBitmapDisplayManager).OptimzeImageColorNA256(bitmapSource)
                    ?? throw new Exception($"Failed to optimize image colors.");
             }
 

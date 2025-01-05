@@ -14,5 +14,6 @@ namespace ArtWiz.Domain
         {
             sprWorkManagerService = EngineKeeper.GetSprWorkManagerService();
         }
+
     }
 }

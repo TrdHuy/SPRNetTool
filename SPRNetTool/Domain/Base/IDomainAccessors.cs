@@ -17,7 +17,7 @@ namespace ArtWiz.Domain.Base
                 domainsList = new Dictionary<Type, object?[]>
                 {
                     {
-                        typeof(IBitmapDisplayManager), BuildValue(null, () => new BitmapDisplayManager())
+                        typeof(ISprEditorBitmapDisplayManager), BuildValue(null, () => new SprEditorBitmapDisplayManager())
                     },
                     {
                         typeof(ISprWorkManager), BuildValue(null, () => new SprWorkManager())

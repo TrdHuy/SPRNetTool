@@ -10,7 +10,7 @@
 					 mc:Ignorable="d"
 					 d:DesignWidth="800"
 					 MouseDown="BasePageViewer_MouseDown"
-					 xmlns:vm="clr-namespace:ArtWiz.ViewModel">
+					 xmlns:vm="clr-namespace:ArtWiz.ViewModel.SprEditor">
 	<UserControl.DataContext>
 		<vm:DebugPageViewModel />
 	</UserControl.DataContext>

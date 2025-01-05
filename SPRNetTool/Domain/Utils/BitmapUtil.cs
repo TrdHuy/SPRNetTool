@@ -935,22 +935,6 @@ namespace ArtWiz.Domain.Utils
         //    return ditheredBitmap;
         //}
 
-        public static BitmapSource GetBitmapFromRGBArray(this IDomainAdapter adapter, byte[] imageData, int width, int height, PixelFormat formats)
-        {
-            // Tạo một WriteableBitmap
-            WriteableBitmap bitmap = new WriteableBitmap(width, height, 96, 96, formats, null);
-
-            // Gán dữ liệu từ mảng imageData vào WriteableBitmap
-            bitmap.Lock();
-
-            if (formats == PixelFormats.Bgra32 || formats == PixelFormats.Pbgra32 || formats == PixelFormats.Bgr32)
-                bitmap.WritePixels(new Int32Rect(0, 0, width, height), imageData, width * 4, 0);
-            else if (formats == PixelFormats.Rgb24 || formats == PixelFormats.Bgr24)
-                bitmap.WritePixels(new Int32Rect(0, 0, width, height), imageData, width * 3, 0);
-            bitmap.Unlock();
-
-            return bitmap;
-        }
 
         public static BitmapSource? LoadBitmapFromFile(this IDomainAdapter adapter, string filePath, bool isFreeze = true)
         {

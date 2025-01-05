@@ -7,12 +7,12 @@ namespace ArtWizTest.Domain
     {
         private string sprFilePath = "Resources\\test.spr";
         private string pngFilePath = "Resources\\test.png";
-        private IBitmapDisplayManager bitmapDisplayManager;
+        private ISprEditorBitmapDisplayManager bitmapDisplayManager;
 
         [SetUp]
         public void Setup()
         {
-            bitmapDisplayManager = new BitmapDisplayManager();
+            bitmapDisplayManager = new SprEditorBitmapDisplayManager();
             bool isNeedToOpenSprFile = GetType()
                 .GetMethod(TestContext.CurrentContext.Test.MethodName ?? "")?
                 .GetCustomAttributes(true)
