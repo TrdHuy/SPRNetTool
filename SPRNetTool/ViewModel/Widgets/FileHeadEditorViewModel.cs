@@ -16,6 +16,7 @@ namespace ArtWiz.ViewModel.Widgets
         private int _pixelHeight = 0;
         private int _pixelWidth = 0;
         private bool _isSpr;
+        private bool _isEditable;
 
         [Bindable(true)]
         public SprFileHead FileHead
@@ -76,6 +77,16 @@ namespace ArtWiz.ViewModel.Widgets
             get => _isSpr; set
             {
                 _isSpr = value;
+                Invalidate();
+            }
+        }
+
+        [Bindable(true)]
+        public bool IsEditable
+        {
+            get => _isEditable; set
+            {
+                _isEditable = value;
                 Invalidate();
             }
         }

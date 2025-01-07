@@ -1,5 +1,8 @@
-﻿using ArtWiz.ViewModel.Base;
+﻿using ArtWiz.Domain.Base;
+using ArtWiz.Domain;
+using ArtWiz.ViewModel.Base;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace ArtWiz.ViewModel.Widgets
 {
@@ -103,4 +106,6 @@ namespace ArtWiz.ViewModel.Widgets
         {
         }
     }
+
+    
 }

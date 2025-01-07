@@ -6,6 +6,7 @@ namespace ArtWiz.ViewModel.Widgets
     public interface IFileHeadEditorViewModel : IArtWizViewModel
     {
         public bool IsSpr { get; set; }
+        public bool IsEditable { get; set; }
         public SprFileHead FileHead { get; set; }
         public int CurrentFrameIndex { get; set; }
         public FrameRGBA CurrentFrameData { get; set; }

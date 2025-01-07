@@ -4,7 +4,8 @@ using System.Windows.Threading;
 using WizMachine.Data;
 using ArtWiz.ViewModel.Widgets;
 using ArtWiz.ViewModel.Base;
-using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.BitmapDisplayChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.SprAnimationChangedEvent;
 using ArtWiz.Utils;
 
 namespace ArtWiz.ViewModel.SprEditor
@@ -13,6 +14,7 @@ namespace ArtWiz.ViewModel.SprEditor
     {
         public SprFileHeadEditorViewModel(BaseParentsViewModel parents) : base(parents)
         {
+            IsEditable = true;
         }
 
         public override void OnArtWizViewModelOwnerDestroy()
@@ -40,29 +42,6 @@ namespace ArtWiz.ViewModel.SprEditor
                         FileHead = new SprFileHead();
                         CurrentFrameData = new FrameRGBA();
                     }
-                    else if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED))
-                    {
-                        if (castArgs.IsPlayingAnimation == true)
-                        {
-                            var dispatcherPriority = DispatcherPriority.Background;
-                            if (FileHead.Interval > 20)
-                            {
-                                dispatcherPriority = DispatcherPriority.Render;
-                            }
-
-                            if (IsOwnerDestroyed) return;
-
-                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
-                            {
-                                CurrentFrameIndex = (int)castArgs.CurrentDisplayingFrameIndex;
-                            }, dispatcherPriority);
-                        }
-                        else if (castArgs.IsPlayingAnimation == false)
-                        {
-                            CurrentFrameData = castArgs.SprFrameData ?? CurrentFrameData;
-                            CurrentFrameIndex = (int)castArgs.CurrentDisplayingFrameIndex;
-                        }
-                    }
                     else
                     {
                         if (castArgs.Event.HasFlag(SPR_FILE_HEAD_CHANGED))
@@ -85,6 +64,32 @@ namespace ArtWiz.ViewModel.SprEditor
                         {
                             PixelHeight = castArgs.CurrentDisplayingSource?.PixelHeight ?? 0;
                             PixelWidth = castArgs.CurrentDisplayingSource?.PixelWidth ?? 0;
+                        }
+                    }
+                    break;
+
+                case SprAnimationChangedArg castArgs:
+                    if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED))
+                    {
+                        if (castArgs.IsPlayingAnimation == true)
+                        {
+                            var dispatcherPriority = DispatcherPriority.Background;
+                            if (FileHead.Interval > 20)
+                            {
+                                dispatcherPriority = DispatcherPriority.Render;
+                            }
+
+                            if (IsOwnerDestroyed) return;
+
+                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
+                            {
+                                CurrentFrameIndex = (int)castArgs.CurrentDisplayingFrameIndex;
+                            }, dispatcherPriority);
+                        }
+                        else if (castArgs.IsPlayingAnimation == false)
+                        {
+                            CurrentFrameData = castArgs.SprFrameData ?? CurrentFrameData;
+                            CurrentFrameIndex = (int)castArgs.CurrentDisplayingFrameIndex;
                         }
                     }
                     break;

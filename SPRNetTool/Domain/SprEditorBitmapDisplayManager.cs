@@ -1,4 +1,5 @@
-﻿using ArtWiz.Domain.Base;
+﻿using ArtWiz.Data;
+using ArtWiz.Domain.Base;
 using ArtWiz.Domain.Utils;
 using ArtWiz.LogUtil;
 using ArtWiz.Utils;
@@ -11,14 +12,15 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WizMachine.Data;
-using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.SprAnimationChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.BitmapDisplayChangedEvent;
 using static ArtWiz.Domain.SprFrameCollectionChangedArg.ChangedEvent;
 using static ArtWiz.Domain.SprPaletteChangedArg.ChangedEvent;
 
 namespace ArtWiz.Domain
 {
     // This domain work only for Spr editor page
-    public class SprEditorBitmapDisplayManager : BaseDomain, ISprEditorBitmapDisplayManager
+    public class SprEditorBitmapDisplayManager : SprAnimationManager, ISprEditorBitmapDisplayManager
     {
         private static Logger logger = new Logger("BitmapDisplayManager");
         private ISprWorkManager? sprWorkManager;
@@ -34,17 +36,8 @@ namespace ArtWiz.Domain
             }
         }
 
-        private class BitmapSourceCache
-        {
-            public bool IsPlaying { get; set; }
-            public bool IsSprImage { get; set; }
-            public BitmapSource? DisplayedBitmapSource { get; set; }
-            public BitmapSource?[]? AnimationSourceCaching { get; set; }
-            public uint? CurrentFrameIndex { get; set; }
-            public CancellationTokenSource? AnimationTokenSource { get; set; }
-        }
+        protected override SprFileHead FileHead => SprWorkManager.FileHead;
 
-        private BitmapSourceCache DisplayedBitmapSourceCache { get; } = new BitmapSourceCache();
 
         #region public interface
         uint ISprEditorBitmapDisplayManager.GetCurrentDisplayFrameIndex()
@@ -64,7 +57,6 @@ namespace ArtWiz.Domain
                 NotifyChanged(new BitmapDisplayMangerChangedArg(
                         changedEvent: SPR_WORKSPACE_RESET));
             }
-
         }
 
         void ISprEditorBitmapDisplayManager.SetNewColorToPalette(uint paletteIndex, Color newColor)
@@ -131,7 +123,7 @@ namespace ArtWiz.Domain
             }
         }
 
-        private BitmapSource? CreateBitmapSourceFromDecodedFrameData(uint frameIndex,
+        protected override BitmapSource? CreateBitmapSourceFromDecodedFrameData(uint frameIndex,
             out List<(Color, Color, int)> rgbColorChangedArgs)
         {
             var frameInfo = SprWorkManager.GetFrameData(frameIndex) ?? throw new Exception();
@@ -450,17 +442,6 @@ namespace ArtWiz.Domain
 
         #endregion
 
-        private void InitAnimationSourceCacheIfAsynchronous(bool force = false)
-        {
-            if (force ||
-                DisplayedBitmapSourceCache.AnimationSourceCaching == null ||
-                DisplayedBitmapSourceCache.AnimationSourceCaching.Length != SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts)
-            {
-                DisplayedBitmapSourceCache.AnimationSourceCaching =
-                    new BitmapSource?[SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts];
-            }
-        }
-
         private BitmapSource? OpenSprFile(string filePath)
         {
             if (SprWorkManager.InitWorkManagerFromSprFile(filePath))
@@ -470,80 +451,6 @@ namespace ArtWiz.Domain
             return null;
         }
 
-        private async Task PlayAnimation()
-        {
-            DisplayedBitmapSourceCache.AnimationTokenSource = new CancellationTokenSource();
-            await Task.Run(async () =>
-            {
-                Stopwatch stopwatch = new Stopwatch();
-
-                uint frameIndex = DisplayedBitmapSourceCache.CurrentFrameIndex ?? 0;
-                DisplayedBitmapSourceCache.CurrentFrameIndex = frameIndex;
-
-                while (DisplayedBitmapSourceCache.IsPlaying && DisplayedBitmapSourceCache.AnimationSourceCaching != null)
-                {
-                    stopwatch.Restart();
-                    DisplayedBitmapSourceCache.AnimationSourceCaching[frameIndex] =
-                    DisplayedBitmapSourceCache.AnimationSourceCaching[frameIndex].IfNullThenLet(() =>
-                        CreateBitmapSourceFromDecodedFrameData(frameIndex, out _));
-                    DisplayedBitmapSourceCache.DisplayedBitmapSource = DisplayedBitmapSourceCache.AnimationSourceCaching[frameIndex];
-
-                    NotifyChanged(new BitmapDisplayMangerChangedArg(
-                        changedEvent: IS_PLAYING_ANIMATION_CHANGED
-                            | CURRENT_DISPLAYING_SOURCE_CHANGED
-                            | CURRENT_DISPLAYING_FRAME_INDEX_CHANGED
-                            | SPR_FRAME_DATA_CHANGED,
-                        currentDisplayingSource: DisplayedBitmapSourceCache.DisplayedBitmapSource,
-                        isPlayingAnimation: true,
-                        currentDisplayFrameIndex: frameIndex,
-                        animationInterval: SprWorkManager.FileHead.modifiedSprFileHeadCache.Interval,
-                        sprFrameData: SprWorkManager.GetFrameData(frameIndex)));
-                    DisplayedBitmapSourceCache.CurrentFrameIndex++;
-                    frameIndex++;
-                    if (frameIndex == SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts)
-                    {
-                        frameIndex = 0;
-                        DisplayedBitmapSourceCache.CurrentFrameIndex = 0;
-                    }
-                    int delayTime = SprWorkManager.FileHead.modifiedSprFileHeadCache.Interval - (int)stopwatch.ElapsedMilliseconds;
-                    if (delayTime > 0)
-                    {
-                        try
-                        {
-                            await Task.Delay(delayTime, DisplayedBitmapSourceCache.AnimationTokenSource.Token);
-                        }
-                        catch (TaskCanceledException)
-                        {
-                            DisplayedBitmapSourceCache.IsPlaying = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (frameIndex > 0)
-                {
-                    DisplayedBitmapSourceCache.CurrentFrameIndex--;
-                    frameIndex--;
-                }
-                else if (frameIndex == 0)
-                {
-                    frameIndex = (uint)(SprWorkManager.FileHead.modifiedSprFileHeadCache.FrameCounts - 1);
-                    DisplayedBitmapSourceCache.CurrentFrameIndex = frameIndex;
-                }
-
-                DisplayedBitmapSourceCache.AnimationTokenSource = null;
-
-                NotifyChanged(new BitmapDisplayMangerChangedArg(
-                        changedEvent: IS_PLAYING_ANIMATION_CHANGED
-                            | CURRENT_DISPLAYING_SOURCE_CHANGED
-                            | CURRENT_DISPLAYING_FRAME_INDEX_CHANGED
-                            | SPR_FRAME_DATA_CHANGED,
-                        currentDisplayingSource: DisplayedBitmapSourceCache.DisplayedBitmapSource,
-                        isPlayingAnimation: false,
-                        currentDisplayFrameIndex: frameIndex,
-                        sprFrameData: SprWorkManager.GetFrameData(frameIndex)));
-            });
-        }
 
         private bool InsertBimapSourceToSprWorkSpace(uint frameIndex, BitmapSource bitmapSource, string? filePath = null)
         {
@@ -669,58 +576,58 @@ namespace ArtWiz.Domain
         protected override void NotifyChanged(IDomainChangedArgs args)
         {
             base.NotifyChanged(args);
-            var changedEvent = ((BitmapDisplayMangerChangedArg)args).Event;
-            logger.D($"ChangedEvent: dec={changedEvent},bin={Convert.ToString((int)changedEvent, 2)}");
+            //var changedEvent = ((BitmapDisplayMangerChangedArg)args).Event;
+            //logger.D($"ChangedEvent: dec={changedEvent},bin={Convert.ToString(changedEvent.Value, 2)}");
+        }
+
+        protected override FrameRGBA? GetFrameData(uint frameIndex)
+        {
+            return SprWorkManager.GetFrameData(frameIndex);
+        }
+
+        protected override byte[]? GetDecodedBGRAData(uint index)
+        {
+            return SprWorkManager.GetDecodedBGRAData(index, out _);
         }
     }
 
-    public class BitmapDisplayMangerChangedArg : IDomainChangedArgs
+    public class BitmapDisplayMangerChangedArg : SprAnimationChangedArg
     {
-        public enum ChangedEvent
+
+        public record BitmapDisplayChangedEvent : SprAnimationChangedEvent
         {
-            CURRENT_DISPLAYING_SOURCE_CHANGED = 0b1,
-            IS_PLAYING_ANIMATION_CHANGED = 0b10,
-            SPR_FILE_HEAD_CHANGED = 0b100,
-            CURRENT_DISPLAYING_FRAME_INDEX_CHANGED = 0b1000,
-            SPR_FRAME_DATA_CHANGED = 0b10000,
-            SPR_FRAME_OFFSET_CHANGED = 0b100000,
-            SPR_FRAME_SIZE_CHANGED = 0b1000000,
-            SPR_GLOBAL_OFFSET_CHANGED = 0b10000000,
-            SPR_GLOBAL_SIZE_CHANGED = 0b100000000,
-            SPR_FRAME_COLLECTION_CHANGED = 0b1000000000,
-            SPR_FILE_PALETTE_CHANGED = 0b10000000000,
-            SPR_WORKSPACE_RESET = 0b100000000000,
+            public static readonly SprAnimationChangedEvent SPR_FRAME_OFFSET_CHANGED = new BitmapDisplayChangedEvent(0b100000);
+            public static readonly SprAnimationChangedEvent SPR_FRAME_SIZE_CHANGED = new BitmapDisplayChangedEvent(0b1000000);
+            public static readonly SprAnimationChangedEvent SPR_GLOBAL_OFFSET_CHANGED = new BitmapDisplayChangedEvent(0b10000000);
+            public static readonly SprAnimationChangedEvent SPR_GLOBAL_SIZE_CHANGED = new BitmapDisplayChangedEvent(0b100000000);
+            public static readonly SprAnimationChangedEvent SPR_FRAME_COLLECTION_CHANGED = new BitmapDisplayChangedEvent(0b1000000000);
+            public static readonly SprAnimationChangedEvent SPR_FILE_PALETTE_CHANGED = new BitmapDisplayChangedEvent(0b10000000000);
+            public static readonly SprAnimationChangedEvent SPR_WORKSPACE_RESET = new BitmapDisplayChangedEvent(0b100000000000);
+
+            public BitmapDisplayChangedEvent(int value) : base(value)
+            {
+            }
         }
 
-        public ChangedEvent Event { get; private set; }
-        public BitmapSource? CurrentDisplayingSource { get; private set; }
-        public bool? IsPlayingAnimation { get; private set; }
         public SprFileHead? CurrentSprFileHead { get; private set; }
-        public uint CurrentDisplayingFrameIndex { get; private set; }
-        public FrameRGBA? SprFrameData { get; private set; }
-        public uint SprFrameCount { get; private set; }
-        public uint AnimationInterval { get; private set; }
         public SprPaletteChangedArg? PaletteChangedArg { get; private set; }
         public SprFrameCollectionChangedArg? SprFrameCollectionChangedArg { get; private set; }
 
-        public BitmapDisplayMangerChangedArg(ChangedEvent changedEvent, BitmapSource? currentDisplayingSource = null,
+        public BitmapDisplayMangerChangedArg(SprAnimationChangedEvent changedEvent, BitmapSource? currentDisplayingSource = null,
             SprFileHead? sprFileHead = null,
             bool? isPlayingAnimation = null,
             uint currentDisplayFrameIndex = 0,
             SprFrameCollectionChangedArg? sprFrameCollectionChangedArg = null,
             FrameRGBA? sprFrameData = null,
             uint animationInterval = 0,
-            SprPaletteChangedArg? paletteChangedArg = null)
+            SprPaletteChangedArg? paletteChangedArg = null) : base(changedEvent,
+                currentDisplayingSource,
+                isPlayingAnimation, currentDisplayFrameIndex,
+                sprFrameData, animationInterval)
         {
-            CurrentDisplayingSource = currentDisplayingSource;
             CurrentSprFileHead = sprFileHead;
-            IsPlayingAnimation = isPlayingAnimation;
-            CurrentDisplayingFrameIndex = currentDisplayFrameIndex;
-            SprFrameData = sprFrameData;
             SprFrameCollectionChangedArg = sprFrameCollectionChangedArg;
             PaletteChangedArg = paletteChangedArg;
-            AnimationInterval = animationInterval;
-            Event = changedEvent;
         }
     }
 

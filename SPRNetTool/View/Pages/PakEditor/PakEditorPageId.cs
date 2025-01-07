@@ -16,5 +16,6 @@ namespace ArtWiz.View.Pages.PakEditor
         StartLoadPakFile,
         CloseBlockDetailPanel,
         ExtractBlock,
+        PlaySprAnimation
     }
 }

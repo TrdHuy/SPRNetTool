@@ -6,7 +6,8 @@ using ArtWiz.ViewModel.Widgets;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
-using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.BitmapDisplayChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.SprAnimationChangedEvent;
 using static ArtWiz.Domain.SprPaletteChangedArg.ChangedEvent;
 
 namespace ArtWiz.ViewModel.SprEditor

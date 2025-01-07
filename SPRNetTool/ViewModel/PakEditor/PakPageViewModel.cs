@@ -1,4 +1,5 @@
-﻿using ArtWiz.Domain.Base;
+﻿using ArtWiz.Domain;
+using ArtWiz.Domain.Base;
 using ArtWiz.Domain.Utils;
 using ArtWiz.LogUtil;
 using ArtWiz.Utils;
@@ -223,6 +224,14 @@ namespace ArtWiz.ViewModel.PakEditor
             get => _currentSelectedPakBlock;
             set
             {
+                if (_currentSelectedPakBlock != null
+                    && _currentSelectedPakBlock.BitmapViewerVM is BlockAnimationViewerViewModel vm)
+                {
+                    if (vm.IsPlayingAnimation)
+                    {
+                        vm.IsPlayingAnimation = false;
+                    }
+                }
                 _currentSelectedPakBlock = value;
                 Invalidate();
             }
@@ -563,8 +572,28 @@ namespace ArtWiz.ViewModel.PakEditor
         private string _stringBlockData;
         private bool _isLoadingBlock;
         private IBitmapViewerViewModel _bitmapViewerVM;
+        private IFileHeadEditorViewModel _fileHeadEditorVM;
         private PakViewModelManager _viewModelManager;
+        private Visibility _sprInfoPanelCollapseButtonVisibility = Visibility.Hidden;
+
         public bool IsSpr { get; private set; }
+
+        [Bindable(true)]
+        public Visibility SprInfoPanelCollapseButtonVisibility
+        {
+            get => _sprInfoPanelCollapseButtonVisibility;
+            set
+            {
+                _sprInfoPanelCollapseButtonVisibility = value;
+                Invalidate();
+            }
+        }
+
+        [Bindable(true)]
+        public IFileHeadEditorViewModel FileHeadEditorVM
+        {
+            get => _fileHeadEditorVM;
+        }
 
         [Bindable(true)]
         public IBitmapViewerViewModel BitmapViewerVM
@@ -639,7 +668,13 @@ namespace ArtWiz.ViewModel.PakEditor
             string blockId,
             long blockSize, PakViewModelManager vmmanager) : base(parents)
         {
-            _bitmapViewerVM = new BitmapViewerViewModel(this);
+            _fileHeadEditorVM = new FileHeadEditorViewModel(this);
+
+            if (isSpr)
+                _bitmapViewerVM = new BlockAnimationViewerViewModel(this);
+            else
+                _bitmapViewerVM = new BitmapViewerViewModel(this);
+            _bitmapViewerVM.IsSpr = isSpr;
             _itemSizeInBytes = blockSize;
             _blockName = blockName;
             IsSpr = isSpr;
@@ -669,6 +704,11 @@ namespace ArtWiz.ViewModel.PakEditor
             PakWorkManager.ParseSprBlockDataById(_blockId, this);
         }
 
+        public void GetSprData(out SprFileHead sprFileHead, out FrameRGBA[] frameRGBAs)
+        {
+            sprFileHead = this._sprFileHead;
+            frameRGBAs = this._frameData;
+        }
 
         public void OnParseSprSuccessfully(string blockId, SprFileHead sprFileHead, FrameRGBA[] frameData, BitmapSource bitmapSource)
         {
@@ -689,6 +729,13 @@ namespace ArtWiz.ViewModel.PakEditor
             _bitmapViewerVM.GlobalOffY = sprFileHead.OffY;
             _bitmapViewerVM.FrameSource = bitmapSource;
             _viewModelManager.EnqueueLoadedSuccessfullyBlockData(this);
+            SprInfoPanelCollapseButtonVisibility = Visibility.Visible;
+
+            FileHeadEditorVM.CurrentFrameData = frameInfo;
+            FileHeadEditorVM.CurrentFrameIndex = 0;
+            FileHeadEditorVM.IsSpr = true;
+            FileHeadEditorVM.IsEditable = false;
+            FileHeadEditorVM.FileHead = sprFileHead;
         }
 
         public void OnFinishJob()
