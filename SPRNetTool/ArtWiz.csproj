@@ -23,12 +23,6 @@
 		<WizMachineVersion>1.0.20</WizMachineVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<Compile Remove="Data\**" />
-		<EmbeddedResource Remove="Data\**" />
-		<None Remove="Data\**" />
-		<Page Remove="Data\**" />
-	</ItemGroup>
-	<ItemGroup>
 		<None Remove="Resources\12345.spr" />
 		<None Remove="Resources\bg.jpg" />
 		<None Remove="Resources\bg2.jpg" />
