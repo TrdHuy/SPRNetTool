@@ -30,7 +30,7 @@
 							Margin="22,13"
 							VerticalAlignment="Stretch"
 							HorizontalAlignment="Stretch">
-					<TextBlock Text="image2.pak"
+					<TextBlock Text="{Binding ItemName}"
 							   FontWeight="Bold"
 							   FontSize="24"
 							   Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"

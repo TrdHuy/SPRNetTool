@@ -809,10 +809,11 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<Rectangle Grid.Row="0"
-										   Fill="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_2}}"
+										   Fill="{TemplateBinding FixedHeaderBackground}"
 										   Grid.ColumnSpan="2" />
 								<wg:IconToggle  x:Name="CollapseButton"
 												Grid.Row="0"
+												Visibility="{TemplateBinding CollapseButtonVisibility}"
 												OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
 												OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"
 												DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.DropDownIconGeometry}}"

@@ -319,11 +319,18 @@
 			page for the page's child, ideally, the set 
 			method should be private, and the child should 
 			find the owner page in code behind-->
-			<pe:BlockPreviewer Grid.Row="1"
-							   DataContext="{Binding CurrentSelectedPakFile.CurrentSelectedPakBlock}"
-							   OwnerPage="{Binding RelativeSource={RelativeSource AncestorType=base:BasePageViewer}}"
-							   Grid.Column="3"
-							   BorderThickness="1,0,1,0" />
+			<Grid Grid.Row="1"
+				  Grid.Column="3"
+				  Height="{Binding ElementName=DetailPanel, Path=ActualHeight}">
+				<ScrollViewer>
+					<pe:BlockPreviewer DataContext="{Binding CurrentSelectedPakFile.CurrentSelectedPakBlock}"
+									   BorderThickness="1,0,1,0"
+									   Grid.Row="1"
+									   Grid.Column="3"
+									   OwnerPage="{Binding RelativeSource={RelativeSource AncestorType=base:BasePageViewer}}" />
+				</ScrollViewer>
+			</Grid>
+
 			<Grid Grid.Column="5"
 				  Grid.Row="1"
 				  Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel1}}">

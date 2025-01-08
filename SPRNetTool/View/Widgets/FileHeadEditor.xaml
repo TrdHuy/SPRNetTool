@@ -101,6 +101,7 @@
 
 			<local:ParamEditor Grid.Row="0"
 							   Grid.Column="1"
+							   IsEnabled="{Binding IsEditable}"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_GlobalWidthParam}"
 							   Value="{Binding FileHead.GlobalWidth}"
 							   PlusMouseHold="OnPlusMouseHold"
@@ -112,6 +113,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="1"
 							   Grid.Column="1"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_GlobalHeightParam}"
@@ -123,6 +125,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="2"
 							   Grid.Column="1"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_GlobalOffsetXParam}"
@@ -134,6 +137,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="3"
 							   Grid.Column="1"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_GlobalOffsetYParam}"
@@ -163,6 +167,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="6"
 							   Grid.Column="1"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_IntervalParam}"
@@ -199,6 +204,7 @@
 					   Grid.Column="2" />
 			<local:ParamEditor Grid.Row="0"
 							   Grid.Column="3"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_FrameIndexParam}"
@@ -210,6 +216,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="1"
 							   Grid.Column="3"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_FrameWidthParam}"
@@ -221,6 +228,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="2"
 							   Grid.Column="3"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_FrameHeightParam}"
@@ -232,6 +240,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="3"
 							   Grid.Column="3"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_FrameOffXParam}"
@@ -243,6 +252,7 @@
 							   VerticalAlignment="Center" />
 			<local:ParamEditor Grid.Row="4"
 							   Grid.Column="3"
+							   IsEnabled="{Binding IsEditable}"
 							   PlusMouseHold="OnPlusMouseHold"
 							   MinusMouseHold="OnMinusMouseHold"
 							   Tag="{x:Static local:FileHeadEditorTagId.SPRInfo_FrameOffYParam}"

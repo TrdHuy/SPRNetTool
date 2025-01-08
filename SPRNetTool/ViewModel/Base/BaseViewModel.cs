@@ -10,6 +10,18 @@ namespace ArtWiz.ViewModel.Base
         private ISprWorkManager? sprWorkManager;
         private IPakWorkManager? pakWorkManager;
         private IDeviceConfigManager? deviceConfigManager;
+        private IBlockPreviewerAnimationManager? blockPreviewerAnimationManager;
+
+        protected IBlockPreviewerAnimationManager BlockPreviewerAnimationManager
+        {
+            get
+            {
+                return blockPreviewerAnimationManager ?? IDomainAccessors
+                    .DomainContext
+                    .GetDomain<IBlockPreviewerAnimationManager>()
+                    .Also(it => blockPreviewerAnimationManager = it);
+            }
+        }
 
         protected IDeviceConfigManager DeviceConfigManager
         {

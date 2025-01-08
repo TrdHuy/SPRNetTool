@@ -1,9 +1,9 @@
 ﻿using ArtWiz.Utils;
 using ArtWiz.View.Utils;
 using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace ArtWiz.View.Widgets
@@ -11,6 +11,33 @@ namespace ArtWiz.View.Widgets
     public class CollapsibleControl : UserControl
     {
         public static string TAG_COLAPSE_BUTTON = "ColapsibleControl_ColapseButton";
+
+        public static readonly DependencyProperty FixedHeaderBackgroundProperty =
+           DependencyProperty.Register(
+               "FixedHeaderBackground",
+               typeof(Brush),
+               typeof(CollapsibleControl),
+               new PropertyMetadata(GetDefaultBackground()));
+
+        private static Brush GetDefaultBackground()
+        {
+            // Kiểm tra chế độ design-time
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                // Giá trị mặc định cho chế độ design-time
+                return new SolidColorBrush(Colors.LightGray);
+            }
+
+            // Runtime: Lấy tài nguyên từ Application
+            return Application.Current.FindResource(Definitions.PanelBackgroundLevel0_2) as Brush;
+        }
+
+        public Brush FixedHeaderBackground
+        {
+            get { return (Brush)GetValue(CollapseVelocityProperty); }
+            set { SetValue(CollapseVelocityProperty, value); }
+        }
+
         public static readonly DependencyProperty CollapseVelocityProperty =
            DependencyProperty.Register(
                "CollapseVelocity",
@@ -107,6 +134,20 @@ namespace ArtWiz.View.Widgets
         {
             get { return GetValue(HeaderProperty)?.ToString() ?? ""; }
             set { SetValue(HeaderProperty, value); }
+        }
+
+        public static readonly DependencyProperty CollapseButtonVisibilityProperty =
+           DependencyProperty.Register(
+               "CollapseButtonVisibility",
+               typeof(Visibility),
+               typeof(CollapsibleControl),
+               new PropertyMetadata(Visibility.Visible));
+
+
+        public Visibility CollapseButtonVisibility
+        {
+            get { return (Visibility)GetValue(CollapseButtonVisibilityProperty); }
+            set { SetValue(CollapseButtonVisibilityProperty, value); }
         }
 
         private TextBlock? headerTextBlock;

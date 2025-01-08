@@ -3,14 +3,15 @@ using ArtWiz.Domain;
 using ArtWiz.ViewModel.Base;
 using ArtWiz.ViewModel.Widgets;
 using System.Windows.Threading;
-using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.SprAnimationChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.BitmapDisplayChangedEvent;
 using ArtWiz.Utils;
 
 namespace ArtWiz.ViewModel.SprEditor
 {
     internal class SprBitmapViewerViewModel : BitmapViewerViewModel
     {
-     
+
         public SprBitmapViewerViewModel(BaseParentsViewModel parents) : base(parents)
         {
         }
@@ -33,45 +34,6 @@ namespace ArtWiz.ViewModel.SprEditor
                         GlobalWidth = 0;
                         GlobalOffY = 0;
                         GlobalOffX = 0;
-                    }
-                    else if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED) && IsSpr)
-                    {
-                        if (castArgs.Event.HasFlag(SPR_FRAME_OFFSET_CHANGED))
-                        {
-                            castArgs.SprFrameData?.Apply(it =>
-                            {
-                                FrameOffX = it.modifiedFrameRGBACache.frameOffX;
-                                FrameOffY = it.modifiedFrameRGBACache.frameOffY;
-                            });
-                        }
-
-                        if (castArgs.Event.HasFlag(SPR_FRAME_SIZE_CHANGED))
-                        {
-                            castArgs.SprFrameData?.Apply(it =>
-                            {
-                                FrameHeight = it.modifiedFrameRGBACache.frameHeight;
-                                FrameWidth = it.modifiedFrameRGBACache.frameWidth;
-                            });
-                        }
-
-
-                        if (castArgs.IsPlayingAnimation == true)
-                        {
-                            var dispatcherPriority = DispatcherPriority.Background;
-                            if (castArgs.AnimationInterval > 20)
-                            {
-                                dispatcherPriority = DispatcherPriority.Render;
-                            }
-                            if (IsOwnerDestroyed) return;
-                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
-                            {
-                                FrameSource = castArgs.CurrentDisplayingSource;
-                            }, dispatcherPriority);
-                        }
-                        else if (castArgs.IsPlayingAnimation == false)
-                        {
-                            FrameSource = castArgs.CurrentDisplayingSource;
-                        }
                     }
                     else
                     {
@@ -136,6 +98,47 @@ namespace ArtWiz.ViewModel.SprEditor
                                 FrameHeight = it.modifiedFrameRGBACache.frameHeight;
                                 FrameWidth = it.modifiedFrameRGBACache.frameWidth;
                             });
+                        }
+                    }
+                    break;
+                case SprAnimationChangedArg castArgs:
+                    if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED) && IsSpr)
+                    {
+                        if (castArgs.Event.HasFlag(SPR_FRAME_OFFSET_CHANGED))
+                        {
+                            castArgs.SprFrameData?.Apply(it =>
+                            {
+                                FrameOffX = it.modifiedFrameRGBACache.frameOffX;
+                                FrameOffY = it.modifiedFrameRGBACache.frameOffY;
+                            });
+                        }
+
+                        if (castArgs.Event.HasFlag(SPR_FRAME_SIZE_CHANGED))
+                        {
+                            castArgs.SprFrameData?.Apply(it =>
+                            {
+                                FrameHeight = it.modifiedFrameRGBACache.frameHeight;
+                                FrameWidth = it.modifiedFrameRGBACache.frameWidth;
+                            });
+                        }
+
+
+                        if (castArgs.IsPlayingAnimation == true)
+                        {
+                            var dispatcherPriority = DispatcherPriority.Background;
+                            if (castArgs.AnimationInterval > 20)
+                            {
+                                dispatcherPriority = DispatcherPriority.Render;
+                            }
+                            if (IsOwnerDestroyed) return;
+                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
+                            {
+                                FrameSource = castArgs.CurrentDisplayingSource;
+                            }, dispatcherPriority);
+                        }
+                        else if (castArgs.IsPlayingAnimation == false)
+                        {
+                            FrameSource = castArgs.CurrentDisplayingSource;
                         }
                     }
                     break;

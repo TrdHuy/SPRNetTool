@@ -7,6 +7,7 @@
 						  mc:Ignorable="d"
 						  d:DesignHeight="800"
 						  d:DesignWidth="800"
+						  FontFamily="{StaticResource ResourceKey={x:Static def:Definitions.FontFiraSans_Regular}}"
 						  xmlns:base="clr-namespace:ArtWiz.View.Base"
 						  d:DataContext="{d:DesignInstance pakvm:PakBlockItemViewModel, IsDesignTimeCreatable=False}"
 						  xmlns:def="clr-namespace:ArtWiz"
@@ -49,16 +50,58 @@
 				   FontWeight="Bold"
 				   FontSize="18" />
 			<TextBlock Margin="25,10,0,0">
-				<Run Text="Kích thước:"
-					 Foreground="White"
+				<Run Text="Tên khối: "
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0_5}}"
+					 FontSize="16" />
+				<Run Text="{Binding BlockName, Mode=OneWay}"
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 					 FontSize="16" />
 			</TextBlock>
 			<TextBlock Margin="25,5,0,0">
-				<Run Text="Định dạng:"
-					 Foreground="White"
+				<Run Text="Kích thước: "
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0_5}}"
+					 FontSize="16" />
+				<Run Text="{Binding BlockSize, Mode=OneWay}"
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
+					 FontSize="16" />
+			</TextBlock>
+			<TextBlock Margin="25,5,0,0">
+				<Run Text="Định dạng: "
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0_5}}"
+					 FontSize="16" />
+				<Run Text="{Binding BlockType, Mode=OneWay}"
+					 Foreground="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0}}"
 					 FontSize="16" />
 			</TextBlock>
 
+
+			<wg:CollapsibleControl Margin="25,15,25,0"
+								   BorderThickness="1"
+								   Header="Thông số spr:"
+								   IsCollapse="True"
+								   CollapseButtonVisibility="{Binding SprInfoPanelCollapseButtonVisibility}"
+								   FixedHeaderBackground="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}">
+				<wg:CollapsibleControl.ExtraHeaderContent>
+					<wg:IconToggle Tag="{x:Static local:PakEditorPageId.PlaySprAnimation}"
+								   IsEllipse="False"
+								   Visibility="{Binding SprInfoPanelCollapseButtonVisibility}"
+								   IsChecked="{Binding BitmapViewerVM.IsPlayingAnimation}"
+								   HorizontalAlignment="Right"
+								   StrokeThickness="3"
+								   Click="OnButtonClick"
+								   VerticalAlignment="Center"
+								   Cursor="Hand"
+								   IconRatio="0.8"
+								   Stroke="{StaticResource ResourceKey={x:Static def:Definitions.TextForegroundBrushLevel0_5}}"
+								   Width="15"
+								   Height="15"
+								   OnIconData="{StaticResource ResourceKey={x:Static def:Definitions.PlayIconGeometry}}"
+								   DefaultIconData="{StaticResource ResourceKey={x:Static def:Definitions.PauseIconGeometry}}"
+								   OffIconData="{StaticResource ResourceKey={x:Static def:Definitions.PauseIconGeometry}}" />
+				</wg:CollapsibleControl.ExtraHeaderContent>
+				<wg:FileHeadEditor MinHeight="230"
+								   ViewModel="{Binding FileHeadEditorVM}" />
+			</wg:CollapsibleControl>
 			<Button Margin="25,30,250,0"
 					Height="40"
 					Tag="{x:Static local:PakEditorPageId.ExtractBlock}"
