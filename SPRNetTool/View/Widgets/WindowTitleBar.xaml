@@ -239,6 +239,16 @@
 			</Style.Triggers>
 		</Style>
 
+        <Style x:Key="TitleBarStyle" TargetType="StackPanel">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsTitleBarHide}"
+							 Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
 	</UserControl.Resources>
 	<Border BorderThickness="0,0,0,1"
 			BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}">
@@ -251,7 +261,8 @@
 			</Grid.ColumnDefinitions>
 
 			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Left">
+						HorizontalAlignment="Left"
+                        Style="{StaticResource TitleBarStyle}">
 
 				<Image Height="38"
 					   Stretch="Uniform"
