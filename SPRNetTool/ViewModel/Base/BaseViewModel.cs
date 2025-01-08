@@ -6,10 +6,22 @@ namespace ArtWiz.ViewModel.Base
     public abstract class BaseViewModel : BaseNotifier, IDomainObserver, IDomainAccessors
     {
         #region Modules
-        private IBitmapDisplayManager? bitmapDisplayManager;
+        private ISprEditorBitmapDisplayManager? bitmapDisplayManager;
         private ISprWorkManager? sprWorkManager;
         private IPakWorkManager? pakWorkManager;
         private IDeviceConfigManager? deviceConfigManager;
+        private IBlockPreviewerAnimationManager? blockPreviewerAnimationManager;
+
+        protected IBlockPreviewerAnimationManager BlockPreviewerAnimationManager
+        {
+            get
+            {
+                return blockPreviewerAnimationManager ?? IDomainAccessors
+                    .DomainContext
+                    .GetDomain<IBlockPreviewerAnimationManager>()
+                    .Also(it => blockPreviewerAnimationManager = it);
+            }
+        }
 
         protected IDeviceConfigManager DeviceConfigManager
         {
@@ -22,13 +34,13 @@ namespace ArtWiz.ViewModel.Base
             }
         }
 
-        protected IBitmapDisplayManager BitmapDisplayManager
+        protected ISprEditorBitmapDisplayManager BitmapDisplayManager
         {
             get
             {
                 return bitmapDisplayManager ?? IDomainAccessors
                     .DomainContext
-                    .GetDomain<IBitmapDisplayManager>()
+                    .GetDomain<ISprEditorBitmapDisplayManager>()
                     .Also(it => bitmapDisplayManager = it);
             }
         }

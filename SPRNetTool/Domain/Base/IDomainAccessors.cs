@@ -8,16 +8,16 @@ namespace ArtWiz.Domain.Base
     {
         protected class DomainContext
         {
-            public static DomainContext ApplicationDomainContext = new DomainContext();
+            private static DomainContext ApplicationDomainContext = new DomainContext();
 
             private Dictionary<Type, object?[]> domainsList;
 
-            DomainContext()
+            private DomainContext()
             {
                 domainsList = new Dictionary<Type, object?[]>
                 {
                     {
-                        typeof(IBitmapDisplayManager), BuildValue(null, () => new BitmapDisplayManager())
+                        typeof(ISprEditorBitmapDisplayManager), BuildValue(null, () => new SprEditorBitmapDisplayManager())
                     },
                     {
                         typeof(ISprWorkManager), BuildValue(null, () => new SprWorkManager())
@@ -27,6 +27,9 @@ namespace ArtWiz.Domain.Base
                     },
                     {
                         typeof(IPakWorkManager), BuildValue(null, () => new PakWorkManagerImpl())
+                    },
+                    {
+                        typeof(IBlockPreviewerAnimationManager), BuildValue(null, () => new BlockPreviewerAnimationManager())
                     },
                 };
             }

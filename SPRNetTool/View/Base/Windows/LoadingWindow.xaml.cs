@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ArtWiz.View
+namespace ArtWiz.View.Base.Windows
 {
     /// <summary>
     /// Interaction logic for LoadingWindow.xaml

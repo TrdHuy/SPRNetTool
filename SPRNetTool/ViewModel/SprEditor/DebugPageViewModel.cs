@@ -15,10 +15,11 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.ChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.SprAnimationChangedEvent;
+using static ArtWiz.Domain.BitmapDisplayMangerChangedArg.BitmapDisplayChangedEvent;
 using static ArtWiz.Domain.SprFrameCollectionChangedArg.ChangedEvent;
 
-namespace ArtWiz.ViewModel
+namespace ArtWiz.ViewModel.SprEditor
 {
     public class DebugPageViewModel : BaseParentsViewModel, IDebugPageCommand
     {
@@ -109,6 +110,7 @@ namespace ArtWiz.ViewModel
                 }
             }
         }
+
         [Bindable(true)]
         public int PixelHeight
         {
@@ -205,9 +207,9 @@ namespace ArtWiz.ViewModel
 
         public DebugPageViewModel()
         {
-            paletteEditorVM = new PaletteEditorViewModel(this);
-            bitmapViewerVM = new BitmapViewerViewModel(this);
-            fileHeadEditorVM = new FileHeadEditorViewModel(this);
+            paletteEditorVM = new SprPaletteEditorViewModel(this);
+            bitmapViewerVM = new SprBitmapViewerViewModel(this);
+            fileHeadEditorVM = new SprFileHeadEditorViewModel(this);
             BindingOperations.EnableCollectionSynchronization(_rawOriginalSource, new object());
             BitmapDisplayManager.RegisterObserver(this);
         }
@@ -354,51 +356,13 @@ namespace ArtWiz.ViewModel
 
             switch (args)
             {
+
                 case BitmapDisplayMangerChangedArg castArgs:
 
                     if (castArgs.Event.HasFlag(SPR_WORKSPACE_RESET))
                     {
                         FramesSource = null;
                         OriginalColorSource.Clear();
-                    }
-                    else if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED))
-                    {
-                        if (castArgs.IsPlayingAnimation == true)
-                        {
-                            var dispatcherPriority = DispatcherPriority.Background;
-                            if (FileHeadEditorVM.FileHead.Interval > 20)
-                            {
-                                dispatcherPriority = DispatcherPriority.Render;
-                            }
-
-                            if (IsOwnerDestroyed) return;
-
-                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
-                            {
-                                IsPlayingAnimation = true;
-                                CurrentlyDisplayedBitmapSource = castArgs.CurrentDisplayingSource;
-                                if (IsSpr &&
-                                    FramesSource != null &&
-                                    FramesSource.Count > 0)
-                                {
-                                    FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
-                                        .PreviewImageSource = castArgs.CurrentDisplayingSource;
-                                }
-
-                            }, dispatcherPriority);
-                        }
-                        else if (castArgs.IsPlayingAnimation == false)
-                        {
-                            IsPlayingAnimation = false;
-                            CurrentlyDisplayedBitmapSource = castArgs.CurrentDisplayingSource;
-                            if (IsSpr &&
-                                FramesSource != null &&
-                                FramesSource.Count > 0)
-                            {
-                                FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
-                                    .PreviewImageSource = castArgs.CurrentDisplayingSource;
-                            }
-                        }
                     }
                     else
                     {
@@ -501,6 +465,49 @@ namespace ArtWiz.ViewModel
                                 }
                             }
 
+                        }
+                    }
+                    break;
+
+                case SprAnimationChangedArg castArgs:
+
+                    if (castArgs.Event.HasFlag(IS_PLAYING_ANIMATION_CHANGED))
+                    {
+                        if (castArgs.IsPlayingAnimation == true)
+                        {
+                            var dispatcherPriority = DispatcherPriority.Background;
+                            if (FileHeadEditorVM.FileHead.Interval > 20)
+                            {
+                                dispatcherPriority = DispatcherPriority.Render;
+                            }
+
+                            if (IsOwnerDestroyed) return;
+
+                            ViewModelOwner?.ViewDispatcher.Invoke(() =>
+                            {
+                                IsPlayingAnimation = true;
+                                CurrentlyDisplayedBitmapSource = castArgs.CurrentDisplayingSource;
+                                if (IsSpr &&
+                                    FramesSource != null &&
+                                    FramesSource.Count > 0)
+                                {
+                                    FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
+                                        .PreviewImageSource = castArgs.CurrentDisplayingSource;
+                                }
+
+                            }, dispatcherPriority);
+                        }
+                        else if (castArgs.IsPlayingAnimation == false)
+                        {
+                            IsPlayingAnimation = false;
+                            CurrentlyDisplayedBitmapSource = castArgs.CurrentDisplayingSource;
+                            if (IsSpr &&
+                                FramesSource != null &&
+                                FramesSource.Count > 0)
+                            {
+                                FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
+                                    .PreviewImageSource = castArgs.CurrentDisplayingSource;
+                            }
                         }
                     }
                     break;
@@ -1033,22 +1040,5 @@ namespace ArtWiz.ViewModel
         }
     }
 
-    public class PaletteEditorColorItemViewModel : BaseViewModel, IPaletteEditorColorItemViewModel
-    {
-        private SolidColorBrush mBrush;
-        public PaletteEditorColorItemViewModel(SolidColorBrush brush)
-        {
-            mBrush = brush;
-        }
 
-        public SolidColorBrush ColorBrush
-        {
-            get => mBrush;
-            set
-            {
-                mBrush = value;
-                Invalidate();
-            }
-        }
-    }
 }

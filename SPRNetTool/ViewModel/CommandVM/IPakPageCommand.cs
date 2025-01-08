@@ -7,6 +7,6 @@ namespace ArtWiz.ViewModel.CommandVM
         void OnRemovePakFileClick(object pakFileViewModel);
         void OnSearchPakBlockByPath(string blockPath);
         void OnResetSearchBox();
-
+        void OnExtractCurrentSelectedBlock();
     }
 }
