@@ -56,7 +56,9 @@ namespace ArtWiz.Domain
                         changedEvent: IS_PLAYING_ANIMATION_CHANGED
                             | CURRENT_DISPLAYING_SOURCE_CHANGED
                             | CURRENT_DISPLAYING_FRAME_INDEX_CHANGED
-                            | SPR_FRAME_DATA_CHANGED,
+                            | SPR_FRAME_DATA_CHANGED
+                            | SPR_FRAME_OFFSET_CHANGED
+                            | SPR_FRAME_SIZE_CHANGED,
                         currentDisplayingSource: DisplayedBitmapSourceCache.DisplayedBitmapSource,
                         isPlayingAnimation: true,
                         currentDisplayFrameIndex: frameIndex,
@@ -101,7 +103,9 @@ namespace ArtWiz.Domain
                         changedEvent: IS_PLAYING_ANIMATION_CHANGED
                             | CURRENT_DISPLAYING_SOURCE_CHANGED
                             | CURRENT_DISPLAYING_FRAME_INDEX_CHANGED
-                            | SPR_FRAME_DATA_CHANGED,
+                            | SPR_FRAME_DATA_CHANGED
+                            | SPR_FRAME_OFFSET_CHANGED
+                            | SPR_FRAME_SIZE_CHANGED,
                         currentDisplayingSource: DisplayedBitmapSourceCache.DisplayedBitmapSource,
                         isPlayingAnimation: false,
                         currentDisplayFrameIndex: frameIndex,
@@ -144,6 +148,8 @@ namespace ArtWiz.Domain
             public static readonly SprAnimationChangedEvent SPR_FILE_HEAD_CHANGED = new SprAnimationChangedEvent(0b100);
             public static readonly SprAnimationChangedEvent CURRENT_DISPLAYING_FRAME_INDEX_CHANGED = new SprAnimationChangedEvent(0b1000);
             public static readonly SprAnimationChangedEvent SPR_FRAME_DATA_CHANGED = new SprAnimationChangedEvent(0b10000);
+            public static readonly SprAnimationChangedEvent SPR_FRAME_OFFSET_CHANGED = new BitmapDisplayChangedEvent(0b100000);
+            public static readonly SprAnimationChangedEvent SPR_FRAME_SIZE_CHANGED = new BitmapDisplayChangedEvent(0b1000000);
 
             public SprAnimationChangedEvent(int value) : base(value)
             {

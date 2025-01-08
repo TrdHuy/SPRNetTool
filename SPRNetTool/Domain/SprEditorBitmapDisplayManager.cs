@@ -596,8 +596,6 @@ namespace ArtWiz.Domain
 
         public record BitmapDisplayChangedEvent : SprAnimationChangedEvent
         {
-            public static readonly SprAnimationChangedEvent SPR_FRAME_OFFSET_CHANGED = new BitmapDisplayChangedEvent(0b100000);
-            public static readonly SprAnimationChangedEvent SPR_FRAME_SIZE_CHANGED = new BitmapDisplayChangedEvent(0b1000000);
             public static readonly SprAnimationChangedEvent SPR_GLOBAL_OFFSET_CHANGED = new BitmapDisplayChangedEvent(0b10000000);
             public static readonly SprAnimationChangedEvent SPR_GLOBAL_SIZE_CHANGED = new BitmapDisplayChangedEvent(0b100000000);
             public static readonly SprAnimationChangedEvent SPR_FRAME_COLLECTION_CHANGED = new BitmapDisplayChangedEvent(0b1000000000);
