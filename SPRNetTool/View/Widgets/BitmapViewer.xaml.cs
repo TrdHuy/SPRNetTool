@@ -247,12 +247,16 @@ namespace ArtWiz.View.Widgets
         }
 
         private DraggableCanvasController draggableCanvasController;
+        private DraggableCanvasController draggableStretchCanvasController;
         public BitmapViewer()
         {
             InitializeComponent();
             draggableCanvasController = new DraggableCanvasController(ContainerCanvas,
                 DragableContainer,
                 () => FitToScreenButton.IsChecked == false);
+            draggableStretchCanvasController = new DraggableCanvasController(ContainerCanvas,
+                StretchContainer,
+                () => FitToScreenButton.IsChecked == true);
             Unloaded += OnUnloaded;
             Loaded += OnLoaded;
             BitmapViewerContainerInternal.GlobalBackgroundSource = BlackBagroundImage;
@@ -283,6 +287,8 @@ namespace ArtWiz.View.Widgets
         {
             draggableCanvasController.Setup();
             draggableCanvasController.Reset();
+            draggableStretchCanvasController.Setup();
+            draggableStretchCanvasController.Reset();
 
             var window = Window.GetWindow(this);
             if (window != null)
@@ -295,11 +301,13 @@ namespace ArtWiz.View.Widgets
         private void OnFrameSourceChange(ImageSource? oldSource, ImageSource? newSource)
         {
             draggableCanvasController.Reset();
+            draggableStretchCanvasController.Reset();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             draggableCanvasController.Dispose();
+            draggableStretchCanvasController.Dispose();
         }
 
         private void FitToScreenButtonClick(object sender, RoutedEventArgs e)
@@ -365,6 +373,7 @@ namespace ArtWiz.View.Widgets
         private void ResetViewPortPositionButtonClick(object sender, RoutedEventArgs e)
         {
             draggableCanvasController.Reset();
+            draggableStretchCanvasController.Reset();
             BitmapViewerContainerInternal.ViewBoxZoomDelta = 1;
         }
     }
@@ -541,13 +550,13 @@ namespace ArtWiz.View.Widgets
     public class DraggableCanvasController : IDisposable
     {
         private Canvas _viewPortCanvas;
-        private Canvas _draggableCanvas;
+        private FrameworkElement _draggableCanvas;
         private Func<bool>? _canContentBeDragged;
         private bool _isDragging = false;
         private Point _offset;
 
         public DraggableCanvasController(Canvas viewPortCanvas,
-            Canvas draggableCanvas,
+            FrameworkElement draggableCanvas,
             Func<bool>? canContentBeDragged = null)
         {
             _canContentBeDragged = canContentBeDragged;
