@@ -49,7 +49,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -107,7 +110,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -162,7 +168,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -198,7 +207,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
