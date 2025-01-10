@@ -9,9 +9,9 @@
 		<SolutionDirectory>$([System.IO.Path]::GetFullPath('$(ProjectFullPath)\..'))</SolutionDirectory>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<UseWindowsForms>True</UseWindowsForms>
-		<AssemblyVersion>1.0.3.0</AssemblyVersion>
-		<FileVersion>1.0.3.0</FileVersion>
-		<Version>1.0.3.0</Version>
+		<AssemblyVersion>1.0.4.0</AssemblyVersion>
+		<FileVersion>1.0.4.0</FileVersion>
+		<Version>1.0.4.0</Version>
 		<PlatformTarget>$(Platform)</PlatformTarget>
 		<ApplicationIcon>logo.ico</ApplicationIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
