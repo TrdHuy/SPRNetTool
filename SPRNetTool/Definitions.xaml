@@ -1088,7 +1088,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
-                            <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0" />	
+                            <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0,0,0,0" />	
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

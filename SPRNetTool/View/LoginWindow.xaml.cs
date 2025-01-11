@@ -1,5 +1,6 @@
 ﻿using ArtWiz.View.Base;
 using ArtWiz.View.Widgets;
+using ArtWiz.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,35 +22,15 @@ namespace ArtWiz.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class LoginWindow : BaseArtWizWindow, INotifyPropertyChanged
+    public partial class LoginWindow : BaseArtWizWindow
     {
-        private bool _isTitleBarHide;
-
-        public bool IsTitleBarHide
-        {
-            get => _isTitleBarHide;
-            set
-            {
-                if (_isTitleBarHide != value)
-                {
-                    _isTitleBarHide = value;
-                    OnPropertyChanged(nameof(IsTitleBarHide));
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private LoginWindowViewModel _loginWindowViewModel;
 
         public LoginWindow()
         {
             InitializeComponent();
-            IsTitleBarHide = true;
-            this.DataContext = this;
+            _loginWindowViewModel = new LoginWindowViewModel();
+            DataContext = _loginWindowViewModel;
         }
     }
     
