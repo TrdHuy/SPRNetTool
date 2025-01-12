@@ -41,6 +41,7 @@ namespace ArtWiz.ViewModel.SprEditor
         private IFileHeadEditorViewModel fileHeadEditorVM;
         private IBitmapViewerViewModel bitmapViewerVM;
         private IPaletteEditorViewModel paletteEditorVM;
+        private IFramePreviewerViewModel? currentDisplayFrame;
 
         [Bindable(true)]
         public IFileHeadEditorViewModel FileHeadEditorVM
@@ -382,8 +383,12 @@ namespace ArtWiz.ViewModel.SprEditor
                                 FramesSource.Count > 0 &&
                                 BitmapDisplayManager.GetCurrentDisplayFrameIndex() < FramesSource.Count)
                             {
-                                FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
+                                currentDisplayFrame?.Apply(it => it.IsHighlighted = false);
+                                var displayFrameIndex = (int)BitmapDisplayManager.GetCurrentDisplayFrameIndex();
+                                FramesSource[displayFrameIndex]
                                     .PreviewImageSource = castArgs.CurrentDisplayingSource;
+                                currentDisplayFrame = FramesSource[displayFrameIndex];
+                                currentDisplayFrame?.Apply(it => it.IsHighlighted = true);
                             }
                         }
 
@@ -418,8 +423,12 @@ namespace ArtWiz.ViewModel.SprEditor
                                 FramesSource = newSrc;
                                 if (castArgs.Event.HasFlag(CURRENT_DISPLAYING_SOURCE_CHANGED))
                                 {
-                                    FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
+                                    currentDisplayFrame?.Apply(it => it.IsHighlighted = false);
+                                    var displayFrameIndex = (int)BitmapDisplayManager.GetCurrentDisplayFrameIndex();
+                                    FramesSource[displayFrameIndex]
                                         .PreviewImageSource = castArgs.CurrentDisplayingSource;
+                                    currentDisplayFrame = FramesSource[displayFrameIndex];
+                                    currentDisplayFrame?.Apply(it => it.IsHighlighted = true);
                                 }
                             }
 
@@ -491,8 +500,12 @@ namespace ArtWiz.ViewModel.SprEditor
                                     FramesSource != null &&
                                     FramesSource.Count > 0)
                                 {
-                                    FramesSource[(int)BitmapDisplayManager.GetCurrentDisplayFrameIndex()]
+                                    currentDisplayFrame?.Apply(it => it.IsHighlighted = false);
+                                    var displayFrameIndex = (int)BitmapDisplayManager.GetCurrentDisplayFrameIndex();
+                                    FramesSource[displayFrameIndex]
                                         .PreviewImageSource = castArgs.CurrentDisplayingSource;
+                                    currentDisplayFrame = FramesSource[displayFrameIndex];
+                                    currentDisplayFrame?.Apply(it => it.IsHighlighted = true);
                                 }
 
                             }, dispatcherPriority);
@@ -948,6 +961,7 @@ namespace ArtWiz.ViewModel.SprEditor
         private int _frameOffsetY = 5;
         private int _globalOffsetX = 50;
         private int _globalOffsetY = 50;
+        private bool _isHighlighted = false;
         public FrameViewModel(BaseParentsViewModel parents) : base(parents)
         {
         }
@@ -1035,6 +1049,16 @@ namespace ArtWiz.ViewModel.SprEditor
             set
             {
                 _globalOffsetY = value;
+                Invalidate();
+            }
+        }
+
+        public bool IsHighlighted
+        {
+            get => _isHighlighted;
+            set
+            {
+                _isHighlighted = value;
                 Invalidate();
             }
         }

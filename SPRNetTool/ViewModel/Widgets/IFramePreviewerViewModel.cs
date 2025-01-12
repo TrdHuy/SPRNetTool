@@ -15,6 +15,6 @@ namespace ArtWiz.ViewModel.Widgets
         string Index { get; set; }
         int GlobalOffsetX { get; set; }
         int GlobalOffsetY { get; set; }
-
+        bool IsHighlighted { get; set; }
     }
 }

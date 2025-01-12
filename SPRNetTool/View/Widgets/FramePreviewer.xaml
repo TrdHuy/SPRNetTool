@@ -17,8 +17,8 @@
 	<UserControl.ContextMenu>
 		<ContextMenu Name="cm"
 					 StaysOpen="False">
-			<MenuItem Header="Remove frame" 
-					  Click="RemoveMenuItemClicked"/>
+			<MenuItem Header="Remove frame"
+					  Click="RemoveMenuItemClicked" />
 			<MenuItem Header="Insert frame"
 					  Click="InsertMenuItemClicked" />
 		</ContextMenu>
@@ -26,11 +26,7 @@
 	<UserControl.Style>
 		<Style TargetType="UserControl">
 			<Style.Triggers>
-				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
-							 Value="true">
-					<Setter Property="Cursor"
-							Value="Hand" />
-				</DataTrigger>
+
 				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsIntersected}"
 							 Value="true">
 					<Setter Property="BorderThickness"
@@ -46,8 +42,17 @@
 							Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_10}}" />
 				</DataTrigger>
 
+				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ViewModel.IsHighlighted}"
+							 Value="true">
+					<Setter Property="BorderThickness"
+							Value="1" />
+					<Setter Property="BorderBrush"
+							Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
+				</DataTrigger>
 				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
 							 Value="true">
+					<Setter Property="Cursor"
+							Value="Hand" />
 					<Setter Property="BorderThickness"
 							Value="2" />
 					<Setter Property="BorderBrush"
@@ -101,7 +106,7 @@
 			</Canvas>
 		</Viewbox>
 	</Grid>
-	
+
 
 	<!--<Viewbox Stretch="Uniform"
 			 x:Name="MainViewBox">
