@@ -122,6 +122,17 @@ namespace ArtWiz.ViewModel.SprEditor
                             });
                         }
 
+                        if (castArgs.Event.HasFlag(SPR_FRAME_DATA_CHANGED))
+                        {
+                            castArgs.SprFrameData?.Apply(it =>
+                            {
+                                FrameHeight = it.modifiedFrameRGBACache.frameHeight;
+                                FrameWidth = it.modifiedFrameRGBACache.frameWidth;
+                                FrameOffX = it.modifiedFrameRGBACache.frameOffX;
+                                FrameOffY = it.modifiedFrameRGBACache.frameOffY;
+                            });
+                        }
+
 
                         if (castArgs.IsPlayingAnimation == true)
                         {
