@@ -897,7 +897,7 @@
 	<Style TargetType="{x:Type Window}"
 		   x:Key="{x:Static local:Definitions.ArtWizDefaultWindowStyle}">
 		<Setter Property="AllowsTransparency"
-				Value="True" />
+				Value="False" />
 		<Setter Property="Background"
 				Value="Transparent" />
 		<Setter Property="WindowStyle"
@@ -918,172 +918,48 @@
 											ScaleX="1"
 											ScaleY="1" />
 						</Border.LayoutTransform>
+						<Border BorderThickness="1"
+								BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}"
+								x:Name="ContentBorder">
+							<Grid x:Name="ContentAndTitleGrid"
+								  Background="{TemplateBinding Background}">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
 
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition x:Name="LeftShadowColumnDef"
-												  Width="5" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition x:Name="RightShadowColumnDef"
-												  Width="5" />
-							</Grid.ColumnDefinitions>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
-								<RowDefinition x:Name="BotShadowRowDef"
-											   Height="5" />
-							</Grid.RowDefinitions>
+								<!--Title bar-->
+								<Grid x:Name="TitleBartGrid"
+									  Grid.Row="0"
+									  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
+									  Background="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_4}}"
+									  VerticalAlignment="Stretch">
 
-							<!--Content and title bar field-->
-							<Border BorderThickness="1"
-									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}"
-									Grid.Column="1">
-								<Grid x:Name="ContentAndTitleGrid"
-									  Background="{TemplateBinding Background}">
-									<Grid.RowDefinitions>
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="*" />
-									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<!--Title-->
+										<ColumnDefinition Width="*" />
+										<!--Windows Button-->
+										<ColumnDefinition Width="Auto" />
 
-									<!--Title bar-->
-									<Grid x:Name="TitleBartGrid"
-										  Grid.Row="0"
-										  Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}"
-										  Background="{StaticResource ResourceKey={x:Static local:Definitions.PanelBackgroundLevel0_4}}"
-										  VerticalAlignment="Stretch">
+									</Grid.ColumnDefinitions>
 
-										<Grid.ColumnDefinitions>
-											<!--Title-->
-											<ColumnDefinition Width="*" />
-											<!--Windows Button-->
-											<ColumnDefinition Width="Auto" />
-
-										</Grid.ColumnDefinitions>
-
-										<wg:WindowTitleBar x:Name="WindowTitleBar"
-														   WindowBarHeight="69"
-														   Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}" />
-
-									</Grid>
-
-									<!--Content field-->
-
-									<ContentPresenter x:Name="DWContentPresenter"
-													  Margin="{TemplateBinding Padding}"
-													  Content="{TemplateBinding Content}"
-													  Visibility="Visible"
-													  Grid.Row="1">
-									</ContentPresenter>
+									<wg:WindowTitleBar x:Name="WindowTitleBar"
+													   WindowBarHeight="69"
+													   Height="{Binding ElementName=WindowTitleBar, Path=WindowBarHeight}" />
 
 								</Grid>
-							</Border>
-							<!--Shadow effect-->
-							<!--Must use radient due to performance issue-->
-							<!--link: https://www.telerik.com/forums/extremely-slow-when-having-dropshadow-->
-							<Rectangle Grid.Column="0"
-									   Grid.RowSpan="1">
-								<Rectangle.Fill>
-									<LinearGradientBrush EndPoint="0.5,1"
-														 StartPoint="0.5,0">
-										<LinearGradientBrush.RelativeTransform>
-											<TransformGroup>
-												<ScaleTransform CenterY="0.5"
-																CenterX="0.5" />
-												<SkewTransform CenterX="0.5"
-															   CenterY="0.5" />
-												<RotateTransform Angle="90"
-																 CenterX="0.5"
-																 CenterY="0.5" />
-												<TranslateTransform />
-											</TransformGroup>
-										</LinearGradientBrush.RelativeTransform>
-										<GradientStop Color="#25000000" />
-										<GradientStop Color="#00000000"
-													  Offset="1" />
-									</LinearGradientBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-							<Rectangle Grid.Column="1"
-									   Grid.Row="1"
-									   Grid.ColumnSpan="1">
-								<Rectangle.Fill>
-									<LinearGradientBrush EndPoint="0.5,1"
-														 StartPoint="0.5,0">
-										<GradientStop Color="#25000000" />
-										<GradientStop Color="#00000000"
-													  Offset="1" />
-									</LinearGradientBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-							<Rectangle Grid.Column="2"
-									   Grid.RowSpan="1">
-								<Rectangle.Fill>
-									<LinearGradientBrush EndPoint="0.5,1"
-														 StartPoint="0.5,0">
-										<LinearGradientBrush.RelativeTransform>
-											<TransformGroup>
-												<ScaleTransform CenterY="0.5"
-																CenterX="0.5" />
-												<SkewTransform CenterX="0.5"
-															   CenterY="0.5" />
-												<RotateTransform Angle="-90"
-																 CenterX="0.5"
-																 CenterY="0.5" />
-												<TranslateTransform />
-											</TransformGroup>
-										</LinearGradientBrush.RelativeTransform>
-										<GradientStop Color="#25000000" />
-										<GradientStop Color="#00000000"
-													  Offset="1" />
-									</LinearGradientBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-							<Rectangle Grid.Row="1">
-								<Rectangle.Fill>
-									<LinearGradientBrush EndPoint="0.5,1"
-														 StartPoint="0.5,0">
-										<LinearGradientBrush.RelativeTransform>
-											<TransformGroup>
-												<ScaleTransform CenterY="0.5"
-																CenterX="0.5" />
-												<SkewTransform CenterX="0.5"
-															   CenterY="0.5" />
-												<RotateTransform Angle="45"
-																 CenterX="0.5"
-																 CenterY="0.5" />
-												<TranslateTransform />
-											</TransformGroup>
-										</LinearGradientBrush.RelativeTransform>
-										<GradientStop Color="#19000000" />
-										<GradientStop Color="#00000000"
-													  Offset="1" />
-									</LinearGradientBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-							<Rectangle Grid.Row="1"
-									   Grid.Column="2">
-								<Rectangle.Fill>
-									<LinearGradientBrush EndPoint="0.5,1"
-														 StartPoint="0.5,0">
-										<LinearGradientBrush.RelativeTransform>
-											<TransformGroup>
-												<ScaleTransform CenterY="0.5"
-																CenterX="0.5" />
-												<SkewTransform CenterX="0.5"
-															   CenterY="0.5" />
-												<RotateTransform Angle="-45"
-																 CenterX="0.5"
-																 CenterY="0.5" />
-												<TranslateTransform />
-											</TransformGroup>
-										</LinearGradientBrush.RelativeTransform>
-										<GradientStop Color="#19000000" />
-										<GradientStop Color="#00000000"
-													  Offset="1" />
-									</LinearGradientBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-						</Grid>
 
+								<!--Content field-->
+
+								<ContentPresenter x:Name="DWContentPresenter"
+												  Margin="{TemplateBinding Padding}"
+												  Content="{TemplateBinding Content}"
+												  Visibility="Visible"
+												  Grid.Row="1">
+								</ContentPresenter>
+
+							</Grid>
+						</Border>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>

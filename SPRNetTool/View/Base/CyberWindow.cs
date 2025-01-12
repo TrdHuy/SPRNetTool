@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Shell;
 using WinInterop = System.Windows.Interop;
 
@@ -98,8 +99,6 @@ namespace ArtWiz.View.Base
             /// </summary>
             private const int SPI_SETWORKAREA = 0x002F;
 
-            private const int SHADOW_DEF = 5;
-
             private CyberWindow _cyberWindow;
             private MINMAXINFO _cyberMinMaxInfo;
             private RECT _previousCyberWorkArea;
@@ -119,18 +118,14 @@ namespace ArtWiz.View.Base
                     _newState = value;
                     if (_newState == WindowState.Maximized)
                     {
-                        _cyberWindow.UpdateWindowShadowEffect(0);
                         SetWindowFullScreen();
                     }
                     else if (_newState == WindowState.Normal)
                     {
-                        var shadowDef = IsCyberWindowDockCache ? 0 : SHADOW_DEF;
-                        _cyberWindow.UpdateWindowShadowEffect(shadowDef);
                         SetWindowBackToLastNormalSize();
                     }
                     else
                     {
-                        _cyberWindow.UpdateWindowShadowEffect(SHADOW_DEF);
                     }
                 }
             }
@@ -151,14 +146,6 @@ namespace ArtWiz.View.Base
                     if (value != _isCyberWindowDockCache)
                     {
                         _isCyberWindowDockCache = value;
-                        if (_cyberWindow.WindowState == WindowState.Maximized)
-                        {
-                            _cyberWindow.UpdateWindowShadowEffect(0);
-                        }
-                        else
-                        {
-                            _cyberWindow.UpdateWindowShadowEffect(_isCyberWindowDockCache ? 0 : SHADOW_DEF);
-                        }
                     }
                 }
             }
@@ -449,23 +436,7 @@ namespace ArtWiz.View.Base
             return false;
         }
 
-        private void UpdateWindowShadowEffect(int shadowDef)
-        {
-            if (_botShadowRowDefinition != null)
-            {
-                _botShadowRowDefinition.Height = new GridLength(shadowDef);
-            }
 
-            if (_leftShadowColumnDefinition != null)
-            {
-                _leftShadowColumnDefinition.Width = new GridLength(shadowDef);
-            }
-
-            if (_rightShadowColumnDefinition != null)
-            {
-                _rightShadowColumnDefinition.Width = new GridLength(shadowDef);
-            }
-        }
 
         private const string MinimizeButtonName = "MinimizeButton";
         private const string SmallmizeButtonName = "SmallmizeButton";
@@ -481,9 +452,6 @@ namespace ArtWiz.View.Base
         protected Button? _closeBtn;
         protected Button? _smallmizeBtn;
         private StackPanel? _windowControlPanel;
-        private RowDefinition? _botShadowRowDefinition;
-        private ColumnDefinition? _leftShadowColumnDefinition;
-        private ColumnDefinition? _rightShadowColumnDefinition;
         protected IWindowTitleBar? _windowTitleBar;
 
         protected WindowSizeManager _windowSizeManager;
@@ -499,6 +467,18 @@ namespace ArtWiz.View.Base
             {
                 System.IntPtr handle = (new WinInterop.WindowInteropHelper(this)).Handle;
                 WinInterop.HwndSource.FromHwnd(handle).AddHook(new WinInterop.HwndSourceHook(_windowSizeManager.WindowProc));
+
+                //if (Environment.OSVersion.Version.Major >= 6) // Chỉ hỗ trợ từ Windows Vista trở lên
+                //{
+                //    bool isCompositionEnabled;
+                //    NativeMethods.DwmIsCompositionEnabled(out isCompositionEnabled);
+
+                //    if (isCompositionEnabled)
+                //    {
+                //        var margins = new NativeMethods.MARGINS { Left = 10, Right = 10, Top = 10, Bottom = 10 };
+                //        NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins);
+                //    }
+                //}
             });
             WindowStyle = WindowStyle.None;
             Style = DefaultArtWizWindowStyle;
@@ -519,9 +499,6 @@ namespace ArtWiz.View.Base
             _maximizeBtn = _windowTitleBar.MaximizeButton;
             _closeBtn = _windowTitleBar.CloseButton;
             _smallmizeBtn = _windowTitleBar.SmallmizeButton;
-            _botShadowRowDefinition = GetTemplateChild(BotShadowRowDefName) as RowDefinition ?? throw new ArgumentNullException();
-            _leftShadowColumnDefinition = GetTemplateChild(LeftShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
-            _rightShadowColumnDefinition = GetTemplateChild(RightShadowColDefName) as ColumnDefinition ?? throw new ArgumentNullException();
 
             _maximizeBtn.Click += (s, e) =>
             {
@@ -629,6 +606,56 @@ namespace ArtWiz.View.Base
             ref long lpTotalNumberOfBytes,
             ref long lpTotalNumberOfFreeBytes
         );
+
+        private const int CS_DROPSHADOW = 0x20000;
+
+        /// <summary>
+        /// Mở rộng khung viền của cửa sổ vào vùng nội dung, cho phép áp dụng các hiệu ứng như
+        /// đổ bóng và trong suốt cho cửa sổ. Hàm này thường được sử dụng khi tùy chỉnh cửa sổ
+        /// với WindowStyle được đặt là None.
+        /// </summary>
+        /// <param name="hwnd">
+        /// Handle của cửa sổ cần mở rộng khung viền.
+        /// </param>
+        /// <param name="margins">
+        /// Tham chiếu đến cấu trúc MARGINS, xác định khoảng cách mở rộng khung viền vào từng phía 
+        /// (trái, phải, trên, dưới). Nếu tất cả giá trị là -1, khung viền sẽ được mở rộng toàn bộ.
+        /// </param>
+        /// <returns>
+        /// Trả về 0 nếu hàm thực thi thành công, hoặc mã lỗi nếu thất bại.
+        /// </returns>
+        /// <remarks>
+        /// Hàm này thường được sử dụng cùng với DwmIsCompositionEnabled để đảm bảo rằng
+        /// Desktop Window Manager (DWM) đang hoạt động trước khi mở rộng khung viền.
+        /// </remarks>
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
+
+        /// <summary>
+        /// Kiểm tra xem Desktop Window Manager (DWM) composition có đang được bật trên hệ thống hay không.
+        /// DWM composition là cần thiết để áp dụng các hiệu ứng như đổ bóng, trong suốt, và Aero glass.
+        /// </summary>
+        /// <param name="enabled">
+        /// Giá trị boolean trả về, cho biết DWM composition có đang được bật (true) hay không (false).
+        /// </param>
+        /// <returns>
+        /// Trả về 0 nếu hàm thực thi thành công, hoặc mã lỗi nếu thất bại.
+        /// </returns>
+        /// <remarks>
+        /// Sử dụng hàm này để kiểm tra tính khả dụng của các tính năng DWM trước khi áp dụng các hiệu ứng
+        /// phụ thuộc vào DWM.
+        /// </remarks>
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        public static extern int DwmIsCompositionEnabled(out bool enabled);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MARGINS
+        {
+            public int Left;
+            public int Right;
+            public int Top;
+            public int Bottom;
+        }
 
         public static Point GetCursorPosition()
         {
