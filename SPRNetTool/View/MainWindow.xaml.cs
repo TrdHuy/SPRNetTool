@@ -143,6 +143,7 @@ namespace ArtWiz.View
             {
                 DisableLayer.Visibility = Visibility.Collapsed;
             }
+            _windowTitleBar?.DisableTitleBar(isDisabled);
         }
 
         public override void OnApplyTemplate()

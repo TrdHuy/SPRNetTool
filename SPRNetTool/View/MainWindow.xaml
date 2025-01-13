@@ -34,7 +34,7 @@
 
 		<Border x:Name="DisableLayer"
 				Grid.RowSpan="2"
-				Background="#50808080"
+				Background="#30808080"
 				Visibility="Collapsed" />
 
 	</Grid>

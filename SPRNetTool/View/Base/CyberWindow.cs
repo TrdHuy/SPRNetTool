@@ -21,6 +21,8 @@ namespace ArtWiz.View.Base
         public Button MaximizeButton { get; }
         public double TitleBarHeight { get; }
 
+        public void DisableTitleBar(bool isDisabled);
+
         event TitleBarHeightChangedHandler? TitleBarHeightChanged;
     }
     public abstract class CyberWindow : Window

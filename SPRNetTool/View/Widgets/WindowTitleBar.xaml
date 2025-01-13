@@ -347,6 +347,10 @@
 						Style="{StaticResource WindowControlButton}" />
 			</StackPanel>
 
+			<Rectangle x:Name="DisableLayer"
+					Grid.ColumnSpan="2"
+					Fill="#30808080"
+					Visibility="Collapsed" />
 		</Grid>
 
 	</Border>

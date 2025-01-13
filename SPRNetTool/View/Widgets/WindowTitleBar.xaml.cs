@@ -93,5 +93,17 @@ namespace ArtWiz.View.Widgets
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
         }
+
+        public void DisableTitleBar(bool isDisabled)
+        {
+            if (isDisabled)
+            {
+                DisableLayer.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DisableLayer.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
