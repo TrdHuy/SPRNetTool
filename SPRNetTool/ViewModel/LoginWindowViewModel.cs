@@ -18,7 +18,7 @@ namespace ArtWiz.ViewModel
             set
             {
                 _isTitleBarHide = value;
-                OnPropertyChanged(nameof(IsTitleBarHide));
+                Invalidate(nameof(IsTitleBarHide));
             }
         }
 

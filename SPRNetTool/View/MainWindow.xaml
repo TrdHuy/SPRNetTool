@@ -1,41 +1,42 @@
 ﻿<base:BaseArtWizWindow x:Class="ArtWiz.View.MainWindow"
-					   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-					   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-					   xmlns:local="clr-namespace:ArtWiz.View"
-					   xmlns:base="clr-namespace:ArtWiz.View.Base"
-					   xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
-					   xmlns:wg="clr-namespace:ArtWiz.View.Widgets"
-					   xmlns:vm="clr-namespace:ArtWiz.ViewModel"
-					   xmlns:def="clr-namespace:ArtWiz"
-					   mc:Ignorable="d"
-					   FontFamily="Calibri"
-					   Height="900"
-					   StateChanged="OnWindowStateChanged"
-					   d:DesignWidth="1440">
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:local="clr-namespace:ArtWiz.View"
+                       xmlns:base="clr-namespace:ArtWiz.View.Base"
+                       xmlns:cvt="clr-namespace:ArtWiz.View.Utils"
+                       xmlns:wg="clr-namespace:ArtWiz.View.Widgets"
+                       xmlns:vm="clr-namespace:ArtWiz.ViewModel"
+                       xmlns:def="clr-namespace:ArtWiz"
+                       mc:Ignorable="d"
+                       FontFamily="Calibri"
+                       Height="900"
+                       StateChanged="OnWindowStateChanged"
+                       d:DesignWidth="1440"
+                       BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0_m8}}"
+                       >
 
-	<Window.DataContext>
-		<vm:MainWindowViewModel />
-	</Window.DataContext>
-	<Window.Resources>
-		<cvt:FormulaConverter x:Key="FormulaConverter" />
-	</Window.Resources>
-	<Grid Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<ScrollViewer Grid.Row="1"
-					  x:Name="PageContentScrollViewer"
-					  VerticalScrollBarVisibility="Auto">
-			<ContentPresenter x:Name="PageContentPresenter" />
-		</ScrollViewer>
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <cvt:FormulaConverter x:Key="FormulaConverter" />
+    </Window.Resources>
+    <Grid Background="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1"
+                      x:Name="PageContentScrollViewer"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentPresenter x:Name="PageContentPresenter" />
+        </ScrollViewer>
 
-		<Border x:Name="DisableLayer"
-				Grid.RowSpan="2"
-				Background="#50808080"
-				Visibility="Collapsed" />
-
-	</Grid>
+        <Border x:Name="DisableLayer"
+                Grid.RowSpan="2"
+                Background="#50808080"
+                Visibility="Collapsed" />
+    </Grid>
 </base:BaseArtWizWindow>

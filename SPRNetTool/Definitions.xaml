@@ -902,12 +902,12 @@
 				Value="Transparent" />
 		<Setter Property="WindowStyle"
 				Value="None" />
-		<Setter Property="ResizeMode"
+        <Setter Property="ResizeMode"
 				Value="CanResizeWithGrip" />
 
-		<Setter Property="Template">
+        <Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type Window}">
+                <ControlTemplate TargetType="{x:Type Window}">
                     <Border x:Name="MainBorderContainer"
 							Width="{TemplateBinding Width}"
 							Height="{TemplateBinding Height}"
@@ -935,7 +935,7 @@
 
                             <!--Content and title bar field-->
                             <Border BorderThickness="1"
-									BorderBrush="{StaticResource ResourceKey={x:Static local:Definitions.ButtonAndIconBrushLevel0}}"
+									BorderBrush="{TemplateBinding BorderBrush}"
 									Grid.Column="1"
                                     x:Name="ContentBorder">
                                 <Grid x:Name="ContentAndTitleGrid"
@@ -1086,11 +1086,6 @@
                         </Grid>
 
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
-                            <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0,0,0,0" />	
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
 			</Setter.Value>
 		</Setter>

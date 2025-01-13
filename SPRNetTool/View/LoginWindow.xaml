@@ -15,9 +15,9 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         FontFamily="Calibri"
+        BorderBrush="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_1}}"
         >
-    
-    
+
 
     <Window.Resources>
         <Style TargetType="FrameworkElement" x:Key="StackPanelItemStyle">
