@@ -37,8 +37,8 @@
 					Value="{StaticResource ResourceKey={x:Static def:Definitions.ButtonAndIconBrushLevel0}}" />
 			<Setter Property="Template">
 				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type Button}">
-						<Border Background="{TemplateBinding Background}"
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
 								Padding="{TemplateBinding Padding}"
 								x:Name="MainBorder">
 							<Path x:Name="ContentPath"
@@ -49,7 +49,11 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="VerticalAlignment" Value="Top"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -107,7 +111,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -162,7 +169,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -198,7 +208,10 @@
 								  Stretch="Uniform" />
 						</Border>
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver"
+                            <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver"
 									 Value="True">
 								<Setter Property="Height"
 										TargetName="ContentPath"
@@ -239,19 +252,52 @@
 			</Style.Triggers>
 		</Style>
 
-	</UserControl.Resources>
-	<Border BorderThickness="0,0,0,1"
-			BorderBrush="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}">
-		<Grid Background="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"
-			  x:Name="ContainerGrid">
-			<Grid.ColumnDefinitions>
+        <Style x:Key="TitleBarStyle" TargetType="StackPanel">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsTitleBarHide}"
+							 Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DefaultBorderStyle" TargetType="Border">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_4}}"/>
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"/>
+                    <Setter Property="Background" Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"/>
+
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DefaultGridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="{StaticResource ResourceKey={x:Static def:Definitions.MenuItemBackground}}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsTitleBarHide}" Value="true">
+                    <Setter Property="Background" Value="{StaticResource ResourceKey={x:Static def:Definitions.PanelBackgroundLevel0_1}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+    <Border Style="{StaticResource DefaultBorderStyle}">
+        <Grid Style="{StaticResource DefaultGridStyle}"	  
+            x:Name="ContainerGrid">
+            <Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
 
 			</Grid.ColumnDefinitions>
 
 			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Left">
+						HorizontalAlignment="Left"
+                        Style="{StaticResource TitleBarStyle}">
 
 				<Image Height="38"
 					   Stretch="Uniform"
@@ -344,7 +390,8 @@
 						Style="{StaticResource WindowMaximizeButton}" />
 				<Button x:Name="CloseButton"
 						Margin="0,1"
-						Style="{StaticResource WindowControlButton}" />
+						Style="{StaticResource WindowControlButton}" 
+                        />
 			</StackPanel>
 
 		</Grid>
