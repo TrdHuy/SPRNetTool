@@ -1,0 +1,88 @@
+﻿<base:BaseArtWizWindow
+    x:Class="ArtWiz.View.AccountRegisterWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="clr-namespace:ArtWiz.View.Base"
+    xmlns:def="clr-namespace:ArtWiz"
+    xmlns:wg="clr-namespace:ArtWiz.View.Widgets"
+    xmlns:local="clr-namespace:ArtWiz.View"
+    mc:Ignorable="d"
+    Background="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_1}}"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterScreen"
+    FontFamily="Calibri"
+    BorderBrush="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_1}}"
+    Width="350">
+
+    <Window.Resources>
+        <Style TargetType="FrameworkElement" x:Key="FormItemStyle">
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="{StaticResource {x:Static def:Definitions.TextForegroundBrushLevel0}}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <Style TargetType="wg:PlaceHolderTextBox" BasedOn="{StaticResource FormItemStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="PlaceholderForeground" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_5}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_10}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+
+        <Style TargetType="wg:PlaceHolderPasswordBox" BasedOn="{StaticResource FormItemStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="PlaceholderForeground" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_5}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_10}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30">
+        <StackPanel>
+            <!-- Header -->
+            <TextBlock Text="Tạo tài khoản" 
+                       FontSize="24" 
+                       FontWeight="Bold"
+                       Foreground="{StaticResource {x:Static def:Definitions.TextForegroundBrushLevel0}}"
+                       Style="{StaticResource FormItemStyle}"
+                       HorizontalAlignment="Left"/>
+
+            <!-- Email Field -->
+            <TextBlock Text="Email" Style="{StaticResource LabelStyle}"/>
+            <wg:PlaceHolderTextBox Placeholder="Nhập email của bạn"/>
+
+            <!-- Email error message -->
+            <TextBlock Text="Email này đã được sử dụng" 
+                       Foreground="{StaticResource {x:Static def:Definitions.ButtonAndIconBrushLevel2_m8}}"
+                       FontSize="12"
+                       Margin="0,-10,0,15"/>
+
+            <!-- Password Field -->
+            <TextBlock Text="Mật khẩu" Style="{StaticResource LabelStyle}"/>
+            <wg:PlaceHolderPasswordBox Placeholder="Nhập mật khẩu"/>
+
+            <!-- Confirm Password Field -->
+            <TextBlock Text="Xác nhận mật khẩu" Style="{StaticResource LabelStyle}"/>
+            <wg:PlaceHolderPasswordBox Placeholder="Xác nhận mật khẩu"/>
+
+            <!-- Register Button -->
+            <Button Content="Đăng ký" 
+                    Height="40"
+                    Background="{StaticResource {x:Static def:Definitions.ButtonAndIconBrushLevel1}}" 
+                    Foreground="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0}}" 
+                    BorderThickness="0"
+                    FontSize="14"
+                    Style="{StaticResource FormItemStyle}"
+                    Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</base:BaseArtWizWindow>
