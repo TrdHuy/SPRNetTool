@@ -35,6 +35,15 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10,5"/>
         </Style>
+
+        <Style TargetType="wg:PlaceHolderPasswordBox" BasedOn="{StaticResource FormItemStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="PlaceholderForeground" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_5}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource {x:Static def:Definitions.PanelBackgroundLevel0_10}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="30">
@@ -59,11 +68,11 @@
 
             <!-- Password Field -->
             <TextBlock Text="Mật khẩu" Style="{StaticResource LabelStyle}"/>
-            <wg:PlaceHolderTextBox Placeholder="Nhập mật khẩu"/>
+            <wg:PlaceHolderPasswordBox Placeholder="Nhập mật khẩu"/>
 
             <!-- Confirm Password Field -->
             <TextBlock Text="Xác nhận mật khẩu" Style="{StaticResource LabelStyle}"/>
-            <wg:PlaceHolderTextBox Placeholder="Xác nhận mật khẩu"/>
+            <wg:PlaceHolderPasswordBox Placeholder="Xác nhận mật khẩu"/>
 
             <!-- Register Button -->
             <Button Content="Đăng ký" 
